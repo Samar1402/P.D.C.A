@@ -1,7 +1,11 @@
+import Navbar from "./Components/Navbar";
+import Header from "./Components/Header";
+
 function App() {
   return (
     <>
-      <h1>Patna District Cricket Assosiation </h1>
+      <Header />
+      <Navbar />
     </>
   );
 }
