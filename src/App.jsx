@@ -3,6 +3,7 @@ import Header from "./Components/Header";
 import Home from "./Components/Home";
 import Login from "./Components/Login";
 import Signup from "./Components/SignUp";
+import CommitteeMember from "./Components/CommitteeMember";
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
       {/* <Navbar /> */}
       {/* <Login /> */}
       {/* <Home /> */}
-      <Signup />
+      {/* <Signup /> */}
+      <CommitteeMember />
     </>
   );
 }
