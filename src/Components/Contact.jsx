@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import asset2 from "../images/asset 2.jpeg";
-// import asset3 from "../images/asset 3.jpeg";
 import map from "../images/map.png";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./Contact.css";
 
 function Contact() {
@@ -13,6 +14,8 @@ function Contact() {
     message: "",
   });
 
+  const [isHovered, setIsHovered] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -23,9 +26,8 @@ function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
     console.log("Form submitted:", formData);
-    // Reset form fields after submission
+    toast.success("Form submitted successfully!");
     setFormData({
       name: "",
       email: "",
@@ -45,22 +47,12 @@ function Contact() {
         />
       </div>
 
-      {/* <div
-  className="relative bg-cover bg-center"
-  style={{
-    backgroundImage: `url(${asset3})`,
-    minHeight: "100vh",
-  }}
->
-</div> */}
-
       <div className="px-20 py-2 bg-gray-100">
         <h1 className="text-4xl text-left mb-2 text-[35px]">
           Contact Information
         </h1>
 
         <div className="flex gap-8 py-4 pt-2 pb-4 bg-gray-100">
-          {/* Address Box */}
           <div className="w-1/3 bg-white shadow-md p-4 rounded-lg">
             <div className="mb-3">
               <h5 className="text-xl font-semibold mb-2 text-red-500">
@@ -74,7 +66,6 @@ function Contact() {
             </div>
           </div>
 
-          {/* For More Information Box */}
           <div className="w-1/2 bg-white shadow-md p-4 rounded-md border border-gray-300">
             <h5 className="text-xl font-semibold mb-2 text-red-500">
               For More Information:
@@ -86,7 +77,6 @@ function Contact() {
         </div>
 
         <div className="flex flex-wrap">
-          {/* Left Side: Contact Form */}
           <div className="w-full lg:w-1/2 p-2">
             <h2 className="text-4xl mb-6 text-[35px]">Get In Touch</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -142,28 +132,37 @@ function Contact() {
             </form>
           </div>
 
-          <div className="w-full lg:w-1/2 p-4 flex justify-center items-center">
-  <a
-    href="https://www.google.com/maps/place/Pushpanjali+Complex,+बोरिंग+रोड,+आनंदपुरी,+पटना,+बिहार+800013/@25.6159151,85.1153152,17z/data=!3m1!4b1!4m6!3m5!1s0x39ed58256c2484a9:0x9169409ece07c25b!8m2!3d25.6159151!4d85.1153152!16s%2Fg%2F11bxfs2ppn?entry=ttu&g_ep=EgoyMDI0MTIxMS4wIKXMDSoASAFQAw%3D%3D"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <img
-      src={map}
-      alt="Map"
-      className="w-full h-96 object-cover rounded-lg shadow-lg"
-    />
-  </a>
-</div>
+          <div className="w-full lg:w-1/2 p-4 flex justify-center items-center relative">
+            <a
+              href="https://www.google.com/maps/place/Pushpanjali+Complex,+बोरिंग+रोड,+आनंदपुरी,+पटना,+बिहार+800013/@25.6159151,85.1153152,17z/data=!3m1!4b1!4m6!3m5!1s0x39ed58256c2484a9:0x9169409ece07c25b!8m2!3d25.6159151!4d85.1153152!16s%2Fg%2F11bxfs2ppn?entry=ttu&g_ep=EgoyMDI0MTIxMS4wIKXMDSoASAFQAw%3D%3D"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              <img
+                src={map}
+                alt="Map"
+                className="w-full h-96 object-cover rounded-lg shadow-lg"
+              />
+              {isHovered && (
+                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-white p-4 rounded-md shadow-lg">
+                  <p className="text-gray-700">
+                  Pushpanjali Complex 45-C, Near Sahyog Hospital, Patliputra
+                    <br />
+                    Colony, Patna-800013
+                  </p>
+                </div>
+              )}
+            </a>
+          </div>
         </div>
       </div>
 
-    
-    
+      <ToastContainer />
     </>
   );
 }
 
 export default Contact;
-
-
