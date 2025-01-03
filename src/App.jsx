@@ -13,10 +13,10 @@ function App() {
     <>
 
       {/* <Header /> */}
-      {/* <Navbar /> */}
+      <Navbar />
       {/* <Login /> */}
       {/* <Home /> */}
-      <Signup />
+      {/* <Signup /> */}
       <Routes>
         <Route path="/members" Component={Members} />
         <Route path="/notification" Component={Notification} />
