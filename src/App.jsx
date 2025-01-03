@@ -5,12 +5,17 @@ import Home from "./Components/Home";
 import Login from "./Components/Login";
 import About from "./Components/About";
 import ForgetPswd from "./Components/ForgetPswd";
+import SignUp from "./Components/SignUp";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("home"); // State to track the visible page
+  const [username, setUsername] = useState(""); // State to store the username
 
-  const handleNavigation = (page) => {
-    setCurrentPage(page); // Update the currentPage state
+  const handleNavigation = (page, username = "") => {
+    setCurrentPage(page);
+    if (page === "forgot-password") {
+      setUsername(username); // Store the username when navigating to Forgot Password
+    }
   };
 
   return (
@@ -22,7 +27,10 @@ function App() {
       {currentPage === "home" && <Home />}
       {currentPage === "about" && <About />}
       {currentPage === "login" && <Login onNavigate={handleNavigation} />}
-      {currentPage === "forgot-password" && <ForgetPswd onNavigate={handleNavigation} />}
+      {currentPage === "forgot-password" && (
+        <ForgetPswd onNavigate={handleNavigation} username={username} />
+      )}
+      {currentPage === "SignUp" && <SignUp onNavigate={handleNavigation} />}
     </>
   );
 }

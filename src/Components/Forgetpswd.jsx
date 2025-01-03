@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUnlockAlt, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import cricketer from "../images/cricketer.png"; 
+import cricketer from "../images/cricketer.png";
 
-const ForgetPswd = ({ onNavigate }) => {
+const ForgetPswd = ({ onNavigate, username }) => {
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   return (
     <div className="flex items-center justify-center mt-4">
       <div className="w-full max-w-md p-8 space-y-4 bg-blue-950 shadow-md rounded-lg">
@@ -14,11 +17,33 @@ const ForgetPswd = ({ onNavigate }) => {
 
         <form>
           <div className="mb-4">
-            <label className="block text-orange-500">Email Address</label>
+            <label className="block text-orange-500">Username</label>
             <input
-              type="email"
+              type="text"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
-              placeholder="Enter your email address"
+              placeholder="Enter your Username"
+              value={username} // Use the passed username value
+              readOnly // Make the username field read-only
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-orange-500">New Password</label>
+            <input
+              type="password"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+              placeholder="Enter New Password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-orange-500">Confirm Password</label>
+            <input
+              type="password"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+              placeholder="Confirm Your Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
           <button

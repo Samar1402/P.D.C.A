@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt, faKey } from "@fortawesome/free-solid-svg-icons";
 import cricketer from "../images/cricketer.png";
 
 const Login = ({ onNavigate }) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Add your login logic here
+  };
+
   return (
     <div className="flex items-center justify-center mt-4">
       <div className="w-full max-w-md p-8 space-y-4 bg-blue-950 shadow-md rounded-lg">
@@ -12,13 +20,15 @@ const Login = ({ onNavigate }) => {
           <img src={cricketer} alt="Cricketer" className="w-11 animate-bounce" />
         </div>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-orange-500">Username</label>
             <input
               type="text"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
               placeholder="Enter your username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)} // Store the username in state
             />
           </div>
           <div className="mb-4">
@@ -27,6 +37,8 @@ const Login = ({ onNavigate }) => {
               type="password"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
               placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)} // Store the password in state
             />
           </div>
           <button
@@ -40,12 +52,14 @@ const Login = ({ onNavigate }) => {
         <div className="flex justify-between text-sm text-green-600 mt-4">
           <span
             className="flex items-center hover:text-green-700 transition-all duration-300 cursor-pointer"
-            onClick={() => onNavigate("forgot-password")} // Navigate to forgot-password page
+            onClick={() => onNavigate("forgot-password", username)} // Pass the username to ForgetPswd
           >
             <FontAwesomeIcon icon={faKey} className="mr-1 animate-bounce" />
             Forgot Password?
           </span>
-          <span className="hover:text-green-700 transition-all duration-300 cursor-pointer">
+          <span className="hover:text-green-700 transition-all duration-300 cursor-pointer"
+          onClick={() => onNavigate("SignUp")} 
+          >
             New Register
           </span>
         </div>
