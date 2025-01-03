@@ -13,6 +13,8 @@ import Gallery from "./Components/Gallery";
 function App() {
   return (
     <>
+
+      
       <Header />
       <Navbar />
       {/* <Login /> */}
