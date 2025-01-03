@@ -3,21 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt, faKey } from "@fortawesome/free-solid-svg-icons";
 import cricketer from "../images/cricketer.png";
 
-const Login = () => {
+const Login = ({ onNavigate }) => {
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex items-center justify-center mt-4">
       <div className="w-full max-w-md p-8 space-y-4 bg-blue-950 shadow-md rounded-lg">
         <div className="flex items-center justify-center space-x-4">
-          {/* Login Heading */}
-          <h2 className="text-2xl font-bold text-center text-green-600">
-            Login
-          </h2>
-          {/* Cricketer Image with Bounce Animation */}
-          <img
-            src={cricketer}
-            alt="Cricketer"
-            className="w-11 animate-bounce"
-          />
+          <h2 className="text-2xl font-bold text-center text-white">Login</h2>
+          <img src={cricketer} alt="Cricketer" className="w-11 animate-bounce" />
         </div>
 
         <form>
@@ -46,19 +38,16 @@ const Login = () => {
           </button>
         </form>
         <div className="flex justify-between text-sm text-green-600 mt-4">
-          <a
-            href="/forgot-password"
-            className="flex items-center hover:text-green-700 transition-all duration-300"
+          <span
+            className="flex items-center hover:text-green-700 transition-all duration-300 cursor-pointer"
+            onClick={() => onNavigate("forgot-password")} // Navigate to forgot-password page
           >
             <FontAwesomeIcon icon={faKey} className="mr-1 animate-bounce" />
             Forgot Password?
-          </a>
-          <a
-            href="/register"
-            className="hover:text-green-700 transition-all duration-300"
-          >
+          </span>
+          <span className="hover:text-green-700 transition-all duration-300 cursor-pointer">
             New Register
-          </a>
+          </span>
         </div>
       </div>
     </div>
