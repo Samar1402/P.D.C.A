@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import Cricketer from "../images/cricketer.png"
+import React, { useState } from "react";
+import Cricketer from "../images/cricketer.png";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    contact: '',
-    password: ''
+    firstName: "",
+    lastName: "",
+    email: "",
+    contact: "",
+    password: "",
   });
 
   const handleChange = (e) => {
@@ -17,18 +17,25 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    alert('Account created successfully!');
+    alert("Account created successfully!");
   };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-blue-50 p-4">
       <div className="w-full max-w-md p-8 space-y-6 bg-blue-900 rounded-lg shadow-md">
         <h2 className="flex flex-row items-center justify-center text-2xl font-bold text-center text-white">
-          Sign Up <img src={Cricketer} alt="logo" className='h-16 sm:h-20 pb-3 ml-2 animate-bounce' />
+          Sign Up{" "}
+          <img
+            src={Cricketer}
+            alt="logo"
+            className="h-16 sm:h-20 pb-3 ml-2 animate-bounce"
+          />
         </h2>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
-            <label className="block text-l font-medium text-white">First Name</label>
+            <label className="block text-l font-medium text-white">
+              First Name
+            </label>
             <input
               type="text"
               name="firstName"
@@ -39,7 +46,9 @@ const Signup = () => {
             />
           </div>
           <div>
-            <label className="block text-l font-medium text-white">Last Name</label>
+            <label className="block text-l font-medium text-white">
+              Last Name
+            </label>
             <input
               type="text"
               name="lastName"
@@ -61,7 +70,9 @@ const Signup = () => {
             />
           </div>
           <div>
-            <label className="block text-l font-medium text-white">Contact No</label>
+            <label className="block text-l font-medium text-white">
+              Contact No
+            </label>
             <input
               type="text"
               name="contact"
@@ -72,7 +83,9 @@ const Signup = () => {
             />
           </div>
           <div>
-            <label className="block text-l font-medium text-white">Password</label>
+            <label className="block text-l font-medium text-white">
+              Password
+            </label>
             <input
               type="password"
               name="password"
@@ -90,7 +103,10 @@ const Signup = () => {
           </button>
         </form>
         <p className="text-m text-center text-white">
-          Already have an account? <a href="/signin" className="text-orange-500 hover:underline">Sign In</a>
+          Already have an account?{" "}
+          <a href="/login" className="text-orange-500 hover:underline">
+            Sign In
+          </a>
         </p>
       </div>
     </div>
