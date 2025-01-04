@@ -42,7 +42,66 @@ const NotificationSection = ({ title, link, data }) => (
 );
 
 const Home = () => {
-  return <div>Home</div>;
+  const notifications = [
+    { title: "Corrigendum of PDCA Meeting", date: "28/12/2023" },
+    { title: "New Updates on Project Timelines", date: "27/12/2023" },
+    { title: "Holiday Schedule Announced", date: "26/12/2023" },
+  ];
+
+  const newsUpdate = [
+    { title: "Final Decision of PDCA", date: "28/01/2024" },
+    { title: "PDCA/Ombudsman 03 of 2024", date: "20/02/2024" },
+    { title: "PDCA/Ombudsman/11 of 2014", date: "26/02/2024" },
+  ];
+
+  const pdcaNotification = [
+    { title: "PDCA Senior Super League Group B Fixture", date: "18/05/2024" },
+    { title: "SHORTLISTED PLAYERS", date: "27/05/2024" },
+    { title: "CORIENDUM", date: "26/06/2024" },
+  ];
+
+  const recentMatches = [
+    {
+      title: "LEAGUE MATCH 01",
+      date: "16/07/2024",
+      match: "PMCH CC VS BLUE STAR",
+    },
+    {
+      title: "LEAGUE MATCH 02",
+      date: "17/07/2024",
+      match: "EAGLE CC VS JP CC",
+    },
+    {
+      title: "LEAGUE MATCH 03",
+      date: "28/07/2024",
+      match: "VAISHLI CC VS AN CC",
+    },
+  ];
+
+  return (
+    <div>
+      <NotificationSection
+        title="NOTIFICATIONS"
+        link="/notification"
+        data={notifications}
+      />
+      <NotificationSection
+        title="NOTICE FROM OMBUDSMAN/ETHICS OFFICER"
+        link="/ombudsman-ethics-officer"
+        data={newsUpdate}
+      />
+      <NotificationSection
+        title="NOTIFICATION OF PDCA MATCHES"
+        link="/pdca-matches"
+        data={pdcaNotification}
+      />
+      <NotificationSection
+        title="RECENT MATCHES"
+        link="/recent-match"
+        data={recentMatches}
+      />
+    </div>
+  );
 };
 
 export default Home;
