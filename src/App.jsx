@@ -19,9 +19,9 @@ function App() {
       <Navbar />
       {/* <Login /> */}
       {/* <Home /> */}
-      <Signup />
+      {/* <Signup /> */}
       {/* <CommitteeMember /> */}
-      <Gallery />
+      {/* <Gallery /> */}
       <Routes>
         <Route path="/members" Component={Members} />
         <Route path="/notification" Component={Notification} />
