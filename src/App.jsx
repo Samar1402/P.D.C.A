@@ -8,6 +8,7 @@ import SignUp from "./Components/SignUp";
 import Contact from "./Components/Contact";
 import Notification from "./Components/Notification";
 import Members from "./Components/Members";
+import Gallery from "./Components/Gallery";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/contact" element={<Contact />}></Route>
           <Route path="/notification" element={<Notification />}></Route>
           <Route path="/members" element={<Members />}></Route>
+          <Route path="/media" element={<Gallery />}></Route>
         </Routes>
       </main>
       <Footer />
