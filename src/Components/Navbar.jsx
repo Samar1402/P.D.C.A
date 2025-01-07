@@ -83,13 +83,17 @@ const Navbar = () => {
             Members
           </NavLink>
           <NavLink
-            to="/result"
-            activeClassName="text-blue-600"
-            className="hover:text-blue-700 transition duration-300"
+            to="/results"
+            className={({ isActive }) =>
+              isActive
+                ? "text-blue-600 hover:text-blue-700 transition duration-300"
+                : "hover:text-blue-700 transition duration-300"
+            }
             onClick={() => setDropdownOpen(false)}
           >
-            Fixture/Results
+            Matches
           </NavLink>
+
           <NavLink
             to="/notification"
             activeClassName="text-blue-600"

@@ -32,17 +32,17 @@ const Footer = () => {
       ],
     },
     {
-      title: "Documentation",
+      title: "Notifications",
       links: [
-        { label: "Policies", path: "/policies" },
-        { label: "Rules and Regulations", path: "/rules" },
+        { label: "Latest Notification", path: "/notifications" },
+        { label: "PDCA Matches", path: "/notifications" },
       ],
     },
     {
       title: "Matches",
       links: [
-        { label: "Upcoming Matches", path: "/matches" },
-        { label: "Match Results", path: "/results" },
+        { label: "Upcoming Matches", path: "/upcomingmatches" },
+        { label: "Match Results", path: "/matchresults" },
       ],
     },
     {

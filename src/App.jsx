@@ -10,7 +10,9 @@ import Notification from "./Components/Notification";
 import Members from "./Components/Members";
 import Gallery from "./Components/Gallery";
 import CommitteeMember from "./Components/CommitteeMember";
-import MatchResult from "./Components/MatchResult";
+import MatchResults from "./Components/MatchResults";
+import UpcomingMatches from "./Components/UpcomingMatches";
+import Results from "./Components/Results";
 
 function App() {
   return (
@@ -24,10 +26,13 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<SignUp />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
-          <Route path="/notification" element={<Notification />}></Route>
+          <Route path="/notifications" element={<Notification />}></Route>
           <Route path="/members" element={<Members />}></Route>
           <Route path="/media" element={<Gallery />}></Route>
-          <Route path="/result" element={<MatchResult />}></Route>
+          <Route path="/results" element={<Results />}></Route>
+          <Route path="/matchresults" element={<MatchResults />}></Route>
+          <Route path="/upcomingmatches" element={<UpcomingMatches />}></Route>
+
           <Route
             path="/about/committeeMembers"
             element={<CommitteeMember />}
