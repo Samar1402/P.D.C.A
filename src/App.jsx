@@ -10,6 +10,7 @@ import Notification from "./Components/Notification";
 import Members from "./Components/Members";
 import Gallery from "./Components/Gallery";
 import CommitteeMember from "./Components/CommitteeMember";
+import MatchResult from "./Components/MatchResult";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/notification" element={<Notification />}></Route>
           <Route path="/members" element={<Members />}></Route>
           <Route path="/media" element={<Gallery />}></Route>
+          <Route path="/result" element={<MatchResult />}></Route>
           <Route
             path="/about/committeeMembers"
             element={<CommitteeMember />}

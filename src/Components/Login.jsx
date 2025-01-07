@@ -1,8 +1,8 @@
-
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt, faKey } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import cricketer from "../images/cricketer.png";
 
 const Login = () => {
   // Handle form submission
@@ -17,6 +17,11 @@ const Login = () => {
       <div className="w-full max-w-md p-10 bg-blue-950 shadow-lg rounded-xl">
         <div className="flex items-center justify-center space-x-4 mb-6">
           <h2 className="text-3xl font-bold text-center text-white">Login</h2>
+          <img
+            src={cricketer}
+            alt="Cricketer"
+            className="w-11 animate-bounce"
+          />
         </div>
 
         {/* Login Form */}

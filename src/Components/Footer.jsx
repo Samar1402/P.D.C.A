@@ -28,7 +28,7 @@ const Footer = () => {
       title: "About",
       links: [
         { label: "History of PDCA", path: "/briefHistory" },
-        { label: "Management Committee", path: "/committee" },
+        { label: "Management Committee", path: "/about/committeeMembers" },
       ],
     },
     {
