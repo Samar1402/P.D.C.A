@@ -1,4 +1,5 @@
 import Navbar from "./Components/Navbar";
+import About from "./Components/About"
 import Header from "./Components/Header";
 import Home from "./Components/Home";
 import Footer from "./Components/Footer";
@@ -13,6 +14,7 @@ import CommitteeMember from "./Components/CommitteeMember";
 import MatchResults from "./Components/MatchResults";
 import UpcomingMatches from "./Components/UpcomingMatches";
 import Results from "./Components/Results";
+import Forgetpswd from "./Components/Forgetpswd";
 
 function App() {
   return (
@@ -32,6 +34,8 @@ function App() {
           <Route path="/results" element={<Results />}></Route>
           <Route path="/matchresults" element={<MatchResults />}></Route>
           <Route path="/upcomingmatches" element={<UpcomingMatches />}></Route>
+          <Route path="/forgot-password" element={<Forgetpswd />}></Route>
+          <Route path="/about/history" element={<About />}></Route>
 
           <Route
             path="/about/committeeMembers"
