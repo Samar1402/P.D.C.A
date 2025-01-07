@@ -1,7 +1,7 @@
 // Tabs.jsx
 import React, { useState } from "react";
 
-const Tabs = ({ tabs, defaultTab, children }) => {
+const MatchTabs = ({ tabs, defaultTab, children }) => {
   const [activeTab, setActiveTab] = useState(defaultTab);
 
   return (
@@ -29,4 +29,4 @@ const Tabs = ({ tabs, defaultTab, children }) => {
   );
 };
 
-export default Tabs;
+export default MatchTabs;
