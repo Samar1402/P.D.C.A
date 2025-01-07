@@ -95,7 +95,7 @@ const Navbar = () => {
           </NavLink>
 
           <NavLink
-            to="/notification"
+            to="/notifications"
             activeClassName="text-blue-600"
             className="hover:text-blue-700 transition duration-300"
             onClick={() => setDropdownOpen(false)}
