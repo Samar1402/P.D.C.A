@@ -1,47 +1,50 @@
-// In App.jsx
-import { Routes, Route } from "react-router-dom";
-// import React, { useState } from "react";
 import Navbar from "./Components/Navbar";
+import About from "./Components/About"
 import Header from "./Components/Header";
 import Home from "./Components/Home";
+import Footer from "./Components/Footer";
+import { Routes, Route } from "react-router-dom";
 import Login from "./Components/Login";
-import About from "./Components/About";
-import Forgetpswd from "./Components/Forgetpswd";
 import SignUp from "./Components/SignUp";
+import Contact from "./Components/Contact";
+import Notification from "./Components/Notification";
+import Members from "./Components/Members";
+import Gallery from "./Components/Gallery";
+import CommitteeMember from "./Components/CommitteeMember";
+import MatchResults from "./Components/MatchResults";
+import UpcomingMatches from "./Components/UpcomingMatches";
+import Results from "./Components/Results";
+import Forgetpswd from "./Components/Forgetpswd";
 
 function App() {
-  // const [currentPage, setCurrentPage] = useState("home"); // State to track the visible page
-  // const [username, setUsername] = useState(""); // State to store the username
-
-  // const handleNavigation = (page, username = "") => {
-  //   setCurrentPage(page);
-  //   if (page === "forgot-password") {
-  //     setUsername(username); // Store the username when navigating to Forgot Password
-  //   }
-  // };
-
   return (
-    <>
-    <Routes>
-      <Route path="/forgot-password" element={<Forgetpswd/>}>
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <Navbar />
 
-      </Route>
-      <Route path="/" element={<Home />}></Route>
+      <main className="flex-grow">
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
           <Route path="/login" element={<Login />}></Route>
-          <Route path="/register" element={<SignUp />}></Route>
-    </Routes>
-      {/* <Header onNavigate={handleNavigation} />
-      <Navbar onNavigate={handleNavigation} /> */}
+          <Route path="/register" element={<SignUp />}></Route>
+          <Route path="/contact" element={<Contact />}></Route>
+          <Route path="/notifications" element={<Notification />}></Route>
+          <Route path="/members" element={<Members />}></Route>
+          <Route path="/media" element={<Gallery />}></Route>
+          <Route path="/results" element={<Results />}></Route>
+          <Route path="/matchresults" element={<MatchResults />}></Route>
+          <Route path="/upcomingmatches" element={<UpcomingMatches />}></Route>
+          <Route path="/forgot-password" element={<Forgetpswd />}></Route>
+          <Route path="/about/history" element={<About />}></Route>
 
-      {/* Conditional rendering based on currentPage */}
-      {/* {currentPage === "home" && <Home />}
-      {currentPage === "about" && <About />}
-      {currentPage === "login" && <Login onNavigate={handleNavigation} />}
-      {currentPage === "forgot-password" && (
-        <ForgetPswd onNavigate={handleNavigation} username={username} />
-      )}
-      {currentPage === "SignUp" && <SignUp onNavigate={handleNavigation} />} */}
-    </>
+          <Route
+            path="/about/committeeMembers"
+            element={<CommitteeMember />}
+          ></Route>
+        </Routes>
+      </main>
+      <Footer />
+    </div>
   );
 }
 
