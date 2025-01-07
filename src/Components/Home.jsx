@@ -4,7 +4,7 @@ import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
 const NotificationCard = ({ title, date, match }) => (
-  <div className="h-60 w-full sm:w-96 border border-slate-950 bg-blue-950 p-6 rounded-3xl flex flex-col justify-between">
+  <div className="h-60 w-full sm:w-96 md:w-80 lg:w-96 border border-slate-950 bg-blue-950 p-6 rounded-3xl flex flex-col justify-between">
     <div className="flex flex-col gap-2 text-sm text-gray-300">
       <h2 className="text-lg font-semibold text-white">{title}</h2>
       <div className="flex items-center gap-3">
@@ -28,7 +28,7 @@ const NotificationSection = ({ title, link, data }) => (
     >
       {title}
     </Link>
-    <div className="py-4 px-10 flex  gap-10 justify-center text-white">
+    <div className="py-4 px-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-center text-white">
       {data.map((item, index) => (
         <NotificationCard
           key={index}
@@ -46,12 +46,6 @@ const Home = () => {
     { title: "Corrigendum of PDCA Meeting", date: "28/12/2023" },
     { title: "New Updates on Project Timelines", date: "27/12/2023" },
     { title: "Holiday Schedule Announced", date: "26/12/2023" },
-  ];
-
-  const newsUpdate = [
-    { title: "Final Decision of PDCA", date: "28/01/2024" },
-    { title: "PDCA/Ombudsman 03 of 2024", date: "20/02/2024" },
-    { title: "PDCA/Ombudsman/11 of 2014", date: "26/02/2024" },
   ];
 
   const pdcaNotification = [
@@ -85,11 +79,7 @@ const Home = () => {
         link="/notification"
         data={notifications}
       />
-      <NotificationSection
-        title="NOTICE FROM OMBUDSMAN/ETHICS OFFICER"
-        link="/ombudsman-ethics-officer"
-        data={newsUpdate}
-      />
+
       <NotificationSection
         title="NOTIFICATION OF PDCA MATCHES"
         link="/pdca-matches"

@@ -9,6 +9,7 @@ import Contact from "./Components/Contact";
 import Notification from "./Components/Notification";
 import Members from "./Components/Members";
 import Gallery from "./Components/Gallery";
+import CommitteeMember from "./Components/CommitteeMember";
 
 function App() {
   return (
@@ -25,6 +26,10 @@ function App() {
           <Route path="/notification" element={<Notification />}></Route>
           <Route path="/members" element={<Members />}></Route>
           <Route path="/media" element={<Gallery />}></Route>
+          <Route
+            path="/about/committeeMembers"
+            element={<CommitteeMember />}
+          ></Route>
         </Routes>
       </main>
       <Footer />
