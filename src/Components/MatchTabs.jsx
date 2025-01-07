@@ -1,4 +1,3 @@
-// Tabs.jsx
 import React, { useState } from "react";
 
 const MatchTabs = ({ tabs, defaultTab, children }) => {

@@ -1,7 +1,7 @@
 import React from "react";
-import MatchTabs from "./MatchTabs"; // Ensure the Tabs component is imported
-import UpcomingMatches from "./UpcomingMatches"; // Ensure the UpcomingMatches component is imported
-import MatchResults from "./MatchResults"; // Ensure the MatchResults component is imported
+import MatchTabs from "./MatchTabs";
+import UpcomingMatches from "./UpcomingMatches";
+import MatchResults from "./MatchResults";
 
 const ResultPage = () => {
   return (
