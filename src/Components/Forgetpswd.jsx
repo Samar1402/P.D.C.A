@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUnlockAlt, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import cricketer from "../images/cricketer.png";
+import { Link } from "react-router-dom";
 
 const ForgetPswd = ({ onNavigate, username }) => {
   const [newPassword, setNewPassword] = useState("");
@@ -55,13 +56,12 @@ const ForgetPswd = ({ onNavigate, username }) => {
           </button>
         </form>
         <div className="flex justify-between text-sm text-green-600 mt-4">
-          <span
+          <Link to="/login"
             className="flex items-center hover:text-green-700 transition-all duration-300 cursor-pointer"
-            onClick={() => onNavigate("login")} // Navigate back to login page
           >
             <FontAwesomeIcon icon={faArrowLeft} className="mr-1 animate-bounce" />
             Back to Login
-          </span>
+          </Link>
         </div>
       </div>
     </div>
