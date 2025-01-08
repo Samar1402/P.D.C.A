@@ -8,7 +8,7 @@ const MatchTabs = ({ tabs, defaultTab, children }) => {
       {/* Tab Navigation */}
       <div className="flex flex-wrap gap-2 sm:gap-4 border-b-2 pb-2">
         {tabs.map((tab) => (
-          <button
+          <button 
             key={tab}
             className={`text-sm sm:text-lg font-semibold transition-colors ${
               activeTab === tab
