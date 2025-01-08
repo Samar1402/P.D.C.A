@@ -53,7 +53,7 @@ const Navbar = () => {
               About Us
             </button>
             {isDropdownOpen && (
-              <div className="absolute left-0 mt-2 w-40 bg-white border rounded shadow-md">
+              <div className="absolute left-0 mt-2 w-40 bg-white border rounded shadow-md z-10">
                 <NavLink
                   to="/about/history"
                   activeClassName="text-blue-600"
