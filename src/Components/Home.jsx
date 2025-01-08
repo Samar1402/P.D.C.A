@@ -2,9 +2,17 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-const NotificationCard = ({ title, date, match }) => (
-  <div className="h-60 w-full sm:w-96 border border-slate-950 bg-blue-950 p-6 rounded-3xl flex flex-col justify-between">
+const NotificationCard = ({ title, date, match, pdfUrl }) => (
+  <a
+    href={pdfUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="h-60 w-full sm:w-96 md:w-80 lg:w-96 border border-slate-950 bg-blue-950 p-6 rounded-3xl flex flex-col justify-between transition-transform transform hover:scale-105"
+  >
     <div className="flex flex-col gap-2 text-sm text-gray-300">
       <h2 className="text-lg font-semibold text-white">{title}</h2>
       <div className="flex items-center gap-3">
@@ -17,7 +25,7 @@ const NotificationCard = ({ title, date, match }) => (
         </p>
       )}
     </div>
-  </div>
+  </a>
 );
 
 const NotificationSection = ({ title, link, data }) => (
@@ -28,13 +36,14 @@ const NotificationSection = ({ title, link, data }) => (
     >
       {title}
     </Link>
-    <div className="py-4 px-10 flex  gap-10 justify-center text-white">
+    <div className="py-4 px-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-center text-white">
       {data.map((item, index) => (
         <NotificationCard
           key={index}
           title={item.title}
           date={item.date}
-          match={item.match} // Pass the match field if available
+          match={item.match}
+          pdfUrl={item.pdfUrl}
         />
       ))}
     </div>
@@ -43,21 +52,36 @@ const NotificationSection = ({ title, link, data }) => (
 
 const Home = () => {
   const notifications = [
-    { title: "Corrigendum of PDCA Meeting", date: "28/12/2023" },
-    { title: "New Updates on Project Timelines", date: "27/12/2023" },
-    { title: "Holiday Schedule Announced", date: "26/12/2023" },
-  ];
-
-  const newsUpdate = [
-    { title: "Final Decision of PDCA", date: "28/01/2024" },
-    { title: "PDCA/Ombudsman 03 of 2024", date: "20/02/2024" },
-    { title: "PDCA/Ombudsman/11 of 2014", date: "26/02/2024" },
+    {
+      title: "Corrigendum of PDCA Meeting",
+      date: "28/12/2023",
+      pdfUrl: "/pdfs/Cricket.pdf",
+    },
+    {
+      title: "New Updates on Project Timelines",
+      date: "27/12/2023",
+      pdfUrl: "/pdfs/Cricket.pdf",
+    },
+    {
+      title: "Holiday Schedule Announced",
+      date: "26/12/2023",
+      pdfUrl: "/pdfs/Cricket.pdf",
+    },
   ];
 
   const pdcaNotification = [
-    { title: "PDCA Senior Super League Group B Fixture", date: "18/05/2024" },
-    { title: "SHORTLISTED PLAYERS", date: "27/05/2024" },
-    { title: "CORIENDUM", date: "26/06/2024" },
+    {
+      title: "PDCA Senior Super League Group B Fixture",
+      date: "18/05/2024",
+    },
+    {
+      title: "SHORTLISTED PLAYERS",
+      date: "27/05/2024",
+    },
+    {
+      title: "CORIENDUM",
+      date: "26/06/2024",
+    },
   ];
 
   const recentMatches = [
@@ -78,23 +102,53 @@ const Home = () => {
     },
   ];
 
+  const carouselImages = [
+    "src/images/gallery/pic1.jpeg",
+    "src/images/gallery/pic2.jpeg",
+    "src/images/gallery/pic3.jpeg",
+    "src/images/gallery/pic6.jpeg",
+    "src/images/gallery/pic9.jpeg",
+    "src/images/gallery/pic11.jpeg",
+  ];
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 400,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    cssEase: "linear",
+    pauseOnHover: false, // Ensures autoplay doesn't stop on hover
+  };
+
   return (
-    <div>
+    <div className="overflow-x-hidden">
+      <Slider {...settings}>
+        {carouselImages.map((image, index) => (
+          <div key={index}>
+            <img
+              src={image}
+              alt={`carousel-${index}`}
+              className="w-[90%] mx-auto h-[34rem] object-fill"
+            />
+          </div>
+        ))}
+      </Slider>
+
       <NotificationSection
         title="NOTIFICATIONS"
         link="/notification"
         data={notifications}
       />
-      <NotificationSection
-        title="NOTICE FROM OMBUDSMAN/ETHICS OFFICER"
-        link="/ombudsman-ethics-officer"
-        data={newsUpdate}
-      />
+
       <NotificationSection
         title="NOTIFICATION OF PDCA MATCHES"
         link="/pdca-matches"
         data={pdcaNotification}
       />
+
       <NotificationSection
         title="RECENT MATCHES"
         link="/recent-match"
@@ -105,3 +159,4 @@ const Home = () => {
 };
 
 export default Home;
+

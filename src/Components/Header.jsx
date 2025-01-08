@@ -18,43 +18,55 @@ const Header = () => {
   };
 
   return (
-    <div>
-      <div className="flex px-8 py-4 bg-blue-950 justify-between">
-        <div className="flex flex-row items-center">
-          <img src={pdcalogo} alt="PDCA" className="w-28 h-24" />
-          <p className="text-white ml-4">Patna District Cricket Association</p>
+    <header>
+      <div className="flex flex-col sm:flex-row items-center justify-between px-4 sm:px-8 py-4 bg-blue-950">
+        {/* Logo and Title */}
+        <div className="flex items-center mb-4 sm:mb-0">
+          <img
+            src={pdcalogo}
+            alt="PDCA"
+            className="w-20 sm:w-28 h-20 sm:h-24"
+          />
+          <p className="text-white text-center sm:text-left text-sm sm:text-lg ml-4">
+            Patna District Cricket Association
+          </p>
         </div>
-        <div className="flex flex-col">
-          <div>
+
+        {/* Login Button and Social Media Icons */}
+        <div className="flex flex-col items-center sm:items-end">
+          {/* Login Button */}
+          <div className="mb-4 sm:mb-2">
             <button
               onClick={handleLoginClick} // Handle login click
-              className="w-52 text-white bg-blue-500 hover:bg-blue-600 font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 h-10"
+              className="w-40 sm:w-52 text-white bg-blue-500 hover:bg-blue-600 font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 h-10"
             >
               Login
             </button>
           </div>
 
-          <div className="flex justify-center gap-2 ml-6">
+
+          {/* Social Media Icons */}
+          <div className="flex justify-center sm:justify-end gap-3">
             <FontAwesomeIcon
               icon={faWhatsapp}
-              className="text-xl text-white mt-3 mr-5 hover:text-green-400 cursor-pointer"
+              className="text-lg sm:text-xl text-white hover:text-green-400 cursor-pointer"
             />
             <FontAwesomeIcon
               icon={faFacebook}
-              className="text-xl text-white mt-3 mr-5 hover:text-blue-400 cursor-pointer"
+              className="text-lg sm:text-xl text-white hover:text-blue-400 cursor-pointer"
             />
             <FontAwesomeIcon
               icon={faXTwitter}
-              className="text-xl text-white mt-3 mr-5 hover:text-gray-900 cursor-pointer"
+              className="text-lg sm:text-xl text-white hover:text-gray-900 cursor-pointer"
             />
             <FontAwesomeIcon
               icon={faYoutube}
-              className="text-xl text-white mt-3 mr-5 hover:text-red-600 cursor-pointer"
+              className="text-lg sm:text-xl text-white hover:text-red-600 cursor-pointer"
             />
           </div>
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 

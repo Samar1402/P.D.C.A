@@ -1,8 +1,8 @@
-
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt, faKey } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import cricketer from "../images/cricketer.png";
 
 const Login = () => {
   // Handle form submission
@@ -13,15 +13,20 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-white">
-      <div className="w-full max-w-md p-10 bg-blue-950 shadow-lg rounded-xl">
+    <div className="flex items-center justify-center min-h-screen bg-white px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md p-8 sm:p-10 bg-blue-950 shadow-lg rounded-xl">
         <div className="flex items-center justify-center space-x-4 mb-6">
           <h2 className="text-3xl font-bold text-center text-white">Login</h2>
+          <img
+            src={cricketer}
+            alt="Cricketer"
+            className="w-11 animate-bounce"
+          />
         </div>
 
         {/* Login Form */}
-        <form onSubmit={handleSubmit}>
-          <div className="mb-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
             <label className="block text-white">Username</label>
             <input
               type="text"
@@ -30,7 +35,7 @@ const Login = () => {
               required
             />
           </div>
-          <div className="mb-6">
+          <div>
             <label className="block text-white">Password</label>
             <input
               type="password"
@@ -55,11 +60,11 @@ const Login = () => {
         </form>
 
         {/* Links for Forgot Password and Register */}
-        <div className="flex justify-between text-sm text-slate-50 mt-6">
+        <div className="flex flex-col sm:flex-row justify-between text-sm text-slate-50 mt-6">
           {/* Link to Forgot Password */}
           <Link
             to="/forgot-password"
-            className="flex items-center hover:text-red-700 transition-all duration-300"
+            className="flex items-center hover:text-red-700 transition-all duration-300 mb-2 sm:mb-0"
           >
             <FontAwesomeIcon icon={faKey} className="mr-1 animate-bounce" />
             Forgot Password?

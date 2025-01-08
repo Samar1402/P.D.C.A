@@ -47,17 +47,13 @@ function Contact() {
         />
       </div>
 
-      <div className="px-20 py-2 bg-gray-100">
-        <h1 className="text-4xl text-left mb-2 text-[35px]">
-          Contact Information
-        </h1>
+      <div className="px-4 md:px-20 py-2 bg-gray-100">
+        <h1 className="text-3xl md:text-4xl text-left mb-2">Contact Information</h1>
 
-        <div className="flex gap-8 py-4 pt-2 pb-4 bg-gray-100">
-          <div className="w-1/3 bg-white shadow-md p-4 rounded-lg">
+        <div className="flex flex-wrap gap-8 py-4 pt-2 pb-4 bg-gray-100">
+          <div className="w-full md:w-1/3 bg-white shadow-md p-4 rounded-lg">
             <div className="mb-3">
-              <h5 className="text-xl font-semibold mb-2 text-red-500">
-                Address:
-              </h5>
+              <h5 className="text-xl font-semibold mb-2 text-red-500">Address:</h5>
               <p className="text-gray-500">
                 45-C, Near Sahyog Hospital, Patliputra
                 <br />
@@ -66,19 +62,15 @@ function Contact() {
             </div>
           </div>
 
-          <div className="w-1/2 bg-white shadow-md p-4 rounded-md border border-gray-300">
-            <h5 className="text-xl font-semibold mb-2 text-red-500">
-              For More Information:
-            </h5>
-            <p className="text-gray-500">
-              Email: info@biharcricketassociation.com
-            </p>
+          <div className="w-full md:w-1/2 bg-white shadow-md p-4 rounded-md border border-gray-300">
+            <h5 className="text-xl font-semibold mb-2 text-red-500">For More Information:</h5>
+            <p className="text-gray-500">Email: info@biharcricketassociation.com</p>
           </div>
         </div>
 
         <div className="flex flex-wrap">
           <div className="w-full lg:w-1/2 p-2">
-            <h2 className="text-4xl mb-6 text-[35px]">Get In Touch</h2>
+            <h2 className="text-3xl md:text-4xl mb-6">Get In Touch</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="flex flex-wrap gap-4">
                 <input
@@ -134,7 +126,7 @@ function Contact() {
 
           <div className="w-full lg:w-1/2 p-4 flex justify-center items-center relative">
             <a
-              href="https://www.google.com/maps/place/Pushpanjali+Complex,+बोरिंग+रोड,+आनंदपुरी,+पटना,+बिहार+800013/@25.6159151,85.1153152,17z/data=!3m1!4b1!4m6!3m5!1s0x39ed58256c2484a9:0x9169409ece07c25b!8m2!3d25.6159151!4d85.1153152!16s%2Fg%2F11bxfs2ppn?entry=ttu&g_ep=EgoyMDI0MTIxMS4wIKXMDSoASAFQAw%3D%3D"
+              href="https://www.google.com/maps/place/Pushpanjali+Complex"
               target="_blank"
               rel="noopener noreferrer"
               className="relative"
@@ -144,7 +136,7 @@ function Contact() {
               <img
                 src={map}
                 alt="Map"
-                className="w-full h-96 object-cover rounded-lg shadow-lg"
+                className="w-full h-80 md:h-96 object-cover rounded-lg shadow-lg"
               />
               {isHovered && (
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-white p-4 rounded-md shadow-lg">
