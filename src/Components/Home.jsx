@@ -124,18 +124,20 @@ const Home = () => {
   };
 
   return (
-    <div className="overflow-x-hidden">
-      <Slider {...settings}>
-        {carouselImages.map((image, index) => (
-          <div key={index}>
-            <img
-              src={image}
-              alt={`carousel-${index}`}
-              className="w-[90%] mx-auto h-[34rem] object-fill"
-            />
-          </div>
-        ))}
-      </Slider>
+    <div className="overflow-x-hidden relative">
+      <div className="relative -z-10 w-full">
+        <Slider {...settings}>
+          {carouselImages.map((image, index) => (
+            <div key={index}>
+              <img
+                src={image}
+                alt={`carousel-${index}`}
+                className="w-[90%] mx-auto h-[34rem] object-fill"
+              />
+            </div>
+          ))}
+        </Slider>
+      </div>
 
       <NotificationSection
         title="NOTIFICATIONS"
@@ -159,4 +161,3 @@ const Home = () => {
 };
 
 export default Home;
-
