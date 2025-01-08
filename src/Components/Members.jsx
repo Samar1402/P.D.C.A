@@ -380,7 +380,7 @@ const Members = () => {
           onClick={() => setActiveTab("affiliated")}
         >
           Affiliated Clubs
-        </button>git ff
+        </button>
         <button
           className={`px-4 py-2 text-lg font-semibold ${
             activeTab === "non-affiliated"

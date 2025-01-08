@@ -18,13 +18,13 @@ const MatchResult = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
-      <h1 className="text-center text-2xl font-bold text-gray-800 mb-4">
+    <div className="max-w-lg lg:max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
+      <h1 className="text-center text-2xl lg:text-3xl font-bold text-gray-800 mb-4">
         {`${matchData.team1} vs ${matchData.team2}`}
       </h1>
-      <div className="flex justify-between items-center border-b pb-4 mb-4">
-        <div className="text-center">
-          <h2 className="text-lg font-semibold text-gray-700">
+      <div className="flex flex-col lg:flex-row justify-between items-center border-b pb-4 mb-4">
+        <div className="text-center mb-4 lg:mb-0 lg:mr-4">
+          <h2 className="text-lg lg:text-xl font-semibold text-gray-700">
             {matchData.team1}
           </h2>
           <p className="text-gray-600">
@@ -32,7 +32,7 @@ const MatchResult = () => {
           </p>
         </div>
         <div className="text-center">
-          <h2 className="text-lg font-semibold text-gray-700">
+          <h2 className="text-lg lg:text-xl font-semibold text-gray-700">
             {matchData.team2}
           </h2>
           <p className="text-gray-600">
@@ -40,11 +40,13 @@ const MatchResult = () => {
           </p>
         </div>
       </div>
-      <p className="text-center text-green-600 font-medium">
+      <p className="text-center text-green-600 font-medium lg:text-lg">
         {matchData.result}
       </p>
-      <h3 className="mt-6 text-lg font-semibold text-gray-700">Highlights</h3>
-      <div className="mt-4 space-y-4">
+      <h3 className="mt-6 text-lg lg:text-xl font-semibold text-gray-700">
+        Highlights
+      </h3>
+      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {matchData.highlights.map((item, index) => (
           <MatchSummaryCard
             key={index}

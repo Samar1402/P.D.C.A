@@ -3,7 +3,7 @@ import MatchCard from "./MatchCard";
 
 const UpcomingMatches = () => {
   // Match data
-  const [matches, setMatches] = useState([
+  const [matches] = useState([
     {
       id: 1,
       team1: "India",
@@ -31,8 +31,8 @@ const UpcomingMatches = () => {
   ]);
 
   return (
-    <div className="bg-gray-100 min-h-screen p-6">
-      <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
+    <div className="bg-gray-50 min-h-screen p-4 sm:p-6 lg:p-8">
+      <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-center text-gray-800 mb-4 sm:mb-6">
         Upcoming Matches
       </h1>
       <div className="max-w-4xl mx-auto space-y-4">

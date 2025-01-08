@@ -55,10 +55,10 @@ const About = () => {
         {aboutUsData.map((person, index) => (
           <div
             key={person.id}
-            className={`flex items-center ${index % 2 === 0 ? "flex-row" : "flex-row-reverse"} mb-12`}
+            className={`flex flex-col md:flex-row items-center ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} mb-12`}
           >
             {/* Left Side - Image with Circular Border and Animation */}
-            <div className="flex-shrink-0 w-48 h-48 mx-auto">
+            <div className="flex-shrink-0 w-48 h-48 mx-auto mb-6 md:mb-0 md:w-56 md:h-56">
               <div className="relative w-full h-full">
                 <img
                   src={person.image}
@@ -69,7 +69,7 @@ const About = () => {
             </div>
 
             {/* Right Side - Description */}
-            <div className="flex-grow ml-8">
+            <div className="flex-grow text-center md:text-left md:ml-8">
               <h3 className="text-2xl font-semibold text-blue-800 mb-2">
                 {underlineRest(person.name)}
               </h3>

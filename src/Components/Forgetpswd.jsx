@@ -9,7 +9,7 @@ const ForgetPswd = ({ onNavigate, username }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md p-8 space-y-6 bg-blue-950 shadow-md rounded-lg">
         <div className="flex items-center justify-center space-x-4">
           <h2 className="text-2xl font-bold text-center text-white">

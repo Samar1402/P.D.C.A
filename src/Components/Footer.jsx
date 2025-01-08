@@ -13,8 +13,7 @@ const FooterSection = ({ title, links }) => (
           to={link.path}
           className="hover:text-red-600 flex items-center gap-2"
         >
-          <ChevronRightIcon className="w-6 h-6 text-red-500 font-extrabold" />{" "}
-          {/* Icon */}
+          <ChevronRightIcon className="w-6 h-6 text-red-500 font-extrabold" />
           {link.label}
         </Link>
       ))}
@@ -55,10 +54,10 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-blue-950 text-white py-8 px-4 ">
+    <footer className="bg-blue-950 text-white py-8 px-4">
       <div className="flex flex-col lg:flex-row justify-between items-center lg:items-start mx-4">
         {/* Logo Section */}
-        <div className="flex flex-col items-center lg:items-start mb-6 lg:mb-0 ">
+        <div className="flex flex-col items-center lg:items-start mb-6 lg:mb-0">
           <img src={pdcalogo} alt="PDCA Logo" className="w-28 h-24 mb-4" />
           <p className="text-center lg:text-left">
             Patna District Cricket Association
@@ -69,7 +68,7 @@ const Footer = () => {
         </div>
 
         {/* Footer Sections */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-1 ">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-screen-lg">
           {sections.map((section, index) => (
             <FooterSection
               key={index}
