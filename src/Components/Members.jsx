@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import AffiliatedMembers from "./AffliatedMembers";
-import NonAffiliatedMembers from "./NonAffliatedMembers";
+import AffiliatedMembers from "./AffiliatedMembers";
+import NonAffiliatedMembers from "./NonAffiliatedMembers";
 
 const MembersPage = () => {
   const [activeTab, setActiveTab] = useState("affiliated");
@@ -16,7 +16,7 @@ const MembersPage = () => {
               : "text-gray-600 hover:text-gray-800"
           }`}
         >
-          Affiliated Members
+          AFFILIATED MEMBERS
         </button>
         <button
           onClick={() => setActiveTab("non-affiliated")}
@@ -26,7 +26,7 @@ const MembersPage = () => {
               : "text-gray-600 hover:text-gray-800"
           }`}
         >
-          Non-Affiliated Members
+          NON-AFFILIATED MEMBERS
         </button>
       </div>
 

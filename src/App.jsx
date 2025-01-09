@@ -15,8 +15,8 @@ import MatchResults from "./Components/MatchResults";
 import UpcomingMatches from "./Components/UpcomingMatches";
 import Results from "./Components/Results";
 import Forgetpswd from "./Components/Forgetpswd";
-import AffliatedMembers from "./Components/AffliatedMembers";
-import NonAffliatedMembers from "./Components/NonAffliatedMembers";
+import AffiliatedMembers from "./Components/AffiliatedMembers";
+import NonAffiliatedMembers from "./Components/NonAffiliatedMembers";
 
 function App() {
   return (
@@ -39,11 +39,11 @@ function App() {
           <Route path="/about/history" element={<About />}></Route>
           <Route
             path="/affliatedmembers"
-            element={<AffliatedMembers />}
+            element={<AffiliatedMembers />}
           ></Route>
           <Route
             path="/nonaffliatedmembers"
-            element={<NonAffliatedMembers />}
+            element={<NonAffiliatedMembers />}
           ></Route>
 
           <Route
