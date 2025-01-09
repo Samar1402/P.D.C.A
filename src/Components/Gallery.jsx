@@ -46,7 +46,8 @@ const Gallery = () => {
 
   return (
     <div className="p-4 sm:p-8 lg:p-20 mx-4 sm:mx-8 flex justify-center items-center flex-col">
-      <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-10 text-gray-800 uppercase underline text-center">Gallery</h1>
+      <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-10 text-black uppercase  text-center font-serif 
+        tracking-wide  font-outline-3">Gallery</h1>
       <div id="main" className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {currentImages.map((image, index) => (
           <div 

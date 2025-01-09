@@ -125,7 +125,7 @@ const Home = () => {
 
   return (
     <div className="overflow-x-hidden relative">
-      <div className="relative -z-10 w-full">
+      <div className="relative -z-10 w-full mt-6">
         <Slider {...settings}>
           {carouselImages.map((image, index) => (
             <div key={index}>
