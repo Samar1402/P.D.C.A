@@ -23,7 +23,7 @@ const Navbar = () => {
     <nav className="bg-blue-200">
       <div className="container mx-auto px-6 py-4 font-serif text-lg font-semibold flex flex-col sm:flex-row justify-center items-center">
         {/* Hamburger Menu for Mobile */}
-        <div className="w-full flex  sm:hidden">
+        <div className="w-full flex sm:hidden">
           <button className="text-xl" onClick={() => setMenuOpen(!isMenuOpen)}>
             ☰
           </button>
@@ -37,8 +37,11 @@ const Navbar = () => {
         >
           <NavLink
             to="/"
-            activeClassName="text-blue-600"
-            className="hover:text-blue-700 transition duration-300"
+            className={({ isActive }) =>
+              isActive
+                ? "text-blue-600 hover:text-blue-700 transition duration-300"
+                : "hover:text-blue-700 transition duration-300"
+            }
             onClick={() => setDropdownOpen(false)}
           >
             Home
@@ -56,16 +59,22 @@ const Navbar = () => {
               <div className="absolute left-0 mt-2 w-40 bg-white border rounded shadow-md z-10">
                 <NavLink
                   to="/about/history"
-                  activeClassName="text-blue-600"
-                  className="block px-4 py-2 hover:bg-blue-100 text-sm"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-blue-600 hover:bg-blue-100 text-sm block px-4 py-2"
+                      : "hover:bg-blue-100 text-sm block px-4 py-2"
+                  }
                   onClick={() => setDropdownOpen(false)}
                 >
                   Brief History
                 </NavLink>
                 <NavLink
                   to="/about/committeeMembers"
-                  activeClassName="text-blue-600"
-                  className="block px-4 py-2 hover:bg-blue-100 text-sm"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-blue-600 hover:bg-blue-100 text-sm block px-4 py-2"
+                      : "hover:bg-blue-100 text-sm block px-4 py-2"
+                  }
                   onClick={() => setDropdownOpen(false)}
                 >
                   Management Committee
@@ -76,12 +85,16 @@ const Navbar = () => {
 
           <NavLink
             to="/members"
-            activeClassName="text-blue-600"
-            className="hover:text-blue-700 transition duration-300"
+            className={({ isActive }) =>
+              isActive
+                ? "text-blue-600 hover:text-blue-700 transition duration-300"
+                : "hover:text-blue-700 transition duration-300"
+            }
             onClick={() => setDropdownOpen(false)}
           >
             Members
           </NavLink>
+
           <NavLink
             to="/results"
             className={({ isActive }) =>
@@ -96,24 +109,35 @@ const Navbar = () => {
 
           <NavLink
             to="/notifications"
-            activeClassName="text-blue-600"
-            className="hover:text-blue-700 transition duration-300"
+            className={({ isActive }) =>
+              isActive
+                ? "text-blue-600 hover:text-blue-700 transition duration-300"
+                : "hover:text-blue-700 transition duration-300"
+            }
             onClick={() => setDropdownOpen(false)}
           >
             Notification
           </NavLink>
+
           <NavLink
             to="/media"
-            activeClassName="text-blue-600"
-            className="hover:text-blue-700 transition duration-300"
+            className={({ isActive }) =>
+              isActive
+                ? "text-blue-600 hover:text-blue-700 transition duration-300"
+                : "hover:text-blue-700 transition duration-300"
+            }
             onClick={() => setDropdownOpen(false)}
           >
             Media
           </NavLink>
+
           <NavLink
             to="/contact"
-            activeClassName="text-blue-600"
-            className="hover:text-blue-700 transition duration-300"
+            className={({ isActive }) =>
+              isActive
+                ? "text-blue-600 hover:text-blue-700 transition duration-300"
+                : "hover:text-blue-700 transition duration-300"
+            }
             onClick={() => setDropdownOpen(false)}
           >
             Contact Us
