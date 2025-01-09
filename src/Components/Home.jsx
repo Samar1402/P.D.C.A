@@ -132,7 +132,7 @@ const Home = () => {
               <img
                 src={image}
                 alt={`carousel-${index}`}
-                className="w-[90%] mx-auto h-[34rem] object-fill"
+                className="w-[90%] mx-auto h-[28rem] object-fill"
               />
             </div>
           ))}
@@ -141,19 +141,19 @@ const Home = () => {
 
       <NotificationSection
         title="NOTIFICATIONS"
-        link="/notification"
+        link="/notifications"
         data={notifications}
       />
 
       <NotificationSection
         title="NOTIFICATION OF PDCA MATCHES"
-        link="/pdca-matches"
+        link="/notifications"
         data={pdcaNotification}
       />
 
       <NotificationSection
         title="RECENT MATCHES"
-        link="/recent-match"
+        link="/matchresults"
         data={recentMatches}
       />
     </div>

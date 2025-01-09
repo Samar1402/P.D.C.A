@@ -45,10 +45,10 @@ const Footer = () => {
       ],
     },
     {
-      title: "Players",
+      title: "Clubs",
       links: [
-        { label: "Player Profiles", path: "/profiles" },
-        { label: "Top Performers", path: "/top-performers" },
+        { label: "Affiliated Clubs", path: "/affliatedmembers" },
+        { label: "Non-Affiliated Clubs", path: "/nonaffliatedmembers" },
       ],
     },
   ];

@@ -1,5 +1,5 @@
 import Navbar from "./Components/Navbar";
-import About from "./Components/About"
+import About from "./Components/About";
 import Header from "./Components/Header";
 import Home from "./Components/Home";
 import Footer from "./Components/Footer";
@@ -15,6 +15,8 @@ import MatchResults from "./Components/MatchResults";
 import UpcomingMatches from "./Components/UpcomingMatches";
 import Results from "./Components/Results";
 import Forgetpswd from "./Components/Forgetpswd";
+import AffliatedMembers from "./Components/AffliatedMembers";
+import NonAffliatedMembers from "./Components/NonAffliatedMembers";
 
 function App() {
   return (
@@ -36,6 +38,14 @@ function App() {
           <Route path="/upcomingmatches" element={<UpcomingMatches />}></Route>
           <Route path="/forgot-password" element={<Forgetpswd />}></Route>
           <Route path="/about/history" element={<About />}></Route>
+          <Route
+            path="/affliatedmembers"
+            element={<AffliatedMembers />}
+          ></Route>
+          <Route
+            path="/nonaffliatedmembers"
+            element={<NonAffliatedMembers />}
+          ></Route>
 
           <Route
             path="/about/committeeMembers"
