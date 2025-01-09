@@ -44,7 +44,6 @@ const Header = () => {
             </button>
           </div>
 
-
           {/* Social Media Icons */}
           <div className="flex justify-center sm:justify-end gap-3">
             <FontAwesomeIcon

@@ -47,8 +47,8 @@ const Footer = () => {
     {
       title: "Clubs",
       links: [
-        { label: "Affiliated Clubs", path: "/affliatedmembers" },
-        { label: "Non-Affiliated Clubs", path: "/nonaffliatedmembers" },
+        { label: "Affliated Clubs", path: "/affliatedmembers" },
+        { label: "Non-Affliated Clubs", path: "/nonaffliatedmembers" },
       ],
     },
   ];
