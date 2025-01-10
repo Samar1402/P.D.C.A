@@ -1,5 +1,3 @@
-
-
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
@@ -105,12 +103,12 @@ const Home = () => {
   ];
 
   const carouselImages = [
-    "src/images/gallery/pic1.jpeg",
-    "src/images/gallery/pic2.jpeg",
-    "src/images/gallery/pic3.jpeg",
-    "src/images/gallery/pic6.jpeg",
-    "src/images/gallery/pic9.jpeg",
-    "src/images/gallery/pic11.jpeg",
+    "/gallery/pic1.jpeg",
+    "/gallery/pic2.jpeg",
+    "/gallery/pic3.jpeg",
+    "/gallery/pic6.jpeg",
+    "/gallery/pic9.jpeg",
+    "/gallery/pic11.jpeg",
   ];
 
   const settings = {
