@@ -45,6 +45,7 @@ const Signup = () => {
               onChange={handleChange}
               className="w-full px-4 py-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500 outline-none"
               required
+              placeholder="Enter Your First Name"
             />
           </div>
           <div>
@@ -58,6 +59,7 @@ const Signup = () => {
               onChange={handleChange}
               className="w-full px-4 py-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500 outline-none"
               required
+              placeholder="Enter Your Last Name"
             />
           </div>
           <div>
@@ -69,6 +71,7 @@ const Signup = () => {
               onChange={handleChange}
               className="w-full px-4 py-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500 outline-none"
               required
+              placeholder="Enter Your Email"
             />
           </div>
           <div>
@@ -82,6 +85,7 @@ const Signup = () => {
               onChange={handleChange}
               className="w-full px-4 py-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500 outline-none"
               required
+              placeholder="Enter Your Contact No"
             />
           </div>
           <div>
@@ -95,6 +99,7 @@ const Signup = () => {
               onChange={handleChange}
               className="w-full px-4 py-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500 outline-none"
               required
+              placeholder="Enter Your Password"
             />
           </div>
           <button
