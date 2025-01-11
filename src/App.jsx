@@ -17,6 +17,7 @@ import Results from "./Components/Results";
 import Forgetpswd from "./Components/Forgetpswd";
 import AffiliatedMembers from "./Components/AffiliatedMembers";
 import NonAffiliatedMembers from "./Components/NonAffiliatedMembers";
+import Dashboard from "./Components/Dashboard";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/login" element={<Login />}></Route>
+          <Route path="/dashboard" element={<Dashboard />}></Route>
           <Route path="/register" element={<SignUp />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
           <Route path="/notifications" element={<Notification />}></Route>

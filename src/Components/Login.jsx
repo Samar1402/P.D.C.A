@@ -1,15 +1,17 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt, faKey } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import cricketer from "../images/cricketer.png";
 
 const Login = () => {
   // Handle form submission
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
 
     console.log("Form submitted");
+    navigate("/dashboard");
   };
 
   return (
