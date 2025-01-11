@@ -198,7 +198,7 @@ const AffiliatedMembers = () => {
     {
       name: "YAC City Cricket Club",
       // location: "Panchsheel",
-      president: "",
+      president: "" ,
       secretary: "",
       // email: "arariadca@biharcricketassociation.com",
       pdf: "/pdfs/Cricket.pdf", // Example PDF URL
