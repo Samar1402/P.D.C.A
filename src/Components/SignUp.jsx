@@ -1,4 +1,6 @@
+
 import React, { useState } from "react";
+import axios from "axios";
 import Cricketer from "../images/cricketer.png";
 import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,14 +14,45 @@ const Signup = () => {
     password: "",
   });
 
+  const [loading, setLoading] = useState(false);
+  const [responseMessage, setResponseMessage] = useState("");
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    alert("Account created successfully!");
+    
+
+    // Prepare data to send
+    const signupData = {
+      first_name: formData.firstName,
+      last_name: formData.lastName,
+      email: formData.email,
+      contact: formData.contact,
+      password: formData.password,
+    };
+
+    setLoading(true);
+    setResponseMessage("");
+
+    try {
+      // Make the POST request
+      const response = await axios.post("http://localhost:3000/addmember", signupData);
+
+      if (response.status === 201) {
+        setResponseMessage("Account created successfully!");
+      } else {
+        setResponseMessage("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || "Failed to create account. Try again later.";
+      setResponseMessage(errorMessage);
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -58,7 +91,6 @@ const Signup = () => {
               value={formData.lastName}
               onChange={handleChange}
               className="w-full px-4 py-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500 outline-none"
-              required
               placeholder="Enter Your Last Name"
             />
           </div>
@@ -105,14 +137,21 @@ const Signup = () => {
           <button
             type="submit"
             className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-md transform transition-transform hover:scale-105 hover:bg-blue-600"
+            disabled={loading}
           >
-            <FontAwesomeIcon
-                icon={faSignInAlt}
-                className="mr-2 animate-pulse"
-              />
-            Sign Up
+            {loading ? "Creating..." : (
+              <>
+                <FontAwesomeIcon icon={faSignInAlt} className="mr-2 animate-pulse" />
+                Sign Up
+              </>
+            )}
           </button>
         </form>
+        {responseMessage && (
+          <p className={`mt-4 text-center ${responseMessage.includes("successfully") ? "text-green-500" : "text-red-500"}`}>
+            {responseMessage}
+          </p>
+        )}
         <p className="text-m text-center text-white">
           Already have an account?{" "}
           <a href="/login" className="text-orange-500 hover:underline">
@@ -125,3 +164,4 @@ const Signup = () => {
 };
 
 export default Signup;
+

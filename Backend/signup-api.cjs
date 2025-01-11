@@ -2,207 +2,146 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
-const { body, validationResult } = require("express-validator");
 
 const app = express();
-
-
-
 const port = 3000;
 
+// Middleware Configuration
+app.use(cors({
+    origin: process.env.FRONTEND_URL || "http://localhost:5173", // Use env variable for flexibility
+    methods: ["GET", "POST", "PUT", "DELETE"], // Include all necessary methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allow specific headers
+    credentials: true, // Enable cookies/authentication if needed
+}));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 
-//connection to PDCA Database
+// Database Connection
 const db = mysql.createConnection({
-    host:"127.0.0.1",
-    user:"root",
-    password:"Kis766626@", //mysql root password
-    port:"3306", //mysql root port id 
-    database: "pdca_db", //mysql database name
+    host: "127.0.0.1",
+    user: "root",
+    password: "Kis766626@", // Replace with environment variable for security
+    port: "3306",
+    database: "pdca_db",
 });
 
 db.connect((err) => {
-    if (err){
-        console.error(`Error Connection ${err.stack}`);
+    if (err) {
+        console.error(`Database connection error: ${err.stack}`);
         return;
     }
-    console.log(`Connected as id ${db.threadId}`);
+    console.log(`Connected to database as id ${db.threadId}`);
 });
 
-//route to get SignUp Details
-app.get("/signup" , (req, res) => {
-   const signUp = "select id, first_name, last_name, email, contact, password From sign_up";
+// Routes
 
-   db.query(signUp, (err, results) =>{
-    if (err){
-        return res.status(500).json({error:"Database query failed"});
-    }
-    res.json(results);
-   });
-});
+// Get all SignUp details
+app.get("/signup", (req, res) => {
+    const signUpQuery = "SELECT id, first_name, last_name, email, contact, password FROM sign_up";
 
-//route to get SignUp details by ID
-app.get("/signup/:ID", (req,res)=>{
-    const {ID} = req.params;
-    const signUp = "Select id, first_name, last_name, email, contact, password From sign_up where id = ? ";
-
-    db.query(signUp, [ID], (err, result)=>{
-        if(err){
-            return res.status(500).json({message: "Database error", error:err});
+    db.query(signUpQuery, (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: "Database query failed", details: err });
         }
-
-        if (result.length === 0 ){
-            return res.status(404).json( {message: "No Result Found"})
-        }
-        res.status(200).json({singUp: result[0]});
+        res.json(results);
     });
 });
 
+// Get SignUp details by ID
+app.get("/signup/:ID", (req, res) => {
+    const { ID } = req.params;
+    const signUpQuery = "SELECT id, first_name, last_name, email, contact, password FROM sign_up WHERE id = ?";
 
-//route to add member by Post method
-app.post("/addmember", (req,res) => {
-    const{
-        first_name,
-        last_name,
-        email,
-        contact, 
-        password
-    } = req.body;
-    const error = [];
-
-    //validation query for Sign Up
-    if (!first_name) {
-        error.push({ field: "first_name", message: "First Name is required" });
-    }
-    if (!email) {
-        error.push({ field: "email", message: "Email is required" });
-    } else {
-        // Validate email format
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            error.push({
-                field: "email",
-                message: "Email format is invalid",
-            });
+    db.query(signUpQuery, [ID], (err, result) => {
+        if (err) {
+            return res.status(500).json({ message: "Database error", error: err });
         }
+        if (result.length === 0) {
+            return res.status(404).json({ message: "No Result Found" });
+        }
+        res.status(200).json(result[0]);
+    });
+});
+
+// Add a new member
+app.post("/addmember", (req, res) => {
+    const { first_name, last_name, email, contact, password } = req.body;
+    const errors = [];
+
+    // Validation
+    if (!first_name) errors.push({ field: "first_name", message: "First Name is required" });
+    if (!email) {
+        errors.push({ field: "email", message: "Email is required" });
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errors.push({ field: "email", message: "Invalid email format" });
     }
-    
+   
     if (!contact) {
-        error.push({ field: "contact", message: "Contact No. is required" });
+        errors.push({ field: "contact", message: "Contact No. is required" });
     } else {
-        // Validate contact number length
-        if (contact.length > 10) {
-            error.push({
-                field: "contact",
-                message: "Contact No. must not exceed 10 digits",
-            });
+        // Check if contact number is exactly 10 digits
+        if (contact.length !== 10) {
+            errors.push({ field: "contact", message: "Contact No. must be exactly 10 digits" });
         }
         // Ensure contact only contains digits
         if (!/^\d+$/.test(contact)) {
-            error.push({
-                field: "contact",
-                message: "Contact No. must contain only digits",
-            });
+            errors.push({ field: "contact", message: "Contact No. must contain only digits" });
         }
     }
     
     if (!password) {
-        error.push({ field: "password", message: "Password is required" });
-    } else {
-        // Check for password complexity
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).+$/;
-        if (!passwordRegex.test(password)) {
-            error.push({
-                field: "password",
-                message: "Password must contain at least one uppercase letter, one lowercase letter, and one special character"
-            });
-        }
+        errors.push({ field: "password", message: "Password is required" });
+    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).+$/.test(password)) {
+        errors.push({
+            field: "password",
+            message: "Password must contain at least one uppercase letter, one lowercase letter, and one special character"
+        });
     }
 
-    if(error.length > 0){
-        return res.status(400).json({error});
+    if (errors.length > 0) {
+        return res.status(400).json({ errors });
     }
 
-    const query = `INSERT INTO sign_up(first_name, last_name, email, contact, password)
-    VALUES(?,?,?,?,?)`;
+    const insertQuery = `
+        INSERT INTO sign_up (first_name, last_name, email, contact, password)
+        VALUES (?, ?, ?, ?, ?)
+    `;
 
-    db.query(
-        query,[
-            first_name,
-            last_name,
-            email,
-            contact,
-            password
-        ],
-
-        (err, result) => {
-            if(err){
-                return res.status(500).json({message: "Database error", error: err})
-            };
-            res.status(200).json({message:"Sign Up Successfully",
-                id: result.insertId
-            })
-        }
-    );
-});
-
-
-//Route to Delete Member by Post method
-app.post("/delete/:ID", (req, res) => {
-    const {ID} = req.params;
-
-    const DelMember = "delete From sign_up where id = ? ";
-
-    db.query(DelMember, [ID], (err, result) => {
+    db.query(insertQuery, [first_name, last_name, email, contact, password], (err, result) => {
         if (err) {
-            return res.status(500).json(`${message}: Database error, ${err}`);
+            return res.status(500).json({ message: "Database error", error: err });
         }
-
-        if (result.length ===0 ){
-            return res.status(404).json(`${message}: Member not deleted`)
-        }
-        res.status(200).json({message: "Deleted Successfully"});
+        res.status(201).json({ message: "Sign Up Successful", id: result.insertId });
     });
 });
 
+// Delete a member by ID
+app.delete("/delete/:ID", (req, res) => {
+    const { ID } = req.params;
+    const deleteQuery = "DELETE FROM sign_up WHERE id = ?";
 
-//Route to Update Member
-app.post("/update/:ID", (req, res) => {
-    const { ID } = req.params; // Extract ID from URL parameters
-    const { first_name, last_name, email, contact, password } = req.body; // Extract fields from request body
+    db.query(deleteQuery, [ID], (err, result) => {
+        if (err) {
+            return res.status(500).json({ message: "Database error", error: err });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Member not found or already deleted" });
+        }
+        res.status(200).json({ message: "Deleted Successfully" });
+    });
+});
 
-    // Validate ID
+// Update a member by ID
+app.put("/update/:ID", (req, res) => {
+    const { ID } = req.params;
+    const { first_name, last_name, email, contact, password } = req.body;
+
     if (!ID) {
         return res.status(400).json({ message: "ID is required in the URL." });
     }
 
-    // Ensure at least one field to update is provided
-    if (!first_name && !last_name && !email && !contact && !password) {
-        return res.status(400).json({ message: "No fields provided to update." });
-    }
-
-    // Validate email format if provided
-    if (email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            return res.status(400).json({ message: "Invalid email format." });
-        }
-    }
-
-    // Validate contact length if provided
-    if (contact) {
-        if (contact.length > 10) {
-            return res.status(400).json({ message: "Contact No. must not exceed 10 digits." });
-        }
-        if (!/^\d+$/.test(contact)) {
-            return res.status(400).json({ message: "Contact No. must contain only digits." });
-        }
-    }
-
-    // Build dynamic query to include only provided fields
-    let fieldsToUpdate = [];
-    let values = [];
+    const fieldsToUpdate = [];
+    const values = [];
 
     if (first_name) {
         fieldsToUpdate.push("first_name = ?");
@@ -225,28 +164,25 @@ app.post("/update/:ID", (req, res) => {
         values.push(password);
     }
 
-    // Join fields to create the SET clause of the SQL query
-    const setClause = fieldsToUpdate.join(", ");
-    const updateQuery = `UPDATE sign_up SET ${setClause} WHERE id = ?`;
-    values.push(ID); // Add ID as the last parameter
+    if (fieldsToUpdate.length === 0) {
+        return res.status(400).json({ message: "No fields provided to update." });
+    }
 
-    // Execute the query
+    const updateQuery = `UPDATE sign_up SET ${fieldsToUpdate.join(", ")} WHERE id = ?`;
+    values.push(ID);
+
     db.query(updateQuery, values, (err, result) => {
         if (err) {
             return res.status(500).json({ message: "Database error", error: err });
         }
-
-        // Check if any rows were updated
         if (result.affectedRows === 0) {
-            return res.status(404).json({ message: "Member not updated. ID not found." });
+            return res.status(404).json({ message: "Member not found or no updates made." });
         }
-
         res.status(200).json({ message: "Updated Successfully" });
     });
 });
 
-
 // Start the server
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
-  });
+});
