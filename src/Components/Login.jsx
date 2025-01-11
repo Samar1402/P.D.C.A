@@ -29,19 +29,19 @@ const Login = () => {
         {/* Login Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-white">Username</label>
+            <label className="block text-l font-medium text-white">Email/Contact No.</label>
             <input
               type="text"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full px-4 py-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500 outline-none"
               placeholder="Enter your username"
               required
             />
           </div>
           <div>
-            <label className="block text-white">Password</label>
+            <label className="block text-l font-medium text-white">Password</label>
             <input
               type="password"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full px-4 py-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500 outline-none"
               placeholder="Enter your password"
               required
             />

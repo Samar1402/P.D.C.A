@@ -24,36 +24,36 @@ const ForgetPswd = ({ onNavigate, username }) => {
 
         <form className="space-y-6">
           <div>
-            <label className="block mb-2 text-sm font-medium text-white">
+            <label className="block text-l font-medium text-white">
               Username
             </label>
             <input
               type="text"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full px-4 py-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500 outline-none"
               placeholder="Enter your Username"
               value={username} // Use the passed username value
               readOnly // Make the username field read-only
             />
           </div>
           <div>
-            <label className="block mb-2 text-sm font-medium text-white">
+            <label className="block text-l font-medium text-white">
               New Password
             </label>
             <input
               type="password"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full px-4 py-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500 outline-none"
               placeholder="Enter New Password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
           </div>
           <div>
-            <label className="block mb-2 text-sm font-medium text-white">
+            <label className="block text-l font-medium text-white">
               Confirm Password
             </label>
             <input
               type="password"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full px-4 py-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500 outline-none0"
               placeholder="Confirm Your Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
