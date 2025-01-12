@@ -18,9 +18,11 @@ import Forgetpswd from "./Components/Forgetpswd";
 import AffiliatedMembers from "./Components/AffiliatedMembers";
 import NonAffiliatedMembers from "./Components/NonAffiliatedMembers";
 import Dashboard from "./Components/Dashboard";
+import MemberEntryService from "./Components/MemberEntryService";
 
 function App() {
   return (
+    // <div><MemberEntryService /></div>
     <div className="flex flex-col min-h-screen">
       <Header />
       <Navbar />
