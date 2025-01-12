@@ -1,8 +1,16 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Clear authentication data (example: localStorage)
+    localStorage.removeItem("authToken");
+    // Redirect to login page
+    navigate("/login");
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row">
@@ -67,6 +75,16 @@ const Dashboard = () => {
         >
           {sidebarOpen ? "Close Menu" : "Open Menu"}
         </button>
+
+        {/* Logout Button */}
+        <div className="flex justify-end mb-4">
+          <button
+            onClick={handleLogout}
+            className="bg-red-600 text-white p-2 rounded hover:bg-red-700"
+          >
+            Logout
+          </button>
+        </div>
 
         <div className="bg-white shadow-md rounded p-4 mb-6">
           <h2 className="text-xl font-bold">Welcome, Samarjeet</h2>

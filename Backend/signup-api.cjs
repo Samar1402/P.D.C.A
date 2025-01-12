@@ -89,6 +89,7 @@ app.post("/addmember", (req, res) => {
         }
     }
     
+    
     if (!password) {
         errors.push({ field: "password", message: "Password is required" });
     } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).+$/.test(password)) {

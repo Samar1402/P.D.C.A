@@ -6,6 +6,8 @@ const Navbar = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
 
+
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -18,6 +20,7 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
 
   return (
     <nav className="bg-blue-200">
