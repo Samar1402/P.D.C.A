@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate hook
+import { useNavigate, useLocation } from "react-router-dom"; // Import useLocation
 import pdcalogo from "../images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,11 +11,17 @@ import {
 
 const Header = () => {
   const navigate = useNavigate(); // Initialize the navigate function
+  const location = useLocation(); // Get the current location
 
   // Handle login button click to navigate to the login page
   const handleLoginClick = () => {
     navigate("/login"); // Navigate to the login page when the button is clicked
   };
+
+  // Check if the current path is the dashboard route
+  if (location.pathname === "/dashboard") {
+    return null; // Do not render the header
+  }
 
   return (
     <header>
@@ -70,3 +76,4 @@ const Header = () => {
 };
 
 export default Header;
+
