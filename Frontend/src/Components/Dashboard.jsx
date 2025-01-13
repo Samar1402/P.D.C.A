@@ -42,9 +42,7 @@ const Dashboard = () => {
               Dashboard
             </button>
             <button
-              onClick={() =>
-                handleNavigate("/manage-committee", "ManageCommittee")
-              }
+              onClick={() => setActiveTab("ManageCommittee")}
               className={`block p-4 hover:bg-blue-700 rounded w-full text-left ${
                 activeTab === "ManageCommittee" ? "bg-blue-700" : ""
               }`}
@@ -68,9 +66,7 @@ const Dashboard = () => {
               Manage Matches
             </button>
             <button
-              onClick={() =>
-                handleNavigate("/statistics", "ManageNotifications")
-              }
+               onClick={() => setActiveTab("ManageNotifications")}
               className={`block p-4 hover:bg-blue-700 rounded w-full text-left ${
                 activeTab === "ManageNotifications" ? "bg-blue-700" : ""
               }`}
@@ -78,7 +74,7 @@ const Dashboard = () => {
               Manage Notifications
             </button>
             <button
-              onClick={() => handleNavigate("/settings", "ManageMedia")}
+              onClick={() => setActiveTab("ManageMedia")}
               className={`block p-4 hover:bg-blue-700 rounded w-full text-left ${
                 activeTab === "ManageMedia" ? "bg-blue-700" : ""
               }`}
@@ -86,7 +82,7 @@ const Dashboard = () => {
               Manage Media
             </button>
             <button
-              onClick={() => handleNavigate("/settings", "ManageContact")}
+            onClick={() => setActiveTab("ManageContact")}
               className={`block p-4 hover:bg-blue-700 rounded w-full text-left ${
                 activeTab === "ManageContact" ? "bg-blue-700" : ""
               }`}
@@ -98,7 +94,7 @@ const Dashboard = () => {
             <div className="flex justify-center">
               <button
                 onClick={handleLogout}
-                className="bg-red-600 text-white p-2 rounded hover:bg-red-700 "
+                className="bg-red-600 text-white p-2 rounded-2xl hover:bg-red-700 w-48 mt-8 "
               >
                 Logout
               </button>
@@ -125,11 +121,13 @@ const Dashboard = () => {
         <DashboardTabs
           tabs={[
             "Dashboard",
+            "ManageCommittee",
             "ManageMembers",
             "ManageMatches",
             "ManageNotifications",
             "ManageMedia",
             "ManageContact",
+            
           ]}
           activeTab={activeTab}
         >

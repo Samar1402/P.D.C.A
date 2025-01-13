@@ -1,13 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+
+
 
 const Navbar = () => {
+
+  const location = useLocation();
+
   if (location.pathname === "/dashboard") {
     return null; // Do not render the header
   }
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+ 
 
   useEffect(() => {
     const handleClickOutside = (event) => {

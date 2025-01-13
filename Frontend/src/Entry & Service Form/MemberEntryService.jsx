@@ -10,35 +10,35 @@ const MemberEntryService = () => {
   };
 
   return (
-    <div className="flex flex-col items-center bg-blue-100 min-h-screen">
-      <header className="bg-blue-950 shadow-md rounded-md p-6 w-full flex justify-end items-center px-48">
-        <div>
-          <button
-            onClick={() => handleFormSelection("entry")}
-            className={`${
-              activeForm === "entry"
-                ? "bg-blue-600"
-                : "bg-blue-400 transform hover:scale-105 transition-all duration-300"
-            } text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-300 mr-2`}
-          >
-            Entry Form
-          </button>
-          <button
-            onClick={() => handleFormSelection("service")}
-            className={`${
-              activeForm === "service"
-                ? "bg-blue-600"
-                : "bg-blue-400 transform hover:scale-105 transition-all duration-300"
-            } text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-300`}
-          >
-            Service Form
-          </button>
-        </div>
-      </header>
+    <div className="flex flex-col items-center mt-8 px-4 sm:px-8">
+      {/* Buttons aligned to the right */}
+      <div className="flex justify-center sm:justify-end w-full mb-4">
+        <button
+          onClick={() => handleFormSelection("entry")}
+          className={`${
+            activeForm === "entry"
+              ? "bg-blue-600"
+              : "bg-blue-400 transform hover:scale-105 transition-all duration-300"
+          } text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-300 mr-2`}
+        >
+          Entry Form
+        </button>
+        <button
+          onClick={() => handleFormSelection("service")}
+          className={`${
+            activeForm === "service"
+              ? "bg-blue-600"
+              : "bg-blue-400 transform hover:scale-105 transition-all duration-300"
+          } text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-300`}
+        >
+          Service Form
+        </button>
+      </div>
 
-      <div className="bg-white shadow-md rounded-md p-6 px-48 w-[70%] mt-8 flex-1">
+      {/* Form centered */}
+      <div className="bg-white shadow-md rounded-md p-6 w-full max-w-3xl mt-11">
         <div className="mb-6">
-          <h3 className="text-2xl font-bold text-center text-gray-800">
+          <h3 className="text-xl sm:text-2xl font-bold text-center text-gray-800">
             {activeForm === "entry"
               ? "Member Entry Form"
               : "Member Service Form"}
@@ -46,40 +46,26 @@ const MemberEntryService = () => {
         </div>
         {activeForm === "entry" ? (
           <div className="space-y-4">
-            <div className="flex items-center space-x-4">
-              <label className="block text-sm font-medium text-black w-72 border-b-2 border-black pb-1">
-                Club Name
-              </label>
-              <input
-                type="text"
-                className="flex-1 border border-black border-b-2 h-[25px] outline-none px-3 pb-1 text-md border-x-0 border-t-0"
-                placeholder="Enter name"
-              />
-            </div>
-            <br />
-            <div className="flex items-center space-x-4">
-              <label className="block text-sm font-medium text-black w-72 border-b-2 border-black pb-1">
-                President
-              </label>
-              <input
-                type="text"
-                className="flex-1 border border-black border-b-2 h-[25px] outline-none px-3 pb-1 text-md border-x-0 border-t-0"
-                placeholder="Enter president"
-              />
-            </div>
-            <br />
-            <div className="flex items-center space-x-4">
-              <label className="block text-sm font-medium text-black w-72 border-b-2 border-black pb-1">
-                Secretary
-              </label>
-              <input
-                type="text"
-                className="flex-1 border border-black border-b-2 h-[25px] outline-none px-3 pb-1 text-md border-x-0 border-t-0"
-                placeholder="Enter secretary"
-              />
-            </div>
-            <br />
-            <div className="flex justify-around mt-4">
+            {[
+              { label: "Club Name", placeholder: "Enter name" },
+              { label: "President", placeholder: "Enter president" },
+              { label: "Secretary", placeholder: "Enter secretary" },
+            ].map(({ label, placeholder }) => (
+              <div
+                key={label}
+                className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4"
+              >
+                <label className="block text-sm font-medium text-black w-full sm:w-48 border-b-2 border-black pb-1">
+                  {label}
+                </label>
+                <input
+                  type="text"
+                  className="flex-1 border border-black border-b-2 h-[30px] outline-none px-3 pb-1 text-sm border-x-0 border-t-0 w-full"
+                  placeholder={placeholder}
+                />
+              </div>
+            ))}
+            <div className="flex justify-center mt-4 space-x-4">
               <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-300 transform hover:scale-105 transition-all duration-300">
                 <FontAwesomeIcon icon={faCheck} className="mr-2" />
                 Submit
@@ -91,31 +77,20 @@ const MemberEntryService = () => {
             </div>
           </div>
         ) : (
-          <div className="space-y-4 -mx-20">
-            <div className="flex items-center space-x-4">
-              <input
-                type="text"
-                className="flex-1 border border-black border-b-2 h-[25px] outline-none px-3 pb-1 border-x-0 border-t-0"
-                placeholder="Search by ID"
-              />
-              <input
-                type="text"
-                className="flex-1 border border-black border-b-2 h-[25px] outline-none px-3 pb-1 border-x-0 border-t-0"
-                placeholder="Search by Club Name"
-              />
-              <input
-                type="text"
-                className="flex-1 border border-black border-b-2 h-[25px] outline-none px-3 pb-1 border-x-0 border-t-0"
-                placeholder="Search by PresidentName"
-              />
-              <input
-                type="text"
-                className="flex-1 border border-black border-b-2 h-[25px] outline-none px-3 pb-1 border-x-0 border-t-0"
-                placeholder="Search by Secretary"
-              />
+          <div>
+            <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4 w-full">
+              {["Search by Club Name", "Search by President Name", "Search by Secretary"].map(
+                (placeholder) => (
+                  <input
+                    key={placeholder}
+                    type="text"
+                    className="flex-1 border border-black border-b-2 h-[30px] outline-none px-3 pb-1 text-sm border-x-0 border-t-0 w-full"
+                    placeholder={placeholder}
+                  />
+                )
+              )}
             </div>
-            <br />
-            <div className="flex justify-around mt-4">
+            <div className="flex justify-center mt-4 space-x-4">
               <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-300 transform hover:scale-105 transition-all duration-300">
                 <FontAwesomeIcon icon={faSearch} className="mr-2" />
                 Search
@@ -133,3 +108,4 @@ const MemberEntryService = () => {
 };
 
 export default MemberEntryService;
+

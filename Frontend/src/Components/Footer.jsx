@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import pdcalogo from "../images/logo.png";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 
@@ -22,9 +22,12 @@ const FooterSection = ({ title, links }) => (
 );
 
 const Footer = () => {
+  const location = useLocation();
+
   if (location.pathname === "/dashboard") {
     return null; // Do not render the header
   }
+
   const sections = [
     {
       title: "About",
@@ -55,6 +58,9 @@ const Footer = () => {
       ],
     },
   ];
+
+   
+
 
   return (
     <footer className="bg-blue-950 text-white py-8 px-4">
