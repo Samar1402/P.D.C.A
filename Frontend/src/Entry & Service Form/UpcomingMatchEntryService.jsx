@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faBroom, faSearch } from "@fortawesome/free-solid-svg-icons";
 
-const MemberEntryService = () => {
+const UpcomingMatchEntryService = () => {
   const [activeForm, setActiveForm] = useState("entry");
 
   const handleFormSelection = (form) => {
@@ -40,29 +40,52 @@ const MemberEntryService = () => {
         <div className="mb-6">
           <h3 className="text-xl sm:text-2xl font-bold text-center text-gray-800">
             {activeForm === "entry"
-              ? "Member Entry Form"
-              : "Member Service Form"}
+              ? "Upcoming Match Entry Form"
+              : "Upcoming Match Service Form"}
           </h3>
         </div>
         {activeForm === "entry" ? (
           <div className="space-y-4">
             {[
-              { label: "Club Name", placeholder: "Enter name" },
-              { label: "President", placeholder: "Enter president" },
-              { label: "Secretary", placeholder: "Enter secretary" },
-            ].map(({ label, placeholder }) => (
-              <div
-                key={label}
-                className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4"
-              >
-                <label className="block text-sm font-medium text-black w-full sm:w-48 border-black pb-1">
+              {
+                label: "Enter Clubs Name",
+                inputs: [
+                  { placeholder: "1st Club Name" },
+                  { placeholder: "2nd Club Name" },
+                ],
+              },
+              {
+                label: "Enter Date and Time",
+                inputs: [
+                  { type: "date", placeholder: "Select Date" },
+                  { type: "time", placeholder: "Select Time" },
+                ],
+              },
+              {
+                label: "Place",
+                inputs: [
+                  { placeholder: "Enter Place" },
+                ],
+              },
+            ].map(({ label, inputs }, index) => (
+              <div key={label} className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                <label className="block text-sm font-medium text-black w-full sm:w-48  border-black pb-1">
                   {label}
                 </label>
-                <input
-                  type="text"
-                  className="flex-1 border border-black border-b-2 h-[30px] outline-none px-3 pb-1 text-sm border-x-0 border-t-0 w-full"
-                  placeholder={placeholder}
-                />
+                <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4 w-full">
+                  {inputs.map(({ type = "text", placeholder }, inputIndex) => (
+                    <React.Fragment key={inputIndex}>
+                      {inputIndex === 1 && label === "Enter Clubs Name" && (
+                        <span className="text-black font-bold mx-2">VS</span>
+                      )}
+                      <input
+                        type={type}
+                        className="flex-1 border border-black border-b-2 h-[30px] outline-none px-3 pb-1 text-sm border-x-0 border-t-0 w-full"
+                        placeholder={placeholder}
+                      />
+                    </React.Fragment>
+                  ))}
+                </div>
               </div>
             ))}
             <div className="flex justify-center mt-4 space-x-4">
@@ -79,16 +102,14 @@ const MemberEntryService = () => {
         ) : (
           <div>
             <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4 w-full">
-              {["Search by Club Name", "Search by President Name", "Search by Secretary"].map(
-                (placeholder) => (
-                  <input
-                    key={placeholder}
-                    type="text"
-                    className="flex-1 border border-black border-b-2 h-[30px] outline-none px-3 pb-1 text-sm border-x-0 border-t-0 w-full"
-                    placeholder={placeholder}
-                  />
-                )
-              )}
+              {["Search by Date", "Search by Place"].map((placeholder) => (
+                <input
+                  key={placeholder}
+                  type="text"
+                  className="flex-1 border border-black border-b-2 h-[30px] outline-none px-3 pb-1 text-sm border-x-0 border-t-0 w-full"
+                  placeholder={placeholder}
+                />
+              ))}
             </div>
             <div className="flex justify-center mt-4 space-x-4">
               <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-300 transform hover:scale-105 transition-all duration-300">
@@ -107,5 +128,4 @@ const MemberEntryService = () => {
   );
 };
 
-export default MemberEntryService;
-
+export default UpcomingMatchEntryService;

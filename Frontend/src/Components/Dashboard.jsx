@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import DashboardTabs from "./DashboardTabs";
 import DashboardItem from "./DashboardItem";
 import MemberEntryService from "../Entry & Service Form/MemberEntryService";
+import MatchEntryService from "../Entry & Service Form/MatchEntryService";
+import NotificationEntryService from "../Entry & Service Form/NotificationEntryService";
+
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -93,8 +96,8 @@ const Dashboard = () => {
           {{
             Dashboard: <DashboardItem />,
             ManageMembers: <MemberEntryService />,
-            ManageMatches: <div>Manage Matches Content</div>,
-            ManageNotifications: <div>Manage Notifications Content</div>,
+            ManageMatches: <MatchEntryService />,
+            ManageNotifications: <NotificationEntryService />,
             ManageMedia: <div>Manage Media Content</div>,
             ManageContact: <div>Manage Contact Content</div>,
           }}
