@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const db = mysql.createConnection({
   host: "127.0.0.1",
   user: "root",
-  password: "Samar@1402", // MySQL root password
+  password: "Kis766626@", // MySQL root password
   port: "3306", // MySQL root port id
   database: "pdca_db", // MySQL database name
 });
@@ -284,6 +284,201 @@ app.post("/login", (req, res) => {
     }
   });
 });
+
+
+// Route to get UPCOMING MATCH Details
+app.get("/upcomingMatch", (req, res) => {
+  const upComingMatch =
+    "SELECT id,first_team, second_team, date, time, location FROM upcoming_match";
+
+  db.query(upComingMatch, (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: "Database query failed" });
+    }
+    res.json(results);
+  });
+});
+
+// Route to get UPCOMING MATCH Details by ID
+app.get("/upcomingMatch/:ID", (req, res) => {
+  const { ID } = req.params;
+  const upComingMatch =
+    "SELECT id,first_team, second_team, date, time, location FROM upcoming_match WHERE id = ?";
+
+  db.query(upComingMatch, [ID], (err, result) => {
+    if (err) {
+      return res.status(500).json({ message: "Database error", error: err });
+    }
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: "No Result Found" });
+    }
+    res.status(200).json({ upComingMatch: result[0] });
+  });
+});
+
+
+// Route to ADD UPCOMING MATCH by POST method
+app.post("/addmatch", (req, res) => {
+  const { first_team, second_team, date, time, location } = req.body;
+  const errors = [];
+
+  // Validate first_team
+  if (!first_team || typeof first_team !== "string" || first_team.trim() === "") {
+    errors.push({ field: "first_team", message: "First team name is required and must be a non-empty string." });
+  }
+
+  // Validate second_team
+  if (!second_team || typeof second_team !== "string" || second_team.trim() === "") {
+    errors.push({ field: "second_team", message: "Second team name is required and must be a non-empty string." });
+  }
+
+  // Ensure teams are not the same
+  if (first_team && second_team && first_team.trim() === second_team.trim()) {
+    errors.push({ field: "teams", message: "First and second teams cannot be the same." });
+  }
+
+  // Validate date
+  if (!date || isNaN(Date.parse(date))) {
+    errors.push({ field: "date", message: "A valid date is required." });
+  }
+
+  // Validate time (e.g., HH:MM format)
+  const timeRegex = /^([0-1]\d|2[0-3]):([0-5]\d)$/;
+  if (!time || !timeRegex.test(time)) {
+    errors.push({ field: "time", message: "A valid time (HH:MM) is required." });
+  }
+
+  // Validate location
+  if (!location || typeof location !== "string" || location.trim() === "") {
+    errors.push({ field: "location", message: "Location is required and must be a non-empty string." });
+  }
+
+  // If there are validation errors, return them
+  if (errors.length > 0) {
+    return res.status(400).json({ errors });
+  }
+
+  // Query to insert match data
+  const query = `INSERT INTO upcoming_match(first_team, second_team, date, time, location) VALUES (?, ?, ?, ?, ?)`;
+
+  db.query(
+    query,
+    [first_team.trim(), second_team.trim(), date, time, location.trim()],
+    (err, result) => {
+      if (err) {
+        return res.status(500).json({ message: "Database error", error: err });
+      }
+      res.status(200).json({ message: "Match added successfully", id: result.insertId });
+    }
+  );
+});
+
+
+// Route to Delete UPCOMING MATCH DETAIL by POST method
+app.post("/deletematch/:ID", (req, res) => {
+  const { ID } = req.params;
+
+  const DelUpComingMatch = "DELETE FROM upcoming_match WHERE id = ? ";
+
+  db.query(DelUpComingMatch, [ID], (err, result) => {
+    if (err) {
+      return res.status(500).json({ message: `Database error, ${err}` });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Record  not deleted" });
+    }
+    res.status(200).json({ message: "Deleted Successfully" });
+  });
+});
+
+
+
+// Route to Update UPCOMING MATCH DETAIL
+app.post("/updatematch/:ID", (req, res) => {
+  const { ID } = req.params; // Extract ID from URL parameters
+  const { first_team, second_team, date, time, location } = req.body; // Extract fields from request body
+
+  // Validate ID
+  if (!ID) {
+    return res.status(400).json({ message: "ID is required in the URL." });
+  }
+
+  // Ensure at least one field to update is provided
+  if (!first_team && !second_team && !date && !time && !location) {
+    return res.status(400).json({ message: "No fields provided to update." });
+  }
+
+  // Validation to ensure no leading spaces in fields
+  const validateNoLeadingSpaces = (field, fieldName) => {
+    if (field && field.trimStart() !== field) {
+      return `${fieldName} should not have leading spaces.`;
+    }
+    return null;
+  };
+
+  const validations = [
+    validateNoLeadingSpaces(first_team, "First Team"),
+    validateNoLeadingSpaces(second_team, "Second Team"),
+    validateNoLeadingSpaces(date, "Date"),
+    validateNoLeadingSpaces(time, "Time"),
+    validateNoLeadingSpaces(location, "Location"),
+  ].filter(Boolean); // Remove null entries
+
+  if (validations.length > 0) {
+    return res.status(400).json({ message: validations.join(" ") });
+  }
+
+  // Build dynamic query to include only provided fields
+  let fieldsToUpdate = [];
+  let values = [];
+
+  if (first_team) {
+    fieldsToUpdate.push("first_team = ?");
+    values.push(first_team.trim());
+  }
+  if (second_team) {
+    fieldsToUpdate.push("second_team = ?");
+    values.push(second_team.trim());
+  }
+  if (date) {
+    fieldsToUpdate.push("date = ?");
+    values.push(date.trim());
+  }
+  if (time) {
+    fieldsToUpdate.push("time = ?");
+    values.push(time.trim());
+  }
+  if (location) {
+    fieldsToUpdate.push("location = ?");
+    values.push(location.trim());
+  }
+
+  // Join fields to create the SET clause of the SQL query
+  const setClause = fieldsToUpdate.join(", ");
+  const updateQuery = `UPDATE upcoming_match SET ${setClause} WHERE id = ?`;
+  values.push(ID); // Add ID as the last parameter
+
+  // Execute the query
+  db.query(updateQuery, values, (err, result) => {
+    if (err) {
+      return res.status(500).json({ message: "Database error", error: err });
+    }
+
+    // Check if any rows were updated
+    if (result.affectedRows === 0) {
+      return res
+        .status(404)
+        .json({ message: "Match not updated. ID not found." });
+    }
+
+    res.status(200).json({ message: "Updated Successfully" });
+  });
+});
+
+
+
 
 // Start the server
 app.listen(port, () => {
