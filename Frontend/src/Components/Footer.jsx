@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import pdcalogo from "../images/logo.png";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 
@@ -20,7 +20,7 @@ const FooterSection = ({ title, links }) => (
     </div>
   </div>
 );
-
+const location = useLocation();
 const Footer = () => {
   if (location.pathname === "/dashboard") {
     return null; // Do not render the header
