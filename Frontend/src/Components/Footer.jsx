@@ -22,9 +22,12 @@ const FooterSection = ({ title, links }) => (
 );
 const location = useLocation();
 const Footer = () => {
+  const location = useLocation();
+
   if (location.pathname === "/dashboard") {
     return null; // Do not render the header
   }
+
   const sections = [
     {
       title: "About",
@@ -55,6 +58,9 @@ const Footer = () => {
       ],
     },
   ];
+
+   
+
 
   return (
     <footer className="bg-blue-950 text-white py-8 px-4">

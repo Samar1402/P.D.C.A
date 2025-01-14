@@ -25,80 +25,36 @@ const Dashboard = () => {
       <aside
         className={`${
           sidebarOpen ? "block" : "hidden"
-        } md:block w-full md:w-64 bg-blue-900 text-white min-h-screen md:min-h-0 fixed md:relative z-10`}
+        } md:block w-64 bg-blue-900 text-white min-h-screen fixed md:relative z-10 transition-all`}
       >
         <div className="p-4 text-center">
           <h1 className="text-2xl font-bold">Cricket Admin</h1>
         </div>
         <nav className="mt-2">
           <div className="space-y-2">
-            {/* Sidebar Buttons */}
-            <button
-              onClick={() => setActiveTab("Dashboard")}
-              className={`block p-4 hover:bg-blue-700 rounded w-full text-left ${
-                activeTab === "Dashboard" ? "bg-blue-700" : ""
-              }`}
-            >
-              Dashboard
-            </button>
-            <button
-              onClick={() =>
-                handleNavigate("/manage-committee", "ManageCommittee")
-              }
-              className={`block p-4 hover:bg-blue-700 rounded w-full text-left ${
-                activeTab === "ManageCommittee" ? "bg-blue-700" : ""
-              }`}
-            >
-              Manage Management Committee
-            </button>
-            <button
-              onClick={() => setActiveTab("ManageMembers")}
-              className={`block p-4 hover:bg-blue-700 rounded w-full text-left ${
-                activeTab === "ManageMembers" ? "bg-blue-700" : ""
-              }`}
-            >
-              Manage Members
-            </button>
-            <button
-              onClick={() => setActiveTab("ManageMatches")}
-              className={`block p-4 hover:bg-blue-700 rounded w-full text-left ${
-                activeTab === "ManageMatches" ? "bg-blue-700" : ""
-              }`}
-            >
-              Manage Matches
-            </button>
-            <button
-              onClick={() =>
-                handleNavigate("/statistics", "ManageNotifications")
-              }
-              className={`block p-4 hover:bg-blue-700 rounded w-full text-left ${
-                activeTab === "ManageNotifications" ? "bg-blue-700" : ""
-              }`}
-            >
-              Manage Notifications
-            </button>
-            <button
-              onClick={() => handleNavigate("/settings", "ManageMedia")}
-              className={`block p-4 hover:bg-blue-700 rounded w-full text-left ${
-                activeTab === "ManageMedia" ? "bg-blue-700" : ""
-              }`}
-            >
-              Manage Media
-            </button>
-            <button
-              onClick={() => handleNavigate("/settings", "ManageContact")}
-              className={`block p-4 hover:bg-blue-700 rounded w-full text-left ${
-                activeTab === "ManageContact" ? "bg-blue-700" : ""
-              }`}
-            >
-              Manage Contact
-            </button>
-
-            {/* Logout Button */}
+            {[
+              { name: "Dashboard", label: "Dashboard" },
+              { name: "ManageCommittee", label: "Manage Management Committee" },
+              { name: "ManageMembers", label: "Manage Members" },
+              { name: "ManageMatches", label: "Manage Matches" },
+              { name: "ManageNotifications", label: "Manage Notifications" },
+              { name: "ManageMedia", label: "Manage Media" },
+              { name: "ManageContact", label: "Manage Contact" },
+            ].map((tab) => (
+              <button
+                key={tab.name}
+                onClick={() => setActiveTab(tab.name)}
+                className={`block p-4 hover:bg-blue-700 rounded w-full text-left ${
+                  activeTab === tab.name ? "bg-blue-700" : ""
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
             <div className="flex justify-center">
               <button
                 onClick={handleLogout}
-                className="bg-red-600 text-white p-2 rounded hover:bg-red-700 "
+                className="bg-red-600 text-white p-2 rounded-2xl hover:bg-red-700 w-48 mt-8"
               >
                 Logout
               </button>
@@ -109,7 +65,7 @@ const Dashboard = () => {
 
       {/* Main Content */}
       <main
-        className={`flex-1 p-4 h-full ${
+        className={`flex-1 p-4 ${
           sidebarOpen ? "ml-64" : "ml-0"
         } transition-all duration-300`}
       >
@@ -125,6 +81,7 @@ const Dashboard = () => {
         <DashboardTabs
           tabs={[
             "Dashboard",
+            "ManageCommittee",
             "ManageMembers",
             "ManageMatches",
             "ManageNotifications",
@@ -148,3 +105,5 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+

@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef, useLocation } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
-  const location = useLocation();
   if (location.pathname === "/dashboard") {
     return null; // Do not render the header
   }
