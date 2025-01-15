@@ -53,12 +53,17 @@ const NotificationEntryService = () => {
                 className="flex-1 border border-black border-b-2 h-[30px] outline-none px-3 pb-1 text-sm border-x-0 border-t-0 w-full"
                 placeholder="Enter new notification"
               />
-            </div><br />
-            <div className="flex flex-col items-start space-y-2">
+            </div>
+            <br />
+            <div className="relative flex-1 w-full">
               <input
                 type="file"
-                className="flex-1 border border-black h-[30px] outline-none text-sm w-full"
+                accept="application/pdf"
+                className="absolute inset-0 opacity-0 cursor-pointer"
               />
+              <div className="border border-black h-[30px] text-sm text-gray-400 px-3 flex items-center">
+                Choose a PDF file to attach....
+              </div>
             </div>
             <div className="flex justify-center mt-4 space-x-4">
               <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-300 transform hover:scale-105 transition-all duration-300">
