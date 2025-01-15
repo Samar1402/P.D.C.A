@@ -7,6 +7,7 @@ import MatchEntryService from "../Entry & Service Form/MatchEntryService";
 import NotificationEntryService from "../Entry & Service Form/NotificationEntryService";
 import MediaEntryService from "../Entry & Service Form/MediaEntryService";
 import ContactEntryService from "../Entry & Service Form/ContactEntryService";
+import CommitteeEntryService from "../Entry & Service Form/CommitteeEntryService";
 
 
 const Dashboard = () => {
@@ -97,6 +98,7 @@ const Dashboard = () => {
         >
           {{
             Dashboard: <DashboardItem />,
+            ManageCommittee : <CommitteeEntryService />,
             ManageMembers: <MemberEntryService />,
             ManageMatches: <MatchEntryService />,
             ManageNotifications: <NotificationEntryService />,
