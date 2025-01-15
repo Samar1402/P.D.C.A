@@ -57,7 +57,7 @@ const MediaEntryService = () => {
                 </div>
               </div>
               {/* Buttons centered */}
-              <div className="flex justify-center mt-4 space-x-4 mx-auto">
+              <div className="flex justify-center mt-4 space-x-4">
                 <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-300 transform hover:scale-105 transition-all duration-300">
                   <FontAwesomeIcon icon={faCheck} className="mr-2" />
                   Submit

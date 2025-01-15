@@ -6,6 +6,7 @@ import MemberEntryService from "../Entry & Service Form/MemberEntryService";
 import MatchEntryService from "../Entry & Service Form/MatchEntryService";
 import NotificationEntryService from "../Entry & Service Form/NotificationEntryService";
 import MediaEntryService from "../Entry & Service Form/MediaEntryService";
+import ContactEntryService from "../Entry & Service Form/ContactEntryService";
 
 
 const Dashboard = () => {
@@ -100,7 +101,7 @@ const Dashboard = () => {
             ManageMatches: <MatchEntryService />,
             ManageNotifications: <NotificationEntryService />,
             ManageMedia: <MediaEntryService />,
-            ManageContact: <div>Manage Contact Content</div>,
+            ManageContact: <ContactEntryService />,
           }}
         </DashboardTabs>
       </main>
