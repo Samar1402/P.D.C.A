@@ -44,7 +44,7 @@ const MediaEntryService = () => {
         </div>
         {activeForm === "entry" ? (
           <div className="space-y-4">
-            <div className="flex flex-col items-start space-y-2">
+            <div className="flex flex-col space-y-2">
               {/* File input */}
               <div className="relative flex-1 w-full">
                 <input
