@@ -20,7 +20,7 @@ const FooterSection = ({ title, links }) => (
     </div>
   </div>
 );
-const location = useLocation();
+// const location = useLocation();
 const Footer = () => {
   const location = useLocation();
 
@@ -58,9 +58,6 @@ const Footer = () => {
       ],
     },
   ];
-
-   
-
 
   return (
     <footer className="bg-blue-950 text-white py-8 px-4">

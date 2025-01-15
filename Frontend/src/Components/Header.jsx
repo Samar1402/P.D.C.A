@@ -11,7 +11,7 @@ import {
 
 const Header = () => {
   const navigate = useNavigate(); // Initialize the navigate function
-  const location = useLocation(); // Get the current location
+  // const location = useLocation(); // Get the current location
 
   // Handle login button click to navigate to the login page
   const handleLoginClick = () => {
