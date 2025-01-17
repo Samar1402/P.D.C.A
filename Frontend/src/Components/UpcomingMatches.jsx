@@ -1,44 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import MatchCard from "./MatchCard";
 
 const UpcomingMatches = () => {
-  // Match data
-  const [matches] = useState([
-    {
-      id: 1,
-      team1: "India",
-      team2: "Pakistan",
-      date: "2025-01-15",
-      time: "14:00",
-      venue: "Wankhede Stadium, Mumbai",
-    },
-    {
-      id: 2,
-      team1: "Australia",
-      team2: "England",
-      date: "2025-01-18",
-      time: "18:00",
-      venue: "Sydney Cricket Ground, Sydney",
-    },
-    {
-      id: 3,
-      team1: "South Africa",
-      team2: "New Zealand",
-      date: "2025-01-20",
-      time: "16:00",
-      venue: "Newlands, Cape Town",
-    },
-  ]);
+  const [matches, setMatches] = useState([]);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchMatches = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/upcomingMatch",
+          {
+            withCredentials: true,
+          }
+        );
+        setMatches(response.data || []);
+        setError("");
+      } catch (err) {
+        console.error("Error fetching matches:", err);
+        setError("Failed to load matches. Please try again later.");
+      }
+    };
+
+    fetchMatches();
+  }, []);
 
   return (
     <div className="bg-gray-50 min-h-screen p-4 sm:p-6 lg:p-8">
-      <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-center text-gray-800 mb-4 sm:mb-6">
-        Upcoming Matches
-      </h1>
+      {error && <p className="text-red-500 text-center mb-4">{error}</p>}
       <div className="max-w-4xl mx-auto space-y-4">
-        {matches.map((match) => (
-          <MatchCard key={match.id} match={match} />
-        ))}
+        {matches.length > 0 ? (
+          matches.map((match) => <MatchCard key={match.id} match={match} />)
+        ) : (
+          <p className="text-center text-gray-500">No matches available.</p>
+        )}
       </div>
     </div>
   );

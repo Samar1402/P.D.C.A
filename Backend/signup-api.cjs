@@ -390,9 +390,13 @@ app.post("/addmatch", (req, res) => {
       if (err) {
         return res.status(500).json({ message: "Database error", error: err });
       }
-      res
-        .status(200)
-        .json({ message: "Match added successfully", id: result.insertId });
+      res.status(200);
+      setTimeout(() => {
+        res.json({
+          message: "Match added successfully",
+          id: result.insertId,
+        });
+      }, 500);
     }
   );
 });
@@ -491,6 +495,315 @@ app.post("/updatematch/:ID", (req, res) => {
       return res
         .status(404)
         .json({ message: "Match not updated. ID not found." });
+    }
+
+    res.status(200).json({ message: "Updated Successfully" });
+  });
+});
+
+// Route to get MATCH RESULT Details
+app.get("/result", (req, res) => {
+  const matchResult =
+    "SELECT id, first_team, second_team, first_team_score, second_team_score, winning_team, winning_team_batsone, batsone_score, winning_team_batstwo, batstwo_score, winning_team_bowlerone, bowlerone_wicket FROM match_result";
+
+  db.query(matchResult, (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: "Database query failed" });
+    }
+    res.json(results);
+  });
+});
+
+// Route to get MATCH RESULT Details by ID
+app.get("/result/:ID", (req, res) => {
+  const { ID } = req.params;
+  const matchResult =
+    "SELECT id, first_team, second_team, first_team_score, second_team_score, winning_team, winning_team_batsone, batsone_score, winning_team_batstwo, batstwo_score, winning_team_bowlerone, bowlerone_wicket FROM match_result WHERE id = ?";
+
+  db.query(matchResult, [ID], (err, result) => {
+    if (err) {
+      return res.status(500).json({ message: "Database error", error: err });
+    }
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: "No Result Found" });
+    }
+    res.status(200).json({ matchResult: result[0] });
+  });
+});
+
+//ROUTE TO ADD MATCH RESULT DETAILS BY POST METHOD
+app.post("/addresult", (req, res) => {
+  const {
+    first_team,
+    second_team,
+    first_team_score,
+    second_team_score,
+    winning_team,
+    winning_team_batsone,
+    batsone_score,
+    winning_team_batstwo,
+    batstwo_score,
+    winning_team_bowlerone,
+    bowlerone_wicket,
+  } = req.body;
+
+  const errors = {};
+
+  // Validation checks
+  if (
+    !first_team ||
+    typeof first_team !== "string" ||
+    first_team.trim() === ""
+  ) {
+    errors.first_team =
+      "First team is required and must be a non-empty string.";
+  }
+
+  if (
+    !second_team ||
+    typeof second_team !== "string" ||
+    second_team.trim() === ""
+  ) {
+    errors.second_team =
+      "Second team is required and must be a non-empty string.";
+  }
+
+  if (first_team === second_team) {
+    errors.teams = "First team and second team cannot be the same.";
+  }
+
+  if (!String(first_team_score) || first_team_score < 0) {
+    errors.first_team_score =
+      "First team score must be a non-negative integer.";
+  }
+
+  if (!String(second_team_score) || second_team_score < 0) {
+    errors.second_team_score =
+      "Second team score must be a non-negative integer.";
+  }
+
+  if (
+    !winning_team ||
+    typeof winning_team !== "string" ||
+    winning_team.trim() === ""
+  ) {
+    errors.winning_team =
+      "Winning team is required and must be a non-empty string.";
+  }
+
+  if (winning_team !== first_team && winning_team !== second_team) {
+    errors.winning_team =
+      "Winning team must be either the first team or the second team.";
+  }
+
+  if (
+    winning_team_batsone &&
+    (typeof winning_team_batsone !== "string" ||
+      winning_team_batsone.trim() === "")
+  ) {
+    errors.winning_team_batsone =
+      "Winning team batsman one must be a valid string if provided.";
+  }
+
+  if (
+    batsone_score !== undefined &&
+    (!String(batsone_score) || batsone_score < 0)
+  ) {
+    errors.batsone_score =
+      "Batsman one score must be a non-negative integer if provided.";
+  }
+
+  if (
+    winning_team_batstwo &&
+    (typeof winning_team_batstwo !== "string" ||
+      winning_team_batstwo.trim() === "")
+  ) {
+    errors.winning_team_batstwo =
+      "Winning team batsman two must be a valid string if provided.";
+  }
+
+  if (
+    batstwo_score !== undefined &&
+    (!String(batstwo_score) || batstwo_score < 0)
+  ) {
+    errors.batstwo_score =
+      "Batsman two score must be a non-negative integer if provided.";
+  }
+
+  if (
+    winning_team_bowlerone &&
+    (typeof winning_team_bowlerone !== "string" ||
+      winning_team_bowlerone.trim() === "")
+  ) {
+    errors.winning_team_bowlerone =
+      "Winning team bowler one must be a valid string if provided.";
+  }
+
+  if (
+    bowlerone_wicket !== undefined &&
+    (!String(bowlerone_wicket) || bowlerone_wicket < 0)
+  ) {
+    errors.bowlerone_wicket =
+      "Bowler one wicket count must be a non-negative integer if provided.";
+  }
+
+  // If there are validation errors, return them
+  if (Object.keys(errors).length > 0) {
+    return res.status(400).json({ status: "error", errors });
+  }
+
+  // Query to insert match data
+  const query = `
+    INSERT INTO match_result (
+      first_team, second_team, first_team_score, second_team_score, 
+      winning_team, winning_team_batsone, batsone_score, 
+      winning_team_batstwo, batstwo_score, 
+      winning_team_bowlerone, bowlerone_wicket
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+
+  const queryParams = [
+    first_team.trim(),
+    second_team.trim(),
+    first_team_score,
+    second_team_score,
+    winning_team.trim(),
+    winning_team_batsone ? winning_team_batsone.trim() : null,
+    batsone_score || null,
+    winning_team_batstwo ? winning_team_batstwo.trim() : null,
+    batstwo_score || null,
+    winning_team_bowlerone ? winning_team_bowlerone.trim() : null,
+    bowlerone_wicket || null,
+  ];
+
+  db.query(query, queryParams, (err, result) => {
+    if (err) {
+      console.error("Database error:", err);
+      return res
+        .status(500)
+        .json({ status: "error", message: "Database error", error: err });
+    }
+    res.status(200).json({
+      status: "success",
+      message: "Result added successfully",
+      id: result.insertId,
+    });
+  });
+});
+
+// Route to Delete MATCH RESULT DETAIL by POST method
+app.post("/deleteresult/:ID", (req, res) => {
+  const { ID } = req.params;
+
+  const DelUpComingMatch = "DELETE FROM match_result WHERE id = ? ";
+
+  db.query(DelUpComingMatch, [ID], (err, result) => {
+    if (err) {
+      return res.status(500).json({ message: `Database error, ${err}` });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Record  not deleted" });
+    }
+    res.status(200).json({ message: "Deleted Successfully" });
+  });
+});
+
+// Route to Update  MATCH RESULT DETAIL
+app.post("/updateresult/:ID", (req, res) => {
+  const { ID } = req.params; // Extract ID from URL parameters
+  const {
+    first_team,
+    second_team,
+    first_team_score,
+    second_team_score,
+    winning_team,
+    winning_team_batsone,
+    batsone_score,
+    winning_team_batstwo,
+    batstwo_score,
+    winning_team_bowlerone,
+    bowlerone_wicket,
+  } = req.body; // Extract fields from request body
+
+  // Validate ID
+  if (!ID || isNaN(ID)) {
+    return res
+      .status(400)
+      .json({ message: "Invalid or missing ID in the URL." });
+  }
+
+  // Collect fields to update dynamically
+  const fieldsToUpdate = [];
+  const values = [];
+
+  if (first_team) {
+    fieldsToUpdate.push("first_team = ?");
+    values.push(first_team);
+  }
+  if (second_team) {
+    fieldsToUpdate.push("second_team = ?");
+    values.push(second_team);
+  }
+  if (first_team_score) {
+    fieldsToUpdate.push("first_team_score = ?");
+    values.push(first_team_score);
+  }
+  if (second_team_score) {
+    fieldsToUpdate.push("second_team_score = ?");
+    values.push(second_team_score);
+  }
+  if (winning_team) {
+    fieldsToUpdate.push("winning_team = ?");
+    values.push(winning_team);
+  }
+  if (winning_team_batsone) {
+    fieldsToUpdate.push("winning_team_batsone = ?");
+    values.push(winning_team_batsone);
+  }
+  if (batsone_score) {
+    fieldsToUpdate.push("batsone_score = ?");
+    values.push(batsone_score);
+  }
+  if (winning_team_batstwo) {
+    fieldsToUpdate.push("winning_team_batstwo = ?");
+    values.push(winning_team_batstwo);
+  }
+  if (batstwo_score) {
+    fieldsToUpdate.push("batstwo_score = ?");
+    values.push(batstwo_score);
+  }
+  if (winning_team_bowlerone) {
+    fieldsToUpdate.push("winning_team_bowlerone = ?");
+    values.push(winning_team_bowlerone);
+  }
+  if (bowlerone_wicket) {
+    fieldsToUpdate.push("bowlerone_wicket = ?");
+    values.push(bowlerone_wicket);
+  }
+
+  // Ensure at least one field to update is provided
+  if (fieldsToUpdate.length === 0) {
+    return res.status(400).json({ message: "No fields provided to update." });
+  }
+
+  // Construct the SQL query
+  const setClause = fieldsToUpdate.join(", ");
+  const updateQuery = `UPDATE match_result SET ${setClause} WHERE id = ?`;
+  values.push(ID); // Add ID as the last parameter
+
+  // Execute the query
+  db.query(updateQuery, values, (err, result) => {
+    if (err) {
+      return res.status(500).json({ message: "Database error", error: err });
+    }
+
+    // Check if any rows were updated
+    if (result.affectedRows === 0) {
+      return res
+        .status(404)
+        .json({ message: "No record found with the provided ID." });
     }
 
     res.status(200).json({ message: "Updated Successfully" });

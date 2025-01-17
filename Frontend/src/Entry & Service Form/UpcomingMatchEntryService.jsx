@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faBroom, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faBroom } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 const UpcomingMatchEntryService = () => {
   const [activeForm, setActiveForm] = useState("entry");
   const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  const [entryError, setEntryError] = useState(""); // Error state for entry form
+  const [serviceError, setServiceError] = useState(""); // Error state for service form
   const [matchData, setMatchData] = useState({
     first_team: "",
     second_team: "",
@@ -14,16 +15,40 @@ const UpcomingMatchEntryService = () => {
     time: "",
     location: "",
   });
+  const [fetchedMatches, setFetchedMatches] = useState([]);
 
-  // Update matchData state on input change
+  // Fetch matches when the activeForm is "service"
+  useEffect(() => {
+    if (activeForm === "service") {
+      fetchMatches();
+    }
+  }, [activeForm]);
+
+  // Fetching matches from the backend
+  const fetchMatches = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/upcomingMatch", {
+        withCredentials: true,
+      });
+      setFetchedMatches(response.data || []);
+      setServiceError(""); // Reset service error if data is fetched successfully
+    } catch (err) {
+      console.error("Error fetching matches: ", err);
+      setServiceError(
+        "Failed to fetch upcoming matches. Please try again later."
+      );
+    }
+  };
+
+  // Handling input change in the match entry form
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setMatchData({ ...matchData, [name]: value });
   };
 
+  // Handling form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Basic form validation
     if (
       !matchData.first_team ||
       !matchData.second_team ||
@@ -31,7 +56,7 @@ const UpcomingMatchEntryService = () => {
       !matchData.time ||
       !matchData.location
     ) {
-      setError("All fields are required.");
+      setEntryError("All fields are required."); // Show entry form specific error
       return;
     }
 
@@ -39,15 +64,11 @@ const UpcomingMatchEntryService = () => {
       const response = await axios.post(
         "http://localhost:3000/addmatch",
         matchData,
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
-
       if (response.data && response.data.message) {
         setMessage(response.data.message);
-        setError("");
-        // Clear the form
+        setEntryError(""); // Clear entry form error on success
         setMatchData({
           first_team: "",
           second_team: "",
@@ -55,12 +76,13 @@ const UpcomingMatchEntryService = () => {
           time: "",
           location: "",
         });
+        setTimeout(() => setMessage(""), 3000); // Clear message after 3 seconds
       } else {
-        setError("Unexpected response from server.");
+        setEntryError("Unexpected response from server.");
       }
     } catch (err) {
       console.error("Error: ", err);
-      setError(
+      setEntryError(
         err.response?.data?.message || "Failed to add match. Try again later."
       );
     }
@@ -68,7 +90,6 @@ const UpcomingMatchEntryService = () => {
 
   return (
     <div className="flex flex-col items-center mt-8 px-4 sm:px-8">
-      {/* Buttons aligned to the right */}
       <div className="flex justify-center sm:justify-end w-full mb-4">
         <button
           onClick={() => setActiveForm("entry")}
@@ -92,16 +113,16 @@ const UpcomingMatchEntryService = () => {
         </button>
       </div>
 
-      {/* Form centered */}
-      <div className="bg-white shadow-md rounded-md p-6 w-full max-w-3xl mt-11">
+      <div className="bg-white shadow-md rounded-md p-6 w-full max-w-3xl mt-6">
         <h3 className="text-xl sm:text-2xl font-bold text-center text-gray-800 mb-6">
           {activeForm === "entry"
             ? "Upcoming Match Entry Form"
             : "Upcoming Match Service Form"}
         </h3>
 
-        {activeForm === "entry" && (
+        {activeForm === "entry" ? (
           <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Input Fields for Match Entry */}
             <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
               <label className="block text-sm font-medium text-black w-full sm:w-48">
                 Enter Team Name
@@ -159,7 +180,7 @@ const UpcomingMatchEntryService = () => {
               />
             </div>
 
-            {error && <p className="text-red-500 text-sm">{error}</p>}
+            {entryError && <p className="text-red-500 text-sm">{entryError}</p>}
             {message && <p className="text-green-500 text-sm">{message}</p>}
 
             <div className="flex justify-center mt-4 space-x-4">
@@ -188,6 +209,60 @@ const UpcomingMatchEntryService = () => {
               </button>
             </div>
           </form>
+        ) : (
+          <div>
+            {serviceError && (
+              <p className="text-red-500 text-sm">{serviceError}</p>
+            )}
+            {/* <p>{activeForm}</p> */}
+            {fetchedMatches.length > 0 ? (
+              <table className="min-w-full table-auto text-left border-collapse mt-4 rounded-lg overflow-hidden shadow-lg">
+                <thead className="bg-blue-600 text-white">
+                  <tr>
+                    <th className="border px-4 py-2 text-sm font-semibold">
+                      First Team
+                    </th>
+                    <th className="border px-4 py-2 text-sm font-semibold">
+                      Second Team
+                    </th>
+                    <th className="border px-4 py-2 text-sm font-semibold">
+                      Date
+                    </th>
+                    <th className="border px-4 py-2 text-sm font-semibold">
+                      Time
+                    </th>
+                    <th className="border px-4 py-2 text-sm font-semibold">
+                      Location
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {fetchedMatches.map((match, index) => (
+                    <tr
+                      key={index}
+                      className={`${
+                        index % 2 === 0 ? "bg-gray-100" : "bg-white"
+                      } hover:bg-blue-50 transition-colors duration-200`}
+                    >
+                      <td className="border px-4 py-2 text-sm">
+                        {match.first_team}
+                      </td>
+                      <td className="border px-4 py-2 text-sm">
+                        {match.second_team}
+                      </td>
+                      <td className="border px-4 py-2 text-sm">{match.date}</td>
+                      <td className="border px-4 py-2 text-sm">{match.time}</td>
+                      <td className="border px-4 py-2 text-sm">
+                        {match.location}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>No upcoming matches found.</p>
+            )}
+          </div>
         )}
       </div>
     </div>

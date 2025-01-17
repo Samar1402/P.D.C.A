@@ -5,6 +5,9 @@ import DashboardItem from "./DashboardItem";
 import MemberEntryService from "../Entry & Service Form/MemberEntryService";
 import MatchEntryService from "../Entry & Service Form/MatchEntryService";
 import NotificationEntryService from "../Entry & Service Form/NotificationEntryService";
+import MediaEntryService from "../Entry & Service Form/MediaEntryService";
+import ContactEntryService from "../Entry & Service Form/ContactEntryService";
+import CommitteeEntryService from "../Entry & Service Form/CommitteeEntryService";
 
 
 const Dashboard = () => {
@@ -95,11 +98,12 @@ const Dashboard = () => {
         >
           {{
             Dashboard: <DashboardItem />,
+            ManageCommittee : <CommitteeEntryService />,
             ManageMembers: <MemberEntryService />,
             ManageMatches: <MatchEntryService />,
             ManageNotifications: <NotificationEntryService />,
-            ManageMedia: <div>Manage Media Content</div>,
-            ManageContact: <div>Manage Contact Content</div>,
+            ManageMedia: <MediaEntryService />,
+            ManageContact: <ContactEntryService />,
           }}
         </DashboardTabs>
       </main>

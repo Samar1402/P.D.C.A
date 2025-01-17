@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faBroom, faSearch } from "@fortawesome/free-solid-svg-icons";
 
-const NotificationEntryService = () => {
+const ContactEntryService = () => {
   const [activeForm, setActiveForm] = useState("entry");
 
   const handleFormSelection = (form) => {
@@ -40,51 +40,60 @@ const NotificationEntryService = () => {
         <div className="mb-6">
           <h3 className="text-xl sm:text-2xl font-bold text-center text-gray-800">
             {activeForm === "entry"
-              ? "Notification Entry Form"
-              : "Notification Service Form"}
+              ? "Conatct Entry Form"
+              : "Conatct Service Form"}
           </h3>
         </div>
         {activeForm === "entry" ? (
           <div className="space-y-4">
-            <div className="flex flex-col items-start space-y-2">
-              {/* <label className="text-sm font-medium text-black">Enter New Notification</label> */}
+          {[
+            { label: "Add Address", placeholder: "Enter address" },
+            { label: "Add Email", placeholder: "Enter email" },
+            { label: "Add Contact No.", placeholder: "Enter contact number" },
+          ].map(({ label, placeholder }) => (
+            <div
+              key={label}
+              className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2"
+            >
+              <label className="block text-sm font-medium text-black w-full sm:w-36">
+                {label}
+              </label>
               <input
                 type="text"
                 className="flex-1 border border-black border-b-2 h-[30px] outline-none px-3 pb-1 text-sm border-x-0 border-t-0 w-full"
-                placeholder="Enter new notification"
+                placeholder={placeholder}
               />
             </div>
-            <br />
-            <div className="relative flex-1 w-full">
-              <input
-                type="file"
-                accept="application/pdf"
-                className="absolute inset-0 opacity-0 cursor-pointer"
-              />
-              <div className="border border-black h-[30px] text-sm text-gray-400 px-3 flex items-center">
-                Choose a PDF file to attach....
-              </div>
-            </div>
-            <div className="flex justify-center mt-4 space-x-4">
-              <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-300 transform hover:scale-105 transition-all duration-300">
-                <FontAwesomeIcon icon={faCheck} className="mr-2" />
-                Submit
-              </button>
-              <button className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:ring-2 focus:ring-red-300 transform hover:scale-105 transition-all duration-300">
-                <FontAwesomeIcon icon={faBroom} className="mr-2" />
-                Reset
-              </button>
-            </div>
+          ))}
+          <div className="flex justify-center mt-4 space-x-4">
+            <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-300 transform hover:scale-105 transition-all duration-300">
+              <FontAwesomeIcon icon={faCheck} className="mr-2" />
+              Submit
+            </button>
+            <button className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:ring-2 focus:ring-red-300 transform hover:scale-105 transition-all duration-300">
+              <FontAwesomeIcon icon={faBroom} className="mr-2" />
+              Reset
+            </button>
           </div>
+        </div>        
         ) : (
           <div>
-            <div className="flex justify-center w-full">
-              <input
-                type="text"
-                className="flex-1 border border-black border-b-2 h-[30px] outline-none px-3 pb-1 text-sm border-x-0 border-t-0 w-full"
-                placeholder="Search by date"
-              />
-            </div>
+            {[
+              { placeholder: "Modify Address" },
+              { placeholder: "Modify Email" },
+              { placeholder: "Modify Contact No." },
+            ].map(({ placeholder }) => (
+              <div
+                key={placeholder}
+                className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4 w-full mb-6"
+              >
+                <input
+                  type="text"
+                  className="flex-1 border border-black border-b-2 h-[30px] outline-none px-3 pb-1 text-sm border-x-0 border-t-0 w-full"
+                  placeholder={placeholder}
+                />
+              </div>
+            ))}
             <div className="flex justify-center mt-4 space-x-4">
               <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-300 transform hover:scale-105 transition-all duration-300">
                 <FontAwesomeIcon icon={faSearch} className="mr-2" />
@@ -102,4 +111,4 @@ const NotificationEntryService = () => {
   );
 };
 
-export default NotificationEntryService;
+export default ContactEntryService;
