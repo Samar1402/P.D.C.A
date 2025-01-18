@@ -15,6 +15,18 @@ const UpcomingMatchEntryService = () => {
     time: "",
     location: "",
   });
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  const formatTime = (timeString) => {
+    const [hours, minutes] = timeString.split(":");
+    const date = new Date();
+    date.setHours(hours);
+    date.setMinutes(minutes);
+    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  };
   const [fetchedMatches, setFetchedMatches] = useState([]);
 
   // Fetch matches when the activeForm is "service"
@@ -250,8 +262,12 @@ const UpcomingMatchEntryService = () => {
                       <td className="border px-4 py-2 text-sm">
                         {match.second_team}
                       </td>
-                      <td className="border px-4 py-2 text-sm">{match.date}</td>
-                      <td className="border px-4 py-2 text-sm">{match.time}</td>
+                      <td className="border px-4 py-2 text-sm">
+                        {formatDate(match.date)}
+                      </td>
+                      <td className="border px-4 py-2 text-sm">
+                        {formatTime(match.time)}
+                      </td>
                       <td className="border px-4 py-2 text-sm">
                         {match.location}
                       </td>

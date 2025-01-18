@@ -9,7 +9,6 @@ import MediaEntryService from "../Entry & Service Form/MediaEntryService";
 import ContactEntryService from "../Entry & Service Form/ContactEntryService";
 import CommitteeEntryService from "../Entry & Service Form/CommitteeEntryService";
 
-
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -20,10 +19,10 @@ const Dashboard = () => {
     navigate("/login");
   };
 
-  const handleNavigate = (path, tab) => {
-    setActiveTab(tab); // Update the active tab state
-    navigate(path); // Navigate after updating the tab state
-  };
+  // const handleNavigate = (path, tab) => {
+  //   setActiveTab(tab); // Update the active tab state
+  //   navigate(path); // Navigate after updating the tab state
+  // };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row">
@@ -98,7 +97,7 @@ const Dashboard = () => {
         >
           {{
             Dashboard: <DashboardItem />,
-            ManageCommittee : <CommitteeEntryService />,
+            ManageCommittee: <CommitteeEntryService />,
             ManageMembers: <MemberEntryService />,
             ManageMatches: <MatchEntryService />,
             ManageNotifications: <NotificationEntryService />,
@@ -112,5 +111,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-
