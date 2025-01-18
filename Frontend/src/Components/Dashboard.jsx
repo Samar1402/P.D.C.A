@@ -19,18 +19,11 @@ const Dashboard = () => {
     navigate("/login");
   };
 
-  // const handleNavigate = (path, tab) => {
-  //   setActiveTab(tab); // Update the active tab state
-  //   navigate(path); // Navigate after updating the tab state
-  // };
-
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row">
+    <div className="min-h-screen bg-gray-100 flex">
       {/* Sidebar */}
       <aside
-        className={`${
-          sidebarOpen ? "block" : "hidden"
-        } md:block w-64 bg-blue-900 text-white min-h-screen fixed md:relative z-10 transition-all`}
+        className={`w-64 bg-blue-900 text-white h-screen fixed z-10 overflow-y-auto`}
       >
         <div className="p-4 text-center">
           <h1 className="text-2xl font-bold">Cricket Admin</h1>
@@ -69,11 +62,7 @@ const Dashboard = () => {
       </aside>
 
       {/* Main Content */}
-      <main
-        className={`flex-1 p-4 ${
-          sidebarOpen ? "ml-64" : "ml-0"
-        } transition-all duration-300`}
-      >
+      <main className={`flex-1 p-4 ml-64 transition-all duration-300`}>
         {/* Mobile Toggle Button */}
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}

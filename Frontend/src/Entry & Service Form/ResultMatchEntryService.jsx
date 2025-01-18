@@ -36,7 +36,7 @@ const ResultMatchEntryService = () => {
       </div>
 
       {/* Form centered */}
-      <div className="bg-white shadow-md rounded-md p-6 w-full max-w-3xl mt-11">
+      <div className="bg-white shadow-md rounded-md p-6 w-full max-w-3xl mt-4">
         <div className="mb-6">
           <h3 className="text-xl sm:text-2xl font-bold text-center text-gray-800">
             {activeForm === "entry"
