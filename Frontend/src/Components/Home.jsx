@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Cricket from "./../images/backg.jpg";
+
+
 
 const NotificationCard = ({ title, date, match, pdfUrl }) => (
   <a
@@ -32,7 +35,7 @@ const NotificationSection = ({ title, link, data }) => (
   <section className="m-4">
     <Link
       to={link}
-      className="text-3xl font-semibold p-4 text-red-800 hover:underline"
+      className="text-3xl p-4 text-white hover:underline "
     >
       {title}
     </Link>
@@ -124,15 +127,20 @@ const Home = () => {
   };
 
   return (
-    <div className="overflow-x-hidden relative">
-      <div className="relative -z-10 w-full mt-6">
+    <div className="overflow-x-hidden relative bg-cover bg-center"
+    style={{
+      backgroundImage: `url(${Cricket})`,
+      backgroundSize: "100% 100%",
+      backgroundRepeat: "no-repeat",
+    }}>
+      <div className="relative w-full mt-6 ">
         <Slider {...settings}>
           {carouselImages.map((image, index) => (
             <div key={index}>
               <img
                 src={image}
                 alt={`carousel-${index}`}
-                className="w-[90%] mx-auto h-[28rem] object-fill"
+                className="w-[90%] mx-auto h-[28rem] object-fill rounded-3xl"
               />
             </div>
           ))}

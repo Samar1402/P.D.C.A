@@ -55,7 +55,7 @@ function Contact() {
             <div className="mb-3">
               <h5 className="text-xl font-semibold mb-2 text-red-500">Address:</h5>
               <p className="text-gray-500">
-                45-C, Near Sahyog Hospital, Patliputra
+              Pushpanjali Complex 45-C, Near Sahyog Hospital, Patliputra
                 <br />
                 <span>Colony, Patna-800013</span>
               </p>

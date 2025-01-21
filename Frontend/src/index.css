@@ -5,6 +5,10 @@
 
 @layer base {
     .font-outline-3 {
-      -webkit-text-stroke: 1px rgb(234, 206, 206);
+      -webkit-text-stroke: 1px rgba(234, 15, 15, 0.621);
+    }
+    .font-outline-4 {
+      -webkit-text-stroke: 1px rgb(22, 21, 21);
     }
 }
+
