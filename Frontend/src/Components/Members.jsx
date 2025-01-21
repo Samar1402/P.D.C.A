@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import AffiliatedMembers from "./AffiliatedMembers";
 import NonAffiliatedMembers from "./NonAffiliatedMembers";
+import Bg from "./../images/div2.jpg"
 
 const MembersPage = () => {
   const [activeTab, setActiveTab] = useState("affiliated");
 
   return (
-    <div className="bg-blue-50 min-h-screen p-4">
+    <div className="bg-blue-50 min-h-screen p-4"
+    >
       <div className="flex justify-center space-x-4">
         <button
           onClick={() => setActiveTab("affiliated")}

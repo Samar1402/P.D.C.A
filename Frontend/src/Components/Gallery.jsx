@@ -10,6 +10,7 @@ import Pic8 from "/gallery/pic8.jpeg";
 import Pic9 from "/gallery/pic9.jpeg";
 import Pic10 from "/gallery/pic10.jpeg";
 import Pic11 from "/gallery/pic11.jpeg";
+import Cricket from "./../images/abt.jpg";
 
 const images = [
   Pic1,
@@ -53,21 +54,33 @@ const Gallery = () => {
   };
 
   return (
-    <div className="p-4 sm:p-8 lg:p-20 mx-4 sm:mx-8 flex justify-center items-center flex-col">
+    <div className="relative p-4 sm:p-8 lg:p-20 mx-4 sm:mx-8 flex justify-center items-center flex-col">
+      {/* Background blur */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: `url(${Cricket})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          filter: "blur(7px)", // This will blur the background
+          zIndex: -1, // Ensures background is behind the content
+        }}
+      ></div>
+
       <h1
-        className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-10 text-black uppercase  text-center font-serif 
-        tracking-wide  font-outline-3"
+        className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-10 text-black uppercase text-center font-serif 
+        tracking-wide font-outline-3 z-10"
       >
         Gallery
       </h1>
       <div
         id="main"
-        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 z-10"
       >
         {currentImages.map((image, index) => (
           <div
             key={index}
-            className="bg-gray-200 rounded-lg overflow-hidden shadow-md cursor-pointer w-full h-64 transform transition duration-200 ease-in-out hover:scale-105 hover:shadow-lg"
+            className="bg-gray-200 rounded-lg overflow-hidden shadow-md cursor-pointer w-full h-64 transform transition duration-200 ease-in-out hover:scale-105 hover:shadow-lg z-10"
           >
             <img
               src={image}
@@ -79,7 +92,7 @@ const Gallery = () => {
         ))}
       </div>
 
-      <div className="flex justify-center items-center mt-4">
+      <div className="flex justify-center items-center mt-4 z-10">
         <button
           onClick={prevPage}
           disabled={currentPage === 1}

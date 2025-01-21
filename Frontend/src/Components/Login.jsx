@@ -4,6 +4,7 @@ import { faSignInAlt, faKey } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import cricketer from "../images/cricketer.png";
 import axios from "axios";
+import Cricket from "./../images/abt.jpg";
 
 const Login = () => {
   const [value, setValue] = useState({
@@ -78,7 +79,12 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-white px-4 sm:px-6 lg:px-8">
+    <div className="flex items-center justify-center min-h-screen bg-white px-4 sm:px-6 lg:px-8"
+      style={{
+            backgroundImage: `url(${Cricket})`,
+            backgroundSize: "100% 100%",
+            backgroundRepeat: "no-repeat",
+          }}>
       <div className="w-full max-w-md p-8 sm:p-10 bg-blue-950 shadow-lg rounded-xl">
         <div className="flex items-center justify-center space-x-4 mb-6">
           <h2 className="text-3xl font-bold text-center text-white">Login</h2>

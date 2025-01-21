@@ -1,5 +1,6 @@
 import React from "react";
 import { ChevronDoubleRightIcon } from "@heroicons/react/20/solid";
+import Cricket from "./../images/bgimg.jpg";
 
 const notifications = [
   { text: "BCCI ODMS rules for seasons 2025-2026", href: "/pdfs/Cricket.pdf" },
@@ -21,7 +22,12 @@ const notifications = [
 
 const Notification = () => {
   return (
-    <div className="bg-blue-50 min-h-screen p-4 sm:p-8 md:p-16">
+    <div className="bg-blue-50 min-h-screen p-4 sm:p-8 md:p-16"
+    style={{
+          backgroundImage: `url(${Cricket})`,
+          backgroundSize: "100% 130%",
+          backgroundRepeat: "no-repeat",
+        }}>
       <h1 className="text-center bg-blue-500 text-white p-2 font-bold text-lg sm:text-xl md:text-2xl tracking-wider font-serif max-w-4xl mx-auto border-b-0">
         BCCI Notification
       </h1>
