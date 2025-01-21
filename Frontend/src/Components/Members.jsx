@@ -28,7 +28,7 @@ const MembersPage = () => {
               : "text-gray-600 hover:text-gray-800"
           }`}
         >
-          NON-AFFILIATED MEMBERS
+          ASSOCIATED MEMBERS
         </button>
       </div>
 

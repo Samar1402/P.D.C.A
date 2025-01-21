@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faBroom } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faBroom, faTrash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 const ResultMatchEntryService = () => {
@@ -43,13 +43,12 @@ const ResultMatchEntryService = () => {
 
   const handleSubmit = async () => {
     // Validation logic
+    console.log("Data to be sent:", matchResultData); // Log the data before sending
     try {
       const response = await axios.post(
         "http://localhost:3000/addresult",
         matchResultData,
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
 
       if (response.status === 200) {
@@ -96,6 +95,27 @@ const ResultMatchEntryService = () => {
 
   const handleFormSelection = (form) => {
     setActiveForm(form);
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/deleteresult/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (response.status === 200) {
+        alert("Match result deleted successfully!");
+        setServiceData(serviceData.filter((item) => item.id !== id)); // Update local state
+      } else {
+        alert("Failed to delete match result.");
+      }
+    } catch (error) {
+      console.error("Error deleting match result:", error);
+      alert("An error occurred while deleting the match result.");
+    }
   };
 
   const entryFormFields = [
@@ -242,6 +262,7 @@ const ResultMatchEntryService = () => {
                     <th className="py-2 px-4 text-left">Match</th>
                     <th className="py-2 px-4 text-left">Scores</th>
                     <th className="py-2 px-4 text-left">Details</th>
+                    <th className="py-2 px-4 text-left">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -273,6 +294,15 @@ const ResultMatchEntryService = () => {
                             {item.bowlerone_wicket}
                           </li>
                         </ul>
+                      </td>
+                      <td className="py-2 px-4">
+                        <button
+                          onClick={() => handleDelete(item.id)}
+                          className="flex items-center space-x-2 py-1 px-4 bg-red-500 hover:bg-red-600 text-white rounded-md focus:outline-none"
+                        >
+                          <FontAwesomeIcon icon={faTrash} />
+                          <span>Delete</span>
+                        </button>
                       </td>
                     </tr>
                   ))}
