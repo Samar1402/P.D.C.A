@@ -43,13 +43,12 @@ const ResultMatchEntryService = () => {
 
   const handleSubmit = async () => {
     // Validation logic
+    console.log('Data to be sent:', matchResultData); // Log the data before sending
     try {
       const response = await axios.post(
         "http://localhost:3000/addresult",
         matchResultData,
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
 
       if (response.status === 200) {
@@ -99,66 +98,18 @@ const ResultMatchEntryService = () => {
   };
 
   const entryFormFields = [
-    {
-      label: "First Team",
-      name: "first_team",
-      placeholder: "Enter first team name",
-    },
-    {
-      label: "Second Team",
-      name: "second_team",
-      placeholder: "Enter second team name",
-    },
-    {
-      label: "First Team Score",
-      name: "first_team_score",
-      placeholder: "Enter first team score",
-    },
-    {
-      label: "Second Team Score",
-      name: "second_team_score",
-      placeholder: "Enter second team score",
-    },
-    {
-      label: "Winning Team",
-      name: "winning_team",
-      placeholder: "Enter winning team",
-    },
-    {
-      label: "Match Description",
-      name: "match_description",
-      placeholder: "Enter match description (optional)",
-    },
-    {
-      label: "Winning Team Batsman One",
-      name: "winning_team_batsone",
-      placeholder: "Enter winning team batsman one",
-    },
-    {
-      label: "Batsman One Score",
-      name: "batsone_score",
-      placeholder: "Enter batsman one score",
-    },
-    {
-      label: "Winning Team Batsman Two",
-      name: "winning_team_batstwo",
-      placeholder: "Enter winning team batsman two",
-    },
-    {
-      label: "Batsman Two Score",
-      name: "batstwo_score",
-      placeholder: "Enter batsman two score",
-    },
-    {
-      label: "Winning Team Bowler One",
-      name: "winning_team_bowlerone",
-      placeholder: "Enter winning team bowler one",
-    },
-    {
-      label: "Bowler One Wicket Count",
-      name: "bowlerone_wicket",
-      placeholder: "Enter bowler one wicket count (wickets/runs(overs))",
-    },
+    { label: "First Team", name: "first_team", placeholder: "Enter first team name" },
+    { label: "Second Team", name: "second_team", placeholder: "Enter second team name" },
+    { label: "First Team Score", name: "first_team_score", placeholder: "Enter first team score" },
+    { label: "Second Team Score", name: "second_team_score", placeholder: "Enter second team score" },
+    { label: "Winning Team", name: "winning_team", placeholder: "Enter winning team" },
+    { label: "Match Description", name: "match_description", placeholder: "Enter match description (optional)" },
+    { label: "Winning Team Batsman One", name: "winning_team_batsone", placeholder: "Enter winning team batsman one" },
+    { label: "Batsman One Score", name: "batsone_score", placeholder: "Enter batsman one score" },
+    { label: "Winning Team Batsman Two", name: "winning_team_batstwo", placeholder: "Enter winning team batsman two" },
+    { label: "Batsman Two Score", name: "batstwo_score", placeholder: "Enter batsman two score" },
+    { label: "Winning Team Bowler One", name: "winning_team_bowlerone", placeholder: "Enter winning team bowler one" },
+    { label: "Bowler One Wicket Count", name: "bowlerone_wicket", placeholder: "Enter bowler one wicket count (wickets/runs(overs))" },
   ];
 
   return (
@@ -197,10 +148,7 @@ const ResultMatchEntryService = () => {
         {activeForm === "entry" ? (
           <div className="space-y-4">
             {entryFormFields.map(({ label, name, placeholder }, index) => (
-              <div
-                key={index}
-                className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4"
-              >
+              <div key={index} className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
                 <label className="block text-sm font-medium text-black w-full sm:w-48 pb-1">
                   {label}
                 </label>
