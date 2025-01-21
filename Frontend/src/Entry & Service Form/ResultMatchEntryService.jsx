@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faBroom } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faBroom, faTrash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 const ResultMatchEntryService = () => {
@@ -43,7 +43,7 @@ const ResultMatchEntryService = () => {
 
   const handleSubmit = async () => {
     // Validation logic
-    console.log('Data to be sent:', matchResultData); // Log the data before sending
+    console.log("Data to be sent:", matchResultData); // Log the data before sending
     try {
       const response = await axios.post(
         "http://localhost:3000/addresult",
@@ -97,19 +97,88 @@ const ResultMatchEntryService = () => {
     setActiveForm(form);
   };
 
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/deleteresult/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (response.status === 200) {
+        alert("Match result deleted successfully!");
+        setServiceData(serviceData.filter((item) => item.id !== id)); // Update local state
+      } else {
+        alert("Failed to delete match result.");
+      }
+    } catch (error) {
+      console.error("Error deleting match result:", error);
+      alert("An error occurred while deleting the match result.");
+    }
+  };
+
   const entryFormFields = [
-    { label: "First Team", name: "first_team", placeholder: "Enter first team name" },
-    { label: "Second Team", name: "second_team", placeholder: "Enter second team name" },
-    { label: "First Team Score", name: "first_team_score", placeholder: "Enter first team score" },
-    { label: "Second Team Score", name: "second_team_score", placeholder: "Enter second team score" },
-    { label: "Winning Team", name: "winning_team", placeholder: "Enter winning team" },
-    { label: "Match Description", name: "match_description", placeholder: "Enter match description (optional)" },
-    { label: "Winning Team Batsman One", name: "winning_team_batsone", placeholder: "Enter winning team batsman one" },
-    { label: "Batsman One Score", name: "batsone_score", placeholder: "Enter batsman one score" },
-    { label: "Winning Team Batsman Two", name: "winning_team_batstwo", placeholder: "Enter winning team batsman two" },
-    { label: "Batsman Two Score", name: "batstwo_score", placeholder: "Enter batsman two score" },
-    { label: "Winning Team Bowler One", name: "winning_team_bowlerone", placeholder: "Enter winning team bowler one" },
-    { label: "Bowler One Wicket Count", name: "bowlerone_wicket", placeholder: "Enter bowler one wicket count (wickets/runs(overs))" },
+    {
+      label: "First Team",
+      name: "first_team",
+      placeholder: "Enter first team name",
+    },
+    {
+      label: "Second Team",
+      name: "second_team",
+      placeholder: "Enter second team name",
+    },
+    {
+      label: "First Team Score",
+      name: "first_team_score",
+      placeholder: "Enter first team score",
+    },
+    {
+      label: "Second Team Score",
+      name: "second_team_score",
+      placeholder: "Enter second team score",
+    },
+    {
+      label: "Winning Team",
+      name: "winning_team",
+      placeholder: "Enter winning team",
+    },
+    {
+      label: "Match Description",
+      name: "match_description",
+      placeholder: "Enter match description (optional)",
+    },
+    {
+      label: "Winning Team Batsman One",
+      name: "winning_team_batsone",
+      placeholder: "Enter winning team batsman one",
+    },
+    {
+      label: "Batsman One Score",
+      name: "batsone_score",
+      placeholder: "Enter batsman one score",
+    },
+    {
+      label: "Winning Team Batsman Two",
+      name: "winning_team_batstwo",
+      placeholder: "Enter winning team batsman two",
+    },
+    {
+      label: "Batsman Two Score",
+      name: "batstwo_score",
+      placeholder: "Enter batsman two score",
+    },
+    {
+      label: "Winning Team Bowler One",
+      name: "winning_team_bowlerone",
+      placeholder: "Enter winning team bowler one",
+    },
+    {
+      label: "Bowler One Wicket Count",
+      name: "bowlerone_wicket",
+      placeholder: "Enter bowler one wicket count (wickets/runs(overs))",
+    },
   ];
 
   return (
@@ -148,7 +217,10 @@ const ResultMatchEntryService = () => {
         {activeForm === "entry" ? (
           <div className="space-y-4">
             {entryFormFields.map(({ label, name, placeholder }, index) => (
-              <div key={index} className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
+              <div
+                key={index}
+                className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4"
+              >
                 <label className="block text-sm font-medium text-black w-full sm:w-48 pb-1">
                   {label}
                 </label>
@@ -190,6 +262,7 @@ const ResultMatchEntryService = () => {
                     <th className="py-2 px-4 text-left">Match</th>
                     <th className="py-2 px-4 text-left">Scores</th>
                     <th className="py-2 px-4 text-left">Details</th>
+                    <th className="py-2 px-4 text-left">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -221,6 +294,15 @@ const ResultMatchEntryService = () => {
                             {item.bowlerone_wicket}
                           </li>
                         </ul>
+                      </td>
+                      <td className="py-2 px-4">
+                        <button
+                          onClick={() => handleDelete(item.id)}
+                          className="flex items-center space-x-2 py-1 px-4 bg-red-500 hover:bg-red-600 text-white rounded-md focus:outline-none"
+                        >
+                          <FontAwesomeIcon icon={faTrash} />
+                          <span>Delete</span>
+                        </button>
                       </td>
                     </tr>
                   ))}

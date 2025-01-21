@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const db = mysql.createConnection({
   host: "127.0.0.1",
   user: "root",
-  password: "Kis766626@", // MySQL root password
+  password: "Samar@1402", // MySQL root password
   port: "3306", // MySQL root port id
   database: "pdca_db", // MySQL database name
 });
@@ -402,20 +402,31 @@ app.post("/addmatch", (req, res) => {
 });
 
 // Route to Delete UPCOMING MATCH DETAIL by POST method
-app.post("/deletematch/:ID", (req, res) => {
+app.delete("/deleteUpcomingMatch/:ID", (req, res) => {
   const { ID } = req.params;
 
-  const DelUpComingMatch = "DELETE FROM upcoming_match WHERE id = ? ";
+  // Check if the ID is a valid number
+  if (!ID || isNaN(ID)) {
+    return res.status(400).json({ message: "Invalid ID provided" });
+  }
+
+  const DelUpComingMatch = "DELETE FROM upcoming_match WHERE id = ?";
 
   db.query(DelUpComingMatch, [ID], (err, result) => {
     if (err) {
-      return res.status(500).json({ message: `Database error, ${err}` });
+      return res
+        .status(500)
+        .json({ message: `Database error: ${err.message}` });
     }
 
     if (result.affectedRows === 0) {
-      return res.status(404).json({ message: "Record  not deleted" });
+      return res
+        .status(404)
+        .json({ message: "Record not deleted, ID not found" });
     }
-    res.status(200).json({ message: "Deleted Successfully" });
+
+    // Return success response with a message
+    res.status(200).json({ success: true, message: "Deleted successfully" });
   });
 });
 
@@ -501,6 +512,43 @@ app.post("/updatematch/:ID", (req, res) => {
   });
 });
 
+app.get("/dashboardResult", (req, res) => {
+  const queryRecentMatches =
+    "SELECT first_team, second_team, winning_team, match_description FROM match_result";
+  const queryTotalMatches = "SELECT COUNT(*) AS totalMatches FROM match_result";
+  const queryTotalUpcomingMatches =
+    "SELECT COUNT(*) AS totalUpcomingMatches FROM upcoming_match";
+
+  db.query(queryRecentMatches, (err, recentMatches) => {
+    if (err) {
+      console.error("Error fetching recent matches:", err);
+      return res.status(500).json({ message: "Error fetching recent matches" });
+    }
+
+    db.query(queryTotalMatches, (err, matchResultCount) => {
+      if (err) {
+        console.error("Error fetching total matches count:", err);
+        return res.status(500).json({ message: "Error fetching match count" });
+      }
+
+      db.query(queryTotalUpcomingMatches, (err, upcomingMatchCount) => {
+        if (err) {
+          console.error("Error fetching upcoming matches count:", err);
+          return res
+            .status(500)
+            .json({ message: "Error fetching upcoming match count" });
+        }
+
+        res.json({
+          recentMatches: recentMatches,
+          totalMatches: matchResultCount[0].totalMatches,
+          totalUpcomingMatches: upcomingMatchCount[0].totalUpcomingMatches,
+        });
+      });
+    });
+  });
+});
+
 // Route to get MATCH RESULT Details
 app.get("/result", (req, res) => {
   const matchResult =
@@ -553,16 +601,23 @@ app.post("/addresult", (req, res) => {
   const errors = {};
 
   // Validation checks
-  if (!first_team || first_team.trim() === "") errors.first_team = "First team is required.";
-  if (!second_team || second_team.trim() === "") errors.second_team = "Second team is required.";
+  if (!first_team || first_team.trim() === "")
+    errors.first_team = "First team is required.";
+  if (!second_team || second_team.trim() === "")
+    errors.second_team = "Second team is required.";
   if (first_team === second_team) errors.teams = "Teams cannot be the same.";
-  if (!first_team_score || first_team_score < 0) errors.first_team_score = "Invalid score.";
-  if (!second_team_score || second_team_score < 0) errors.second_team_score = "Invalid score.";
-  if (!winning_team || winning_team.trim() === "") errors.winning_team = "Winning team is required.";
-  if (winning_team !== first_team && winning_team !== second_team) errors.winning_team = "Invalid winning team.";
+  if (!first_team_score || first_team_score < 0)
+    errors.first_team_score = "Invalid score.";
+  if (!second_team_score || second_team_score < 0)
+    errors.second_team_score = "Invalid score.";
+  if (!winning_team || winning_team.trim() === "")
+    errors.winning_team = "Winning team is required.";
+  if (winning_team !== first_team && winning_team !== second_team)
+    errors.winning_team = "Invalid winning team.";
 
   // Handle errors
-  if (Object.keys(errors).length > 0) return res.status(400).json({ status: 'error', errors });
+  if (Object.keys(errors).length > 0)
+    return res.status(400).json({ status: "error", errors });
 
   // SQL query to insert match result
   const query = `
@@ -591,7 +646,9 @@ app.post("/addresult", (req, res) => {
   db.query(query, queryParams, (err, result) => {
     if (err) {
       console.error("Database error:", err);
-      return res.status(500).json({ status: 'error', message: 'Database error', error: err });
+      return res
+        .status(500)
+        .json({ status: "error", message: "Database error", error: err });
     }
     res.status(200).json({
       status: "success",
@@ -602,24 +659,30 @@ app.post("/addresult", (req, res) => {
 });
 
 // Route to Delete MATCH RESULT DETAIL by POST method
-app.post("/deleteresult/:ID", (req, res) => {
-  const { ID } = req.params;
 
-  const DelUpComingMatch = "DELETE FROM match_result WHERE id = ? ";
+// Route to Update  MATCH RESULT DETAIL
+app.delete("/deleteresult/:id", (req, res) => {
+  const matchId = req.params.id;
 
-  db.query(DelUpComingMatch, [ID], (err, result) => {
+  // SQL query to delete the match result
+  const query = "DELETE FROM match_result WHERE id = ?";
+
+  db.query(query, [matchId], (err, result) => {
     if (err) {
-      return res.status(500).json({ message: `Database error, ${err}` });
+      console.error("Error deleting match result:", err);
+      return res
+        .status(500)
+        .json({ message: "Failed to delete match result." });
     }
 
     if (result.affectedRows === 0) {
-      return res.status(404).json({ message: "Record  not deleted" });
+      return res.status(404).json({ message: "Match result not found." });
     }
-    res.status(200).json({ message: "Deleted Successfully" });
+
+    res.status(200).json({ message: "Match result deleted successfully." });
   });
 });
 
-// Route to Update  MATCH RESULT DETAIL
 app.post("/updateresult/:ID", (req, res) => {
   const { ID } = req.params; // Extract ID from URL parameters
   const {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faBroom, faPencilAlt, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faBroom, faTrash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 const UpcomingMatchEntryService = () => {
@@ -27,6 +27,7 @@ const UpcomingMatchEntryService = () => {
     date.setMinutes(minutes);
     return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
+
   const [fetchedMatches, setFetchedMatches] = useState([]);
 
   // Fetch matches when the activeForm is "service"
@@ -97,6 +98,30 @@ const UpcomingMatchEntryService = () => {
       setEntryError(
         err.response?.data?.message || "Failed to add match. Try again later."
       );
+    }
+  };
+
+  // Handling delete action
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/deleteUpcomingMatch/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (response.data && response.data.success) {
+        // Remove the deleted match from the state
+        setFetchedMatches(fetchedMatches.filter((match) => match.id !== id));
+        setMessage("Match deleted successfully.");
+        setTimeout(() => setMessage(""), 3000); // Clear success message after 3 seconds
+      } else {
+        setServiceError("Failed to delete match. Please try again.");
+      }
+    } catch (err) {
+      console.error("Error deleting match: ", err);
+      setServiceError(err.response?.data?.message || "An error occurred.");
     }
   };
 
@@ -200,7 +225,7 @@ const UpcomingMatchEntryService = () => {
                 type="submit"
                 className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-300 transform hover:scale-105 transition-all duration-300"
               >
-                <FontAwesomeIcon icon={faCheck} className="mr-2" />
+                <FontAwesomeIcon icon={faCheck} />
                 Submit
               </button>
               <button
@@ -214,89 +239,65 @@ const UpcomingMatchEntryService = () => {
                     location: "",
                   })
                 }
-                className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:ring-2 focus:ring-red-300 transform hover:scale-105 transition-all duration-300"
+                className="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 focus:ring-2 focus:ring-gray-300 transform hover:scale-105 transition-all duration-300"
               >
-                <FontAwesomeIcon icon={faBroom} className="mr-2" />
-                Reset
+                <FontAwesomeIcon icon={faBroom} />
+                Clear
               </button>
             </div>
           </form>
         ) : (
           <div>
-  {serviceError && (
-    <p className="text-red-500 text-sm">{serviceError}</p>
-  )}
-  {fetchedMatches.length > 0 ? (
-    <table className="min-w-full table-auto text-left border-collapse mt-4 rounded-lg overflow-hidden shadow-lg">
-      <thead className="bg-blue-600 text-white">
-        <tr>
-          <th className="border px-4 py-2 text-sm font-semibold">
-            First Team
-          </th>
-          <th className="border px-4 py-2 text-sm font-semibold">
-            Second Team
-          </th>
-          <th className="border px-4 py-2 text-sm font-semibold">
-            Date
-          </th>
-          <th className="border px-4 py-2 text-sm font-semibold">
-            Time
-          </th>
-          <th className="border px-4 py-2 text-sm font-semibold">
-            Location
-          </th>
-          <th className="border px-4 py-2 text-sm font-semibold">
-            Actions
-          </th> {/* New Action Column */}
-        </tr>
-      </thead>
-      <tbody>
-        {fetchedMatches.map((match, index) => (
-          <tr
-            key={index}
-            className={`${
-              index % 2 === 0 ? "bg-gray-100" : "bg-white"
-            } hover:bg-blue-50 transition-colors duration-200`}
-          >
-            <td className="border px-4 py-2 text-sm">
-              {match.first_team}
-            </td>
-            <td className="border px-4 py-2 text-sm">
-              {match.second_team}
-            </td>
-            <td className="border px-4 py-2 text-sm">
-              {formatDate(match.date)}
-            </td>
-            <td className="border px-4 py-2 text-sm">
-              {formatTime(match.time)}
-            </td>
-            <td className="border px-4 py-2 text-sm">
-              {match.location}
-            </td>
-            <td className="border px-4 py-2 text-sm flex justify-center">
-              {/* Edit Button with Icon */}
-              <button
-                onClick={() => handleEdit(match)}
-                className="bg-yellow-500 text-white px-4 py-2 rounded mr-2 flex items-center justify-center"
-              >
-                <FontAwesomeIcon icon={faPencilAlt} className="text-white" />
-              </button>
-              {/* Delete Button with Icon */}
-              <button
-                onClick={() => handleDelete(match.id)}
-                className="bg-red-500 text-white px-4 py-2 rounded flex items-center justify-center"
-              >
-                <FontAwesomeIcon icon={faTrash} className="text-white" />
-              </button>
-            </td> {/* Action buttons */}
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  ) : (
-    <p>No upcoming matches found.</p>
-  )}
-</div>
+            {/* Displaying the list of upcoming matches */}
+            {serviceError && (
+              <p className="text-red-500 text-sm">{serviceError}</p>
+            )}
+            {message && <p className="text-green-500 text-sm">{message}</p>}
+            <table className="min-w-full table-auto mt-6 rounded-lg overflow-hidden shadow-lg w-full sm:w-10/12 md:w-9/12 lg:w-8/12">
+              <thead className="bg-blue-600 text-white">
+                <tr>
+                  <th className="px-6 py-3 text-left">First Team</th>
+                  <th className="px-6 py-3 text-left">Second Team</th>
+                  <th className="px-6 py-3 text-left">Date</th>
+                  <th className="px-6 py-3 text-left">Time</th>
+                  <th className="px-6 py-3 text-left">Location</th>
+                  <th className="px-6 py-3">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {fetchedMatches.map((match) => (
+                  <tr
+                    key={match.id}
+                    className="hover:bg-blue-100 transition-all duration-300 ease-in-out"
+                  >
+                    <td className="px-6 py-4 text-gray-800">
+                      {match.first_team}
+                    </td>
+                    <td className="px-6 py-4 text-gray-800">
+                      {match.second_team}
+                    </td>
+                    <td className="px-6 py-4 text-gray-600">
+                      {formatDate(match.date)}
+                    </td>
+                    <td className="px-6 py-4 text-gray-600">
+                      {formatTime(match.time)}
+                    </td>
+                    <td className="px-6 py-4 text-gray-600">
+                      {match.location}
+                    </td>
+                    <td className="px-6 py-4 flex justify-center space-x-2">
+                      <button
+                        onClick={() => handleDelete(match.id)}
+                        className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out"
+                      >
+                        <FontAwesomeIcon icon={faTrash} />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </div>
