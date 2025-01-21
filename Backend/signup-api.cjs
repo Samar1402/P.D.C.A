@@ -504,7 +504,7 @@ app.post("/updatematch/:ID", (req, res) => {
 // Route to get MATCH RESULT Details
 app.get("/result", (req, res) => {
   const matchResult =
-    "SELECT id, first_team, second_team, first_team_score, second_team_score, winning_team, winning_team_batsone, batsone_score, winning_team_batstwo, batstwo_score, winning_team_bowlerone, bowlerone_wicket FROM match_result";
+    "SELECT id, first_team, second_team, first_team_score, second_team_score, winning_team, match_description , winning_team_batsone, batsone_score, winning_team_batstwo, batstwo_score, winning_team_bowlerone, bowlerone_wicket FROM match_result";
 
   db.query(matchResult, (err, results) => {
     if (err) {
@@ -540,6 +540,7 @@ app.post("/addresult", (req, res) => {
     first_team_score,
     second_team_score,
     winning_team,
+    match_description,
     winning_team_batsone,
     batsone_score,
     winning_team_batstwo,
@@ -597,6 +598,11 @@ app.post("/addresult", (req, res) => {
       "Winning team must be either the first team or the second team.";
   }
 
+  if (match_description && typeof match_description !== "string") {
+    errors.match_description =
+      "Match description must be a valid string if provided.";
+  }
+
   if (
     winning_team_batsone &&
     (typeof winning_team_batsone !== "string" ||
@@ -640,12 +646,18 @@ app.post("/addresult", (req, res) => {
       "Winning team bowler one must be a valid string if provided.";
   }
 
-  if (
-    bowlerone_wicket !== undefined &&
-    (!String(bowlerone_wicket) || bowlerone_wicket < 0)
-  ) {
+  // Validate bowlerone_wicket format (wickets/runs (overs))
+  const bowlerWicketRegex = /^\d+\/\d+ \(\d+over\)$/;
+  if (bowlerone_wicket && !bowlerWicketRegex.test(bowlerone_wicket)) {
     errors.bowlerone_wicket =
-      "Bowler one wicket count must be a non-negative integer if provided.";
+      "Bowler one wicket count must be in the format 'wickets/runs (overs)', e.g., '4/32 (4over)'.";
+  }
+
+  // Validate batsman score format (runs(balls))
+  const batsmanScoreRegex = /^\d+\(\d+\)$/;
+  if (batsone_score && !batsmanScoreRegex.test(batsone_score)) {
+    errors.batsone_score =
+      "Batsman one score must be in the format 'runs(balls)', e.g., '78(42)'.";
   }
 
   // If there are validation errors, return them
@@ -657,10 +669,10 @@ app.post("/addresult", (req, res) => {
   const query = `
     INSERT INTO match_result (
       first_team, second_team, first_team_score, second_team_score, 
-      winning_team, winning_team_batsone, batsone_score, 
+      winning_team, match_description, winning_team_batsone, batsone_score, 
       winning_team_batstwo, batstwo_score, 
       winning_team_bowlerone, bowlerone_wicket
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   const queryParams = [
@@ -669,6 +681,7 @@ app.post("/addresult", (req, res) => {
     first_team_score,
     second_team_score,
     winning_team.trim(),
+    match_description ? match_description.trim() : null,
     winning_team_batsone ? winning_team_batsone.trim() : null,
     batsone_score || null,
     winning_team_batstwo ? winning_team_batstwo.trim() : null,
