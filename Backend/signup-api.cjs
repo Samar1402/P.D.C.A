@@ -533,6 +533,7 @@ app.get("/result/:ID", (req, res) => {
 });
 
 //ROUTE TO ADD MATCH RESULT DETAILS BY POST METHOD
+
 app.post("/addresult", (req, res) => {
   const {
     first_team,
@@ -552,126 +553,23 @@ app.post("/addresult", (req, res) => {
   const errors = {};
 
   // Validation checks
-  if (
-    !first_team ||
-    typeof first_team !== "string" ||
-    first_team.trim() === ""
-  ) {
-    errors.first_team =
-      "First team is required and must be a non-empty string.";
-  }
+  if (!first_team || first_team.trim() === "") errors.first_team = "First team is required.";
+  if (!second_team || second_team.trim() === "") errors.second_team = "Second team is required.";
+  if (first_team === second_team) errors.teams = "Teams cannot be the same.";
+  if (!first_team_score || first_team_score < 0) errors.first_team_score = "Invalid score.";
+  if (!second_team_score || second_team_score < 0) errors.second_team_score = "Invalid score.";
+  if (!winning_team || winning_team.trim() === "") errors.winning_team = "Winning team is required.";
+  if (winning_team !== first_team && winning_team !== second_team) errors.winning_team = "Invalid winning team.";
 
-  if (
-    !second_team ||
-    typeof second_team !== "string" ||
-    second_team.trim() === ""
-  ) {
-    errors.second_team =
-      "Second team is required and must be a non-empty string.";
-  }
+  // Handle errors
+  if (Object.keys(errors).length > 0) return res.status(400).json({ status: 'error', errors });
 
-  if (first_team === second_team) {
-    errors.teams = "First team and second team cannot be the same.";
-  }
-
-  if (!String(first_team_score) || first_team_score < 0) {
-    errors.first_team_score =
-      "First team score must be a non-negative integer.";
-  }
-
-  if (!String(second_team_score) || second_team_score < 0) {
-    errors.second_team_score =
-      "Second team score must be a non-negative integer.";
-  }
-
-  if (
-    !winning_team ||
-    typeof winning_team !== "string" ||
-    winning_team.trim() === ""
-  ) {
-    errors.winning_team =
-      "Winning team is required and must be a non-empty string.";
-  }
-
-  if (winning_team !== first_team && winning_team !== second_team) {
-    errors.winning_team =
-      "Winning team must be either the first team or the second team.";
-  }
-
-  if (match_description && typeof match_description !== "string") {
-    errors.match_description =
-      "Match description must be a valid string if provided.";
-  }
-
-  if (
-    winning_team_batsone &&
-    (typeof winning_team_batsone !== "string" ||
-      winning_team_batsone.trim() === "")
-  ) {
-    errors.winning_team_batsone =
-      "Winning team batsman one must be a valid string if provided.";
-  }
-
-  if (
-    batsone_score !== undefined &&
-    (!String(batsone_score) || batsone_score < 0)
-  ) {
-    errors.batsone_score =
-      "Batsman one score must be a non-negative integer if provided.";
-  }
-
-  if (
-    winning_team_batstwo &&
-    (typeof winning_team_batstwo !== "string" ||
-      winning_team_batstwo.trim() === "")
-  ) {
-    errors.winning_team_batstwo =
-      "Winning team batsman two must be a valid string if provided.";
-  }
-
-  if (
-    batstwo_score !== undefined &&
-    (!String(batstwo_score) || batstwo_score < 0)
-  ) {
-    errors.batstwo_score =
-      "Batsman two score must be a non-negative integer if provided.";
-  }
-
-  if (
-    winning_team_bowlerone &&
-    (typeof winning_team_bowlerone !== "string" ||
-      winning_team_bowlerone.trim() === "")
-  ) {
-    errors.winning_team_bowlerone =
-      "Winning team bowler one must be a valid string if provided.";
-  }
-
-  // Validate bowlerone_wicket format (wickets/runs (overs))
-  const bowlerWicketRegex = /^\d+\/\d+ \(\d+over\)$/;
-  if (bowlerone_wicket && !bowlerWicketRegex.test(bowlerone_wicket)) {
-    errors.bowlerone_wicket =
-      "Bowler one wicket count must be in the format 'wickets/runs (overs)', e.g., '4/32 (4over)'.";
-  }
-
-  // Validate batsman score format (runs(balls))
-  const batsmanScoreRegex = /^\d+\(\d+\)$/;
-  if (batsone_score && !batsmanScoreRegex.test(batsone_score)) {
-    errors.batsone_score =
-      "Batsman one score must be in the format 'runs(balls)', e.g., '78(42)'.";
-  }
-
-  // If there are validation errors, return them
-  if (Object.keys(errors).length > 0) {
-    return res.status(400).json({ status: "error", errors });
-  }
-
-  // Query to insert match data
+  // SQL query to insert match result
   const query = `
     INSERT INTO match_result (
-      first_team, second_team, first_team_score, second_team_score, 
-      winning_team, match_description, winning_team_batsone, batsone_score, 
-      winning_team_batstwo, batstwo_score, 
-      winning_team_bowlerone, bowlerone_wicket
+      first_team, second_team, first_team_score, second_team_score,
+      winning_team, match_description, winning_team_batsone, batsone_score,
+      winning_team_batstwo, batstwo_score, winning_team_bowlerone, bowlerone_wicket
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
@@ -693,9 +591,7 @@ app.post("/addresult", (req, res) => {
   db.query(query, queryParams, (err, result) => {
     if (err) {
       console.error("Database error:", err);
-      return res
-        .status(500)
-        .json({ status: "error", message: "Database error", error: err });
+      return res.status(500).json({ status: 'error', message: 'Database error', error: err });
     }
     res.status(200).json({
       status: "success",

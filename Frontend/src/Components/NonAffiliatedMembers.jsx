@@ -9,22 +9,148 @@ const NonAffliatedMembers = () => {
   const [search, setSearch] = useState("");
   const clubs = [
     {
-      name: "Amar Cricket Club",
+      name: "GAC Cricket Club",
       // location: "Amar ",
-      president: "Ajit Kumar Sinha",
-      secretary: "Abhimanyu Prasad Ray",
+      president: "Shyam Babu Rai",
+      secretary: "Avinash Rai",
       // email: "arariadca@biharcricketassociation.com",
       pdf: "/pdfs/Cricket.pdf", // Example PDF URL
-      type: "affiliated",
+      type: "associated",
     },
     {
-      name: "Adalatganj Cricket Club",
+      name: "Crescent Cricket Club",
       // location: "Adalatganj",
-      president: "Shaista Parveen",
-      secretary: "Mahfuz Qamar",
+      president: "Shaheen Akhtar",
+      secretary: "Gulrez Akhtar",
       // email: "arariadca@biharcricketassociation.com",
       pdf: "/pdfs/Cricket.pdf", // Example PDF URL
-      type: "affiliated",
+      type: "associated",
+    },
+    {
+      name: "Alliance Cricket Club",
+      // location: "Adalatganj",
+      president: "Sachidanand Singh",
+      secretary: "Bandana Singh",
+      // email: "arariadca@biharcricketassociation.com",
+      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      type: "associated",
+    },
+    {
+      name: "Lakshya Ingitech Cricket Club",
+      // location: "Adalatganj",
+      president: "S.N Raju",
+      secretary: "Jaya Singh",
+      // email: "arariadca@biharcricketassociation.com",
+      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      type: "associated",
+    },
+    {
+      name: "PESU Cricket Club",
+      // location: "Adalatganj",
+      president: "Sri Ram Singh",
+      secretary: "Sanjay Kumar Sinha",
+      // email: "arariadca@biharcricketassociation.com",
+      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      type: "associated",
+    },
+    {
+      name: "Sachivalaya Sarts Cricket Club",
+      // location: "Adalatganj",
+      president: "Amrit Lal Mina",
+      secretary: "Mahendra Prasad",
+      // email: "arariadca@biharcricketassociation.com",
+      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      type: "associated",
+    },
+    {
+      name: "AG Bihar Cricket Club",
+      // location: "Adalatganj",
+      president: "Kamlesh Kumar Singh",
+      secretary: "Santosh Kumar Singh",
+      // email: "arariadca@biharcricketassociation.com",
+      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      type: "associated",
+    },
+    {
+      name: "BHPCL Cricket Club",
+      // location: "Adalatganj",
+      president: "Pankaj Kumar Pal",
+      secretary: "Ajay Kumar Mishra",
+      // email: "arariadca@biharcricketassociation.com",
+      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      type: "associated",
+    },
+    {
+      name: "Trimphant Cricket Club",
+      // location: "Adalatganj",
+      president: "Ashok Kumar",
+      secretary: "Avinash Kumar",
+      // email: "arariadca@biharcricketassociation.com",
+      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      type: "associated",
+    },
+    {
+      name: "Guru Gobind Singh College Cricket Club",
+      // location: "Adalatganj",
+      president: "",
+      secretary: "Dr.Amit Kumar Singh",
+      // email: "arariadca@biharcricketassociation.com",
+      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      type: "associated",
+    },
+    {
+      name: "Citizen Cricket Club",
+      // location: "Adalatganj",
+      president: "Dilip Kumar Thakur",
+      secretary: "Amit Kumar",
+      // email: "arariadca@biharcricketassociation.com",
+      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      type: "associated",
+    },
+    {
+      name: "Adhikari XI Cricket Club",
+      // location: "Adalatganj",
+      president: "Sarwar Abdin",
+      secretary: "Renuka Kumari Sinha",
+      // email: "arariadca@biharcricketassociation.com",
+      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      type: "associated",
+    },
+    {
+      name: "Kazipur Cricket Club",
+      // location: "Adalatganj",
+      president: "Syed Umar Faruk Imam",
+      secretary: "Rupam Saroj",
+      // email: "arariadca@biharcricketassociation.com",
+      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      type: "associated",
+    },
+    {
+      name: "YCC Cricket Club",
+      // location: "Adalatganj",
+      president: "Ritika Jain",
+      secretary: "Sushma Kumari",
+      // email: "arariadca@biharcricketassociation.com",
+      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      type: "associated",
+    },
+    {
+      name: "Kedia XI Cricket Club",
+      // location: "Adalatganj",
+      president: "Neetu Davia",
+      secretary: "Rishita Singh",
+      // email: "arariadca@biharcricketassociation.com",
+      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      type: "associated",
+    },
+    {
+      name: "PAC Cricket Club",
+      // location: "Adalatganj",
+      president: "Danish Abdin",
+      secretary: "Murari Kumar",
+      // email: "arariadca@biharcricketassociation.com",
+      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      type: "associated",
     },
   ].sort((a, b) => a.name.localeCompare(b.name));
 
@@ -51,7 +177,7 @@ const NonAffliatedMembers = () => {
               className="w-32 h-32 md:w-60 md:h-60"
             />
             <h1 className="mt-4 md:mt-32 text-2xl md:text-4xl font-bold font-serif tracking-wide text-black font-outline-3">
-            NON-AFFILIATED CLUBS
+            ASSOCIATED CLUBS
             </h1>
             <div className="flex justify-center items-center mt-6 pt-28 md:mt-0 md:ml-auto mr-8">
               <input
