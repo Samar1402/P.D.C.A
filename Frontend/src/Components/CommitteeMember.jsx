@@ -4,8 +4,11 @@ import Img2 from "../images/Rahbar-abdin.jpg";
 import Img3 from "../images/Rajesh-kumar.jpg";
 import Img4 from "../images/indradip-kumar.jpg";
 // import Img5 from "../images/akshay-kumar.jpg";
+import Img5 from "../images/user.png"
 import Cricket from "./../images/backg.jpg";
 import Div from "./../images/div3.jpg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const CommitteeMember = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -15,7 +18,7 @@ const CommitteeMember = () => {
     { img: Img2, name: "Rahbar Abdin", role: "Vice President", contact: "7759917777" },
     { img: Img3, name: "Rajesh Kumar", role: "Secretary", contact: "6201788147" },
     { img: Img4, name: "Dr. Indradip Kumar Chandrawanshi", role: "Joint Secretary" },
-    { name: "Akshay Kumar", role: "Treasurer" },
+    { img: Img5, name: "Akshay Kumar", role: "Treasurer" },
   ];
 
   const filteredMembers = members.filter(
@@ -36,13 +39,19 @@ const CommitteeMember = () => {
         <h1 className="text-2xl md:text-4xl   text-center sm:text-left font-serif tracking-wide text-yellow-400 ">
           COMMITTEE OF MANAGEMENT
         </h1>
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="mt-4 sm:mt-0 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500  w-[20rem] pl-8"
-        />
+        <div className="relative mt-4 sm:mt-0 w-[20rem]">
+      <FontAwesomeIcon
+        icon={faSearch}
+        className="absolute top-1/2 right-5 transform -translate-y-1/2 text-gray-400"
+      />
+      <input
+        type="text"
+        placeholder="Search..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full pl-5"
+      />
+    </div>
       </div>
 
       {/* Members Section */}
