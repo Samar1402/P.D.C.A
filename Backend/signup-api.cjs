@@ -3,6 +3,8 @@ const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
 const { body, validationResult } = require("express-validator");
+const multer = require('multer');
+const path = require('path');
 
 const app = express();
 
@@ -16,8 +18,24 @@ const corsOptions = {
   optionsSuccessStatus: 204, // Preflight response code set karein
 };
 
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname)); // Append the file extension
+  }
+});
+const upload = multer({ storage: storage });
+
 app.use(cors(corsOptions));
 app.options("*", cors(corsOptions)); // Preflight request ko handle karne ke liye
+
+// Serve static files from the 'uploads' directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+
 
 const port = 3000;
 
@@ -28,7 +46,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const db = mysql.createConnection({
   host: "127.0.0.1",
   user: "root",
-  password: "Kis766626@", // MySQL root password
+  password: "abhi@123", // MySQL root password
   port: "3306", // MySQL root port id
   database: "pdca_db", // MySQL database name
 });
@@ -820,6 +838,87 @@ app.post("/updateresult/:ID", (req, res) => {
     }
 
     res.status(200).json({ message: "Updated Successfully" });
+  });
+});
+
+// Route to handle image upload
+app.post('/upload', upload.single('image'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: 'No file uploaded' });
+  }
+
+  const imageUrl = `http://localhost:3000/uploads/${req.file.filename}`;
+
+  const query = 'INSERT INTO gallery (image_url) VALUES (?)';
+  db.query(query, [imageUrl], (err, result) => {
+    if (err) {
+      return res.status(500).json({ message: 'Database error', error: err });
+    }
+    res.status(200).json({ message: 'Image uploaded successfully', imageUrl });
+  });
+});
+
+// Route to fetch all gallery images
+app.get('/gallery', (req, res) => {
+  const query = 'SELECT * FROM gallery';
+  db.query(query, (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: 'Database error', error: err });
+    }
+    res.status(200).json(results);
+  });
+});
+
+
+// Route to Delete an image
+app.delete("/gallery/:id", (req, res) => {
+  const { id } = req.params;
+  const query = "DELETE FROM gallery WHERE id = ?";
+  db.query(query, [id], (err, results) => {
+    if (err) {
+      console.error("Error deleting image:", err);
+      return res.status(500).json({ error: "Failed to delete image" });
+    }
+    res.json({ message: "Image deleted successfully" });
+  });
+});
+
+// Route to handle notification submission
+app.post('/addNotification', upload.single('pdfFile'), (req, res) => {
+  const { notificationText } = req.body;
+  const pdfFilePath = req.file ? `/uploads/${req.file.filename}` : null;
+
+  const query = 'INSERT INTO notifications (text, pdf_path) VALUES (?, ?)';
+  db.query(query, [notificationText, pdfFilePath], (err, result) => {
+    if (err) {
+      return res.status(500).json({ message: 'Database error', error: err });
+    }
+    res.status(200).json({ message: 'Notification added successfully' });
+  });
+});
+
+// Route to fetch all notifications
+app.get('/notifications', (req, res) => {
+  const query = 'SELECT * FROM notifications';
+  db.query(query, (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: 'Database error', error: err });
+    }
+    res.status(200).json(results);
+  });
+});
+
+
+// Route to Delete notification
+app.delete("/notifications/:id", (req, res) => {
+  const { id } = req.params;
+  const query = "DELETE FROM notifications WHERE id = ?";
+  db.query(query, [id], (err, result) => {
+    if (err) {
+      console.error("Error deleting notification:", err);
+      return res.status(500).json({ message: "Failed to delete notification" });
+    }
+    res.json({ message: "Notification deleted successfully" });
   });
 });
 
