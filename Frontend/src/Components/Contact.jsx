@@ -48,14 +48,18 @@ function Contact() {
       </div>
 
       <div className="px-4 md:px-20 py-2 bg-gray-100">
-        <h1 className="text-3xl md:text-4xl text-left mb-2">Contact Information</h1>
+        <h1 className="text-3xl md:text-4xl text-left mb-2">
+          Contact Information
+        </h1>
 
         <div className="flex flex-wrap gap-8 py-4 pt-2 pb-4 bg-gray-100">
           <div className="w-full md:w-1/3 bg-white shadow-md p-4 rounded-lg">
             <div className="mb-3">
-              <h5 className="text-xl font-semibold mb-2 text-red-500">Address:</h5>
+              <h5 className="text-xl font-semibold mb-2 text-red-500">
+                Address:
+              </h5>
               <p className="text-gray-500">
-              Pushpanjali Complex 45-C, Near Sahyog Hospital, Patliputra
+                Pushpanjali Complex 45-C, Near Sahyog Hospital, Patliputra
                 <br />
                 <span>Colony, Patna-800013</span>
               </p>
@@ -63,8 +67,12 @@ function Contact() {
           </div>
 
           <div className="w-full md:w-1/2 bg-white shadow-md p-4 rounded-md border border-gray-300">
-            <h5 className="text-xl font-semibold mb-2 text-red-500">For More Information:</h5>
-            <p className="text-gray-500">Email: info@biharcricketassociation.com</p>
+            <h5 className="text-xl font-semibold mb-2 text-red-500">
+              For More Information:
+            </h5>
+            <p className="text-gray-500">
+              Email: Patnadca@biharcricketassociation.com
+            </p>
           </div>
         </div>
 
@@ -141,7 +149,7 @@ function Contact() {
               {isHovered && (
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-white p-4 rounded-md shadow-lg">
                   <p className="text-gray-700">
-                  Pushpanjali Complex 45-C, Near Sahyog Hospital, Patliputra
+                    Pushpanjali Complex 45-C, Near Sahyog Hospital, Patliputra
                     <br />
                     Colony, Patna-800013
                   </p>

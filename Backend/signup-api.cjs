@@ -3,8 +3,8 @@ const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
 const { body, validationResult } = require("express-validator");
-const multer = require('multer');
-const path = require('path');
+const multer = require("multer");
+const path = require("path");
 
 const app = express();
 
@@ -21,11 +21,11 @@ const corsOptions = {
 // Configure multer for file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/');
+    cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + path.extname(file.originalname)); // Append the file extension
-  }
+  },
 });
 const upload = multer({ storage: storage });
 
@@ -33,9 +33,7 @@ app.use(cors(corsOptions));
 app.options("*", cors(corsOptions)); // Preflight request ko handle karne ke liye
 
 // Serve static files from the 'uploads' directory
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 const port = 3000;
 
@@ -801,33 +799,32 @@ app.post("/updateresult/:ID", (req, res) => {
 });
 
 // Route to handle image upload
-app.post('/upload', upload.single('image'), (req, res) => {
+app.post("/upload", upload.single("image"), (req, res) => {
   if (!req.file) {
-    return res.status(400).json({ message: 'No file uploaded' });
+    return res.status(400).json({ message: "No file uploaded" });
   }
 
   const imageUrl = `http://localhost:3000/uploads/${req.file.filename}`;
 
-  const query = 'INSERT INTO gallery (image_url) VALUES (?)';
+  const query = "INSERT INTO gallery (image_url) VALUES (?)";
   db.query(query, [imageUrl], (err, result) => {
     if (err) {
-      return res.status(500).json({ message: 'Database error', error: err });
+      return res.status(500).json({ message: "Database error", error: err });
     }
-    res.status(200).json({ message: 'Image uploaded successfully', imageUrl });
+    res.status(200).json({ message: "Image uploaded successfully", imageUrl });
   });
 });
 
 // Route to fetch all gallery images
-app.get('/gallery', (req, res) => {
-  const query = 'SELECT * FROM gallery';
+app.get("/gallery", (req, res) => {
+  const query = "SELECT * FROM gallery";
   db.query(query, (err, results) => {
     if (err) {
-      return res.status(500).json({ message: 'Database error', error: err });
+      return res.status(500).json({ message: "Database error", error: err });
     }
     res.status(200).json(results);
   });
 });
-
 
 // Route to Delete an image
 app.delete("/gallery/:id", (req, res) => {
@@ -843,30 +840,29 @@ app.delete("/gallery/:id", (req, res) => {
 });
 
 // Route to handle notification submission
-app.post('/addNotification', upload.single('pdfFile'), (req, res) => {
+app.post("/addNotification", upload.single("pdfFile"), (req, res) => {
   const { notificationText } = req.body;
   const pdfFilePath = req.file ? `/uploads/${req.file.filename}` : null;
 
-  const query = 'INSERT INTO notifications (text, pdf_path) VALUES (?, ?)';
+  const query = "INSERT INTO notifications (title, pdf_path) VALUES (?, ?)";
   db.query(query, [notificationText, pdfFilePath], (err, result) => {
     if (err) {
-      return res.status(500).json({ message: 'Database error', error: err });
+      return res.status(500).json({ message: "Database error", error: err });
     }
-    res.status(200).json({ message: 'Notification added successfully' });
+    res.status(200).json({ message: "Notification added successfully" });
   });
 });
 
 // Route to fetch all notifications
-app.get('/notifications', (req, res) => {
-  const query = 'SELECT * FROM notifications';
+app.get("/notifications", (req, res) => {
+  const query = "SELECT * FROM notifications";
   db.query(query, (err, results) => {
     if (err) {
-      return res.status(500).json({ message: 'Database error', error: err });
+      return res.status(500).json({ message: "Database error", error: err });
     }
     res.status(200).json(results);
   });
 });
-
 
 // Route to Delete notification
 app.delete("/notifications/:id", (req, res) => {
