@@ -44,7 +44,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const db = mysql.createConnection({
   host: "127.0.0.1",
   user: "root",
-  password: "Kis766626@", // MySQL root password
+  password: "Samar@1402", // MySQL root password
   port: "3306", // MySQL root port id
   database: "pdca_db", // MySQL database name
 });

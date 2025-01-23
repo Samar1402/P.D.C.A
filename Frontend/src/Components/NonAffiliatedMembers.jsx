@@ -14,7 +14,7 @@ const NonAffliatedMembers = () => {
       president: "Shyam Babu Rai",
       secretary: "Avinash Rai",
       // email: "arariadca@biharcricketassociation.com",
-      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      pdf: "/pdfs/", // Example PDF URL
       type: "associated",
     },
     {
@@ -23,7 +23,7 @@ const NonAffliatedMembers = () => {
       president: "Shaheen Akhtar",
       secretary: "Gulrez Akhtar",
       // email: "arariadca@biharcricketassociation.com",
-      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      pdf: "/pdfs/", // Example PDF URL
       type: "associated",
     },
     {
@@ -32,7 +32,7 @@ const NonAffliatedMembers = () => {
       president: "Sachidanand Singh",
       secretary: "Bandana Singh",
       // email: "arariadca@biharcricketassociation.com",
-      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      pdf: "/pdfs/", // Example PDF URL
       type: "associated",
     },
     {
@@ -41,7 +41,7 @@ const NonAffliatedMembers = () => {
       president: "S.N Raju",
       secretary: "Jaya Singh",
       // email: "arariadca@biharcricketassociation.com",
-      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      pdf: "/pdfs/", // Example PDF URL
       type: "associated",
     },
     {
@@ -50,7 +50,7 @@ const NonAffliatedMembers = () => {
       president: "Sri Ram Singh",
       secretary: "Sanjay Kumar Sinha",
       // email: "arariadca@biharcricketassociation.com",
-      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      pdf: "/pdfs/", // Example PDF URL
       type: "associated",
     },
     {
@@ -59,7 +59,7 @@ const NonAffliatedMembers = () => {
       president: "Amrit Lal Mina",
       secretary: "Mahendra Prasad",
       // email: "arariadca@biharcricketassociation.com",
-      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      pdf: "/pdfs/", // Example PDF URL
       type: "associated",
     },
     {
@@ -68,7 +68,7 @@ const NonAffliatedMembers = () => {
       president: "Kamlesh Kumar Singh",
       secretary: "Santosh Kumar Singh",
       // email: "arariadca@biharcricketassociation.com",
-      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      pdf: "/pdfs/", // Example PDF URL
       type: "associated",
     },
     {
@@ -77,7 +77,7 @@ const NonAffliatedMembers = () => {
       president: "Pankaj Kumar Pal",
       secretary: "Ajay Kumar Mishra",
       // email: "arariadca@biharcricketassociation.com",
-      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      pdf: "/pdfs/", // Example PDF URL
       type: "associated",
     },
     {
@@ -86,7 +86,7 @@ const NonAffliatedMembers = () => {
       president: "Ashok Kumar",
       secretary: "Avinash Kumar",
       // email: "arariadca@biharcricketassociation.com",
-      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      pdf: "/pdfs/", // Example PDF URL
       type: "associated",
     },
     {
@@ -95,7 +95,7 @@ const NonAffliatedMembers = () => {
       president: "",
       secretary: "Dr.Amit Kumar Singh",
       // email: "arariadca@biharcricketassociation.com",
-      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      pdf: "/pdfs/", // Example PDF URL
       type: "associated",
     },
     {
@@ -104,7 +104,7 @@ const NonAffliatedMembers = () => {
       president: "Dilip Kumar Thakur",
       secretary: "Amit Kumar",
       // email: "arariadca@biharcricketassociation.com",
-      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      pdf: "/pdfs/", // Example PDF URL
       type: "associated",
     },
     {
@@ -113,7 +113,7 @@ const NonAffliatedMembers = () => {
       president: "Sarwar Abdin",
       secretary: "Renuka Kumari Sinha",
       // email: "arariadca@biharcricketassociation.com",
-      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      pdf: "/pdfs/", // Example PDF URL
       type: "associated",
     },
     {
@@ -122,7 +122,7 @@ const NonAffliatedMembers = () => {
       president: "Syed Umar Faruk Imam",
       secretary: "Rupam Saroj",
       // email: "arariadca@biharcricketassociation.com",
-      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      pdf: "/pdfs/", // Example PDF URL
       type: "associated",
     },
     {
@@ -131,7 +131,7 @@ const NonAffliatedMembers = () => {
       president: "Ritika Jain",
       secretary: "Sushma Kumari",
       // email: "arariadca@biharcricketassociation.com",
-      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      pdf: "/pdfs/", // Example PDF URL
       type: "associated",
     },
     {
@@ -140,7 +140,7 @@ const NonAffliatedMembers = () => {
       president: "Neetu Davia",
       secretary: "Rishita Singh",
       // email: "arariadca@biharcricketassociation.com",
-      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      pdf: "/pdfs/", // Example PDF URL
       type: "associated",
     },
     {
@@ -149,7 +149,7 @@ const NonAffliatedMembers = () => {
       president: "Danish Abdin",
       secretary: "Murari Kumar",
       // email: "arariadca@biharcricketassociation.com",
-      pdf: "/pdfs/Cricket.pdf", // Example PDF URL
+      pdf: "/pdfs/", // Example PDF URL
       type: "associated",
     },
   ].sort((a, b) => a.name.localeCompare(b.name));
