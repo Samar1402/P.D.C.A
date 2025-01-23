@@ -3,7 +3,7 @@ import asset2 from "../images/asset 2.jpeg";
 import map from "../images/map.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./Contact.css";
+
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -71,7 +71,7 @@ function Contact() {
               For More Information:
             </h5>
             <p className="text-gray-500">
-              Email: Patnadca@biharcricketassociation.com
+              Email: patnadca@biharcricketassociation.com
             </p>
           </div>
         </div>

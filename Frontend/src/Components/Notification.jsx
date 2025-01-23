@@ -29,7 +29,7 @@ const Notification = () => {
       }}
     >
       <h1 className="text-center bg-blue-500 text-white p-2 font-bold text-lg sm:text-xl md:text-2xl tracking-wider font-serif max-w-4xl mx-auto border-b-0">
-        BCCI Notification
+        PDCA Notification
       </h1>
       <div className="overflow-y-auto max-h-96 border-2 border-t-0 border-blue-500 pb-3 text-sm sm:text-base md:text-lg font-serif bg-gray-100 max-w-4xl mx-auto">
         {notifications.map((item, index) => (

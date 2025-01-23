@@ -86,9 +86,10 @@ const Footer = () => {
       </div>
 
       {/* Bottom Note */}
-      <div className="mt-6 text-center text-sm text-gray-400">
-        &copy; {new Date().getFullYear()} Patna District Cricket Association.
-        All rights reserved.
+      <div className="mt-6 text-center text-sm text-gray-400 flex flex-row justify-end gap-72 px-10">
+      All rights reserved &copy; {new Date().getFullYear()} Patna District Cricket Association.
+      <p className="">DEVELOPED BY TEAM <span className="text-red-600"> S.K.A 💛</span></p>
+        
       </div>
     </footer>
   );

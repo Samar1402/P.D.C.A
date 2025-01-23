@@ -20,8 +20,8 @@
   "main": "Dashboard.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run": "node server.js",
-    "start": "nodemon signup-api.cjs"
+    "run": "node server.cjs",
+    "start": "nodemon server.cjs"
   },
   "keywords": [],
   "author": "",
