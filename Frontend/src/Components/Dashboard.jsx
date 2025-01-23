@@ -86,12 +86,12 @@ const Dashboard = () => {
         >
           {{
             Dashboard: <DashboardItem />,
-            ManageCommittee: <CommitteeEntryService />,
-            ManageMembers: <MemberEntryService />,
+            ManageCommittee: <DashboardItem />,
+            ManageMembers: <DashboardItem />,
             ManageMatches: <MatchEntryService />,
             ManageNotifications: <NotificationEntryService />,
             ManageMedia: <MediaEntryService />,
-            ManageContact: <ContactEntryService />,
+            ManageContact: <DashboardItem />,
           }}
         </DashboardTabs>
       </main>
