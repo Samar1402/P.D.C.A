@@ -47,11 +47,11 @@ function App() {
             element={<DashboardItem />}
           ></Route>
           <Route
-            path="/affliatedmembers"
+            path="/affiliatedmembers"
             element={<AffiliatedMembers />}
           ></Route>
           <Route
-            path="/nonaffliatedmembers"
+            path="/nonaffiliatedmembers"
             element={<NonAffiliatedMembers />}
           ></Route>
 
