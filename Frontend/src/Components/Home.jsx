@@ -57,7 +57,10 @@ const NotificationSection = ({ title, link, data, isNotification }) => {
 
   return (
     <section className="m-4">
-      <Link to={link} className="text-3xl p-4 text-white hover:underline">
+      <Link
+        to={link}
+        className="text-lg sm:text-3xl p-4 text-white hover:underline"
+      >
         {title}
       </Link>
       <div className="py-4 px-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-center text-white">
@@ -170,14 +173,14 @@ const Home = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="relative w-full mt-6">
+      <div className="relative w-full ">
         <Slider {...settings}>
           {carouselImages.map((image, index) => (
             <div key={index}>
               <img
                 src={image}
                 alt={`carousel-${index}`}
-                className="w-[90%] mx-auto h-[28rem] object-fill rounded-3xl"
+                className="sm:w-[70%] mx-auto sm:h-[28rem] object-fill sm:rounded-3xl  w-full h-44 sm:mt-6"
               />
             </div>
           ))}

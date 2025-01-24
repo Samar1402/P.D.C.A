@@ -38,36 +38,14 @@ const Header = () => {
           </p>
         </div>
 
-        {/* Login Button and Social Media Icons */}
         <div className="flex flex-col items-center sm:items-end">
-          {/* Login Button */}
-          <div className="mb-4 sm:mb-2">
+          <div className="hidden sm:mb-2 sm:block">
             <button
               onClick={handleLoginClick} // Handle login click
-              className="w-40 sm:w-52 text-white bg-blue-500 hover:bg-blue-600 font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 h-10"
+              className="w-40 sm:w-42 text-white bg-blue-500 hover:bg-blue-600 font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 h-10"
             >
               Login
             </button>
-          </div>
-
-          {/* Social Media Icons */}
-          <div className="flex justify-center sm:justify-end gap-3">
-            <FontAwesomeIcon
-              icon={faWhatsapp}
-              className="text-lg sm:text-xl text-white hover:text-green-400 cursor-pointer"
-            />
-            <FontAwesomeIcon
-              icon={faFacebook}
-              className="text-lg sm:text-xl text-white hover:text-blue-400 cursor-pointer"
-            />
-            <FontAwesomeIcon
-              icon={faXTwitter}
-              className="text-lg sm:text-xl text-white hover:text-gray-900 cursor-pointer"
-            />
-            <FontAwesomeIcon
-              icon={faYoutube}
-              className="text-lg sm:text-xl text-white hover:text-red-600 cursor-pointer"
-            />
           </div>
         </div>
       </div>

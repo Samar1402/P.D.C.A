@@ -4,7 +4,6 @@ import map from "../images/map.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 function Contact() {
   const [formData, setFormData] = useState({
     name: "",
@@ -59,9 +58,9 @@ function Contact() {
                 Address:
               </h5>
               <p className="text-gray-500">
-                Pushpanjali Complex 45-C, Near Sahyog Hospital, Patliputra
+                Pushpanjali Complex,Ground Floor, OPP. Police Check Post
                 <br />
-                <span>Colony, Patna-800013</span>
+                <span>Boring Road, Patna-800013</span>
               </p>
             </div>
           </div>
@@ -134,7 +133,7 @@ function Contact() {
 
           <div className="w-full lg:w-1/2 p-4 flex justify-center items-center relative">
             <a
-              href="https://www.google.com/maps/place/Pushpanjali+Complex"
+              href="https://maps.app.goo.gl/BFchT9j7J7fYzVSw7"
               target="_blank"
               rel="noopener noreferrer"
               className="relative"
@@ -149,9 +148,9 @@ function Contact() {
               {isHovered && (
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-white p-4 rounded-md shadow-lg">
                   <p className="text-gray-700">
-                    Pushpanjali Complex 45-C, Near Sahyog Hospital, Patliputra
+                    Pushpanjali Complex,Ground Floor, OPP. Police Check Post
                     <br />
-                    Colony, Patna-800013
+                    Boring Road, Patna-800013
                   </p>
                 </div>
               )}

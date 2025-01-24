@@ -1,10 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const handleLoginClick = () => {
+    navigate("/login");
+  };
+
   const location = useLocation();
   if (location.pathname === "/dashboard") {
-    return null; // Do not render the header
+    return null;
   }
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -25,17 +30,17 @@ const Navbar = () => {
 
   return (
     <nav className="bg-blue-200">
-      <div className="container mx-auto px-6 py-4 font-serif text-lg font-semibold flex flex-col sm:flex-row justify-center items-center">
+      <div className="container mx-auto px-6 py-4 font-serif text-sm sm:text-lg font-semibold flex flex-col sm:flex-row justify-center ">
         {/* Hamburger Menu for Mobile */}
-        <div className="w-full flex sm:hidden">
-          <button className="text-xl" onClick={() => setMenuOpen(!isMenuOpen)}>
+        <div className="flex sm:hidden">
+          <button className="text-xl " onClick={() => setMenuOpen(!isMenuOpen)}>
             ☰
           </button>
         </div>
 
         {/* Links */}
         <div
-          className={`w-full sm:w-auto flex-col sm:flex-row sm:flex ${
+          className={`w-auto sm:w-auto flex-col justify-start sm:flex-row sm:flex ${
             isMenuOpen ? "flex gap-4 mt-2" : "hidden"
           } sm:gap-12`}
         >
@@ -146,6 +151,16 @@ const Navbar = () => {
           >
             Contact Us
           </NavLink>
+
+          {/* Login Button */}
+          <div className="sm:hidden mb-4 sm:mb-2">
+            <button
+              onClick={handleLoginClick}
+              className="w-20 text-white bg-blue-500 hover:bg-blue-600 font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 h-10"
+            >
+              Login
+            </button>
+          </div>
         </div>
       </div>
     </nav>

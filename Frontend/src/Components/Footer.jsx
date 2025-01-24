@@ -4,28 +4,28 @@ import pdcalogo from "../images/logo.png";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 
 const FooterSection = ({ title, links }) => (
-  <div className="py-4 px-2 flex flex-col">
-    <h1 className="text-xl font-serif text-white">{title}</h1>
-    <div className="mt-4 text-zinc-400 flex flex-col gap-3 pl-1">
+  <div className="py-4 px-2 flex flex-col ">
+    <h1 className="text-base sm:text-xl font-serif text-white">{title}</h1>
+    <div className="mt-4 text-zinc-400 flex flex-col gap-3">
       {links.map((link, index) => (
         <Link
           key={index}
           to={link.path}
-          className="hover:text-red-600 flex items-center gap-2"
+          className="hover:text-red-600 flex items-center sm:gap-3" // Adjusted gap for alignment
         >
-          <ChevronRightIcon className="w-6 h-6 text-red-500 font-extrabold" />
-          {link.label}
+          <ChevronRightIcon className="sm:w-6 sm:h-6 w-5 h-5 text-red-500 font-extrabold" />
+          <span className="text-xs sm:text-sm md:text-base">{link.label}</span>
         </Link>
       ))}
     </div>
   </div>
 );
-// const location = useLocation();
+
 const Footer = () => {
   const location = useLocation();
 
   if (location.pathname === "/dashboard") {
-    return null; // Do not render the header
+    return null; // Do not render the footer on the dashboard page
   }
 
   const sections = [
@@ -33,7 +33,7 @@ const Footer = () => {
       title: "About",
       links: [
         { label: "History of PDCA", path: "/about/history" },
-        { label: "Management Committee", path: "/about/committeeMembers" },
+        { label: "Management Comm", path: "/about/committeeMembers" },
       ],
     },
     {
@@ -53,8 +53,8 @@ const Footer = () => {
     {
       title: "Clubs",
       links: [
-        { label: "Affliated Clubs", path: "/affliatedmembers" },
-        { label: "Non-Affliated Clubs", path: "/nonaffliatedmembers" },
+        { label: "Affiliated Clubs", path: "/affiliatedmembers" },
+        { label: "Non-Affiliated Clubs", path: "/nonaffiliatedmembers" },
       ],
     },
   ];
@@ -65,10 +65,10 @@ const Footer = () => {
         {/* Logo Section */}
         <div className="flex flex-col items-center lg:items-start mb-6 lg:mb-0">
           <img src={pdcalogo} alt="PDCA Logo" className="w-28 h-24 mb-4" />
-          <p className="text-center lg:text-left">
+          <p className="text-center lg:text-left text-sm sm:text-base md:text-lg">
             Patna District Cricket Association
           </p>
-          <p className="text-center lg:text-left mt-2 text-sm">
+          <p className="text-center lg:text-left mt-2 text-sm sm:text-base md:text-lg">
             Affiliated to: <br /> Bihar Cricket Association
           </p>
         </div>
@@ -86,10 +86,14 @@ const Footer = () => {
       </div>
 
       {/* Bottom Note */}
-      <div className="mt-6 text-center text-sm text-gray-400 flex flex-row justify-end gap-72 px-10">
-      All rights reserved &copy; {new Date().getFullYear()} Patna District Cricket Association.
-      <p className="">DEVELOPED BY TEAM <span className="text-red-600"> S.K.A 💛</span></p>
-        
+      <div className="mt-6 text-center text-sm text-gray-400 flex flex-col sm:flex-row justify-center sm:justify-end sm:gap-72 px-4 sm:px-10">
+        <p className="mb-2 sm:mb-0 text-sm sm:text-base">
+          All rights reserved &copy; {new Date().getFullYear()} Patna District
+          Cricket Association.
+        </p>
+        <p className="text-center sm:text-right sm:text-sm text-xs">
+          DEVELOPED BY TEAM <span className="text-red-600"> S.K.A 💛</span>
+        </p>
       </div>
     </footer>
   );
