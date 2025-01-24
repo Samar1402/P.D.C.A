@@ -6,19 +6,17 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Cricket from "./../images/backg.jpg";
 
-// Simplified NotificationCard to display only the title for notifications
 const NotificationCard = ({ title, pdf_path }) => (
   <a
-    href={`http://localhost:3000${pdf_path}`} // Link to the PDF file
-    target="_blank" // Open in a new tab
-    rel="noopener noreferrer" // Security best practice
+    href={`http://localhost:3000${pdf_path}`}
+    target="_blank"
+    rel="noopener noreferrer"
     className="h-60 w-full sm:w-96 md:w-80 lg:w-96 border border-slate-950 bg-blue-950 p-6 rounded-3xl flex flex-col justify-between transition-transform transform hover:scale-105 cursor-pointer"
   >
     <h2 className="text-lg font-semibold text-white ">{title}</h2>
   </a>
 );
 
-// Standard NotificationCard for recent matches
 const MatchCard = ({ title, score, match }) => (
   <div className="h-60 w-full sm:w-96 md:w-80 lg:w-96 border border-slate-950 bg-blue-950 p-6 rounded-3xl flex flex-col justify-between transition-transform transform hover:scale-105">
     <div className="flex flex-col gap-2 text-sm text-gray-300">
@@ -33,7 +31,6 @@ const MatchCard = ({ title, score, match }) => (
   </div>
 );
 
-// NotificationSection adjusted to pass titles and pdf_path directly for notifications
 const NotificationSection = ({ title, link, data, isNotification }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 3;
@@ -68,8 +65,8 @@ const NotificationSection = ({ title, link, data, isNotification }) => {
           isNotification ? (
             <NotificationCard
               key={index}
-              title={item.title} // Notification title
-              pdf_path={item.pdf_path} // Path to the PDF
+              title={item.title}
+              pdf_path={item.pdf_path}
             />
           ) : (
             <MatchCard
@@ -131,9 +128,7 @@ const Home = () => {
     pauseOnHover: false,
   };
 
-  // Fetch data from backend
   useEffect(() => {
-    // Fetch recent matches
     fetch("http://localhost:3000/result")
       .then((response) => response.json())
       .then((data) => {
@@ -148,14 +143,12 @@ const Home = () => {
         console.error("Error fetching match results:", error);
       });
 
-    // Fetch notifications with pdf_path
     fetch("http://localhost:3000/notifications")
       .then((response) => response.json())
       .then((data) => {
-        // Map notifications to include title and pdf_path
         const notificationData = data.map((notification) => ({
           title: notification.title,
-          pdf_path: notification.pdf_path, // Ensure pdf_path is included
+          pdf_path: notification.pdf_path,
         }));
         setNotifications(notificationData);
       })
@@ -180,7 +173,7 @@ const Home = () => {
               <img
                 src={image}
                 alt={`carousel-${index}`}
-                className="sm:w-[70%] mx-auto sm:h-[28rem] object-fill sm:rounded-3xl  w-full h-44 sm:mt-6"
+                className="sm:w-[65%] mx-auto sm:h-[28rem] object-fill sm:rounded-3xl  w-full h-44 sm:mt-6"
               />
             </div>
           ))}
@@ -191,14 +184,14 @@ const Home = () => {
         title="NOTIFICATIONS"
         link="/notifications"
         data={notifications}
-        isNotification={true} // Pass true for notifications
+        isNotification={true}
       />
 
       <NotificationSection
         title="RECENT MATCHES"
         link="/matchresults"
         data={recentMatches}
-        isNotification={false} // Pass false for matches
+        isNotification={false}
       />
     </div>
   );
