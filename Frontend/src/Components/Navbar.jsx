@@ -11,10 +11,25 @@ const Navbar = () => {
   if (location.pathname === "/dashboard") {
     return null;
   }
+
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
 
+  // Handle scrolling behavior when the menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden'; // Disable scrolling
+    } else {
+      document.body.style.overflow = 'auto'; // Enable scrolling
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto'; // Clean up on unmount
+    };
+  }, [isMenuOpen]);
+
+  // Close the dropdown when clicking outside of it
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -30,11 +45,14 @@ const Navbar = () => {
 
   return (
     <nav className="bg-blue-200">
-      <div className="container mx-auto px-6 py-4 font-serif text-sm sm:text-lg font-semibold flex flex-col sm:flex-row justify-center ">
+      <div className="container mx-auto px-6 py-4 font-serif text-sm sm:text-lg font-semibold flex flex-col sm:flex-row justify-center">
         {/* Hamburger Menu for Mobile */}
         <div className="flex sm:hidden">
-          <button className="text-xl " onClick={() => setMenuOpen(!isMenuOpen)}>
-            ☰
+          <button
+            className="text-xl"
+            onClick={() => setMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? "✖" : "☰"} {/* Change icon based on menu state */}
           </button>
         </div>
 
