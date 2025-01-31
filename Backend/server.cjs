@@ -5,6 +5,7 @@ const cors = require("cors");
 const { body, validationResult } = require("express-validator");
 const multer = require("multer");
 const path = require("path");
+const bcrypt = require("bcrypt");
 
 const app = express();
 
@@ -41,20 +42,24 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Connection to PDCA Database
-const db = mysql.createConnection({
-  host: "127.0.0.1",
-  user: "root",
-  password: "Samar@1402", // MySQL root password
-  port: "3306", // MySQL root port id
-  database: "pdca_db", // MySQL database name
+const db = mysql.createPool({
+  host: "auth-db1825.hstgr.io",
+  user: "u515845719_pdca",
+  password: "Samar@1402",
+  database: "u515845719_pdca_db",
+  waitForConnections: true,
+  connectionLimit: 10, // Connection pool size
+  queueLimit: 0, // Unlimited queue size
+  connectTimeout: 10000, // Connection timeout of 10 seconds
 });
 
-db.connect((err) => {
+db.getConnection((err, connection) => {
   if (err) {
-    console.error(`Error Connection ${err.stack}`);
-    return;
+    console.error("Error connecting to the database:", err);
+  } else {
+    console.log("Database connected as id", connection.threadId);
+    connection.release(); // Release the connection back to the pool
   }
-  console.log(`Connected as id ${db.threadId}`);
 });
 
 // Route to get SignUp Details
@@ -270,48 +275,32 @@ app.post("/update/:ID", (req, res) => {
 
 //login api
 app.post("/login", (req, res) => {
-  const loginQuery =
-    "SELECT * FROM sign_up WHERE `email` = ? AND `password` = ?";
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(400).json({ message: "Email and password are required" });
+    return res.status(400).send({ message: "Email and password are required" });
   }
 
-  db.query(loginQuery, [email, password], (err, results) => {
+  // Fetch the user by email from the database
+  const query = "SELECT * FROM sign_up WHERE email = ?";
+
+  db.query(query, [email], (err, result) => {
     if (err) {
-      console.error("Database error:", err);
-      return res
-        .status(500)
-        .json({ message: "Server error, please try again" });
+      return res.status(500).send({ message: "Error querying the database" });
     }
 
-    if (results.length > 0) {
-      const user = results[0];
-      return res.status(200).json({
-        message: "Login successful",
-        user: {
-          id: user.id, // Provide only necessary data
-          email: user.email,
-          name: user.name,
-        },
-      });
+    if (result.length === 0) {
+      return res.status(401).send({ message: "Invalid email or password" });
+    }
+
+    const user = result[0];
+
+    // Compare the entered password with the stored password (no bcrypt here)
+    if (password === user.password) {
+      return res.status(200).send({ message: "Login successful" });
     } else {
-      return res.status(401).json({ message: "Invalid email or password" });
+      return res.status(401).send({ message: "Invalid email or password" });
     }
-  });
-});
-
-// Route to get UPCOMING MATCH Details
-app.get("/upcomingMatch", (req, res) => {
-  const upComingMatch =
-    "SELECT id,first_team, second_team, date, time, location FROM upcoming_match";
-
-  db.query(upComingMatch, (err, results) => {
-    if (err) {
-      return res.status(500).json({ error: "Database query failed" });
-    }
-    res.json(results);
   });
 });
 
@@ -879,6 +868,7 @@ app.delete("/notifications/:id", (req, res) => {
 });
 
 // Start the server
+// const port = 3000;
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });

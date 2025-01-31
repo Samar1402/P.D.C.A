@@ -3,14 +3,17 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Avoid rendering the navbar on the /dashboard route
+  // if (location.pathname === "/dashboard") {
+  //   return <></>;
+  // }
+
   const handleLoginClick = () => {
     navigate("/login");
   };
 
-  const location = useLocation();
-  if (location.pathname === "/dashboard") {
-    return null;
-  }
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -30,10 +33,10 @@ const Navbar = () => {
 
   return (
     <nav className="bg-blue-200">
-      <div className="container mx-auto px-6 py-4 font-serif text-sm sm:text-lg font-semibold flex flex-col sm:flex-row justify-center ">
+      <div className="container mx-auto px-6 py-4 font-serif text-sm sm:text-lg font-semibold flex flex-col sm:flex-row justify-center">
         {/* Hamburger Menu for Mobile */}
         <div className="flex sm:hidden">
-          <button className="text-xl " onClick={() => setMenuOpen(!isMenuOpen)}>
+          <button className="text-xl" onClick={() => setMenuOpen(!isMenuOpen)}>
             ☰
           </button>
         </div>

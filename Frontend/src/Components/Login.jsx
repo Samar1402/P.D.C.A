@@ -1,30 +1,34 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignInAlt, faKey, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate } from "react-router-dom";
-import cricketer from "../images/cricketer.png";
+import {
+  faSignInAlt,
+  faEye,
+  faEyeSlash,
+} from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Cricket from "./../images/abt.jpg";
+import cricketer from "../images/cricketer.png"; // Your cricketer image
+import Cricket from "../images/abt.jpg"; // Your background image
 
 const Login = () => {
-  const [value, setValue] = useState({
-    email: "",
-    password: "",
-  });
-
+  const [value, setValue] = useState({ email: "", password: "" });
   const [error, setError] = useState({});
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false); // For toggling password visibility
+  const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleInput = (e) => {
-    e.preventDefault();
-    setValue((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setValue((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const validate = () => {
-    let formErrors = {};
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const formErrors = {};
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zAHEY0-9.-]+\.[a-zA-Z]{2,}$/;
     const contactRegex = /^\d{10}$/;
 
     if (!value.email) {
@@ -44,7 +48,6 @@ const Login = () => {
     return formErrors;
   };
 
-  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formErrors = validate();
@@ -57,16 +60,18 @@ const Login = () => {
           value,
           { withCredentials: true }
         );
-
-        if (response.data && response.data.message) {
+        if (response.status === 200 && response.data?.message) {
           setMessage(response.data.message);
-          setTimeout(() => navigate("/dashboard"), 500);
+          localStorage.setItem("authToken", response.data.token);
+          setTimeout(() => {
+            navigate("/dashboard");
+          }, 500);
         }
       } catch (err) {
-        console.error("Error: ", err);
-        setError(
-          err.response?.data?.message || "Failed to login. Try again later."
-        );
+        setError({
+          general:
+            err.response?.data?.message || "Failed to login. Try again later.",
+        });
       } finally {
         setIsLoading(false);
       }
@@ -77,7 +82,6 @@ const Login = () => {
 
   return (
     <div className="relative">
-      {/* Blurred background */}
       <div
         className="absolute inset-0"
         style={{
@@ -89,7 +93,6 @@ const Login = () => {
         }}
       ></div>
 
-      {/* Content */}
       <div className="flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md p-8 sm:p-10 bg-blue-950 rounded-[60px] min-h-[500px]">
           <div className="flex items-center justify-center space-x-4 mb-6">
@@ -101,7 +104,6 @@ const Login = () => {
             />
           </div>
 
-          {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-8">
             <div>
               <label className="block text-l font-medium text-white">
@@ -121,6 +123,7 @@ const Login = () => {
                 <p className="text-red-500 text-sm mt-1">{error.email}</p>
               )}
             </div>
+
             <div>
               <label className="block text-l font-medium text-white">
                 Password
@@ -141,9 +144,7 @@ const Login = () => {
                   className="absolute inset-y-0 right-3 flex items-center text-gray-500"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  <FontAwesomeIcon
-                    icon={showPassword ? faEyeSlash : faEye}
-                  />
+                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                 </button>
               </div>
               {error.password && (
@@ -151,9 +152,8 @@ const Login = () => {
               )}
             </div>
 
-            {/* General error message */}
-            {typeof error === "string" && (
-              <div className="text-red-500 text-sm mt-1">{error}</div>
+            {error.general && (
+              <div className="text-red-500 text-sm mt-1">{error.general}</div>
             )}
 
             <div className="flex justify-center">
@@ -179,7 +179,6 @@ const Login = () => {
             </div>
           </form>
 
-          {/* Success/Error Messages */}
           {message && <p className="text-green-500 text-sm mt-4">{message}</p>}
         </div>
       </div>
@@ -188,4 +187,3 @@ const Login = () => {
 };
 
 export default Login;
-
