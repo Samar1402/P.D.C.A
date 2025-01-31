@@ -303,7 +303,17 @@ app.post("/login", (req, res) => {
     }
   });
 });
+app.get("/upcomingMatch", (req, res) => {
+  const query = "SELECT * FROM upcoming_match  ";
 
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("Error fetching matches:", err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+    res.json(results);
+  });
+});
 // Route to get UPCOMING MATCH Details by ID
 app.get("/upcomingMatch/:ID", (req, res) => {
   const { ID } = req.params;
