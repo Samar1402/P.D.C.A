@@ -55,8 +55,10 @@ const Login = () => {
     if (Object.keys(formErrors).length === 0) {
       setIsLoading(true);
       try {
+        const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:3000"; // Default to local if not set
+
         const response = await axios.post(
-          "http://localhost:3000/login",
+          `${apiUrl}/login`, // Dynamically use the correct API URL
           value,
           { withCredentials: true }
         );
@@ -159,27 +161,22 @@ const Login = () => {
             <div className="flex justify-center">
               <button
                 type="submit"
-                className={`w-full flex items-center justify-center px-4 py-3 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 transform hover:scale-105 transition-all duration-300 ${
+                className={`w-full flex items-center justify-center px-4 py-3 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 ${
                   isLoading ? "opacity-50 cursor-not-allowed" : ""
                 }`}
                 disabled={isLoading}
               >
-                {isLoading ? (
-                  <span className="animate-spin">🔄</span>
-                ) : (
-                  <>
-                    <FontAwesomeIcon
-                      icon={faSignInAlt}
-                      className="mr-2 animate-pulse"
-                    />
-                    Login
-                  </>
-                )}
+                <FontAwesomeIcon icon={faSignInAlt} className="mr-2" />
+                {isLoading ? "Logging in..." : "Login"}
               </button>
             </div>
-          </form>
 
-          {message && <p className="text-green-500 text-sm mt-4">{message}</p>}
+            {message && (
+              <div className="text-green-500 text-sm mt-2 text-center">
+                {message}
+              </div>
+            )}
+          </form>
         </div>
       </div>
     </div>

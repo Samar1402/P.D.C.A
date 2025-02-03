@@ -1,10 +1,5 @@
 import React, { Suspense, lazy } from "react";
-import {
-  Routes,
-  Route,
-  BrowserRouter as Router,
-  useNavigate,
-} from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import Header from "./Components/Header";
@@ -46,71 +41,64 @@ const LoginRedirect = () => {
 };
 
 function App() {
-  // Assume that authentication state is stored in local state or context
-  const [isAuthenticated, setIsAuthenticated] = React.useState(false); // Set this based on actual auth logic
+  const [isAuthenticated, setIsAuthenticated] = React.useState(false); // Example auth state
 
   return (
-    <Router>
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        <Navbar />
-        <main className="flex-grow">
-          <Suspense fallback={<div>Loading...</div>}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<SignUp />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/notifications" element={<Notification />} />
-              <Route path="/members" element={<Members />} />
-              <Route path="/media" element={<Gallery />} />
-              <Route path="/results" element={<Results />} />
-              <Route path="/matchresults" element={<MatchResults />} />
-              <Route path="/upcomingmatches" element={<UpcomingMatches />} />
-              <Route path="/forgot-password" element={<Forgetpswd />} />
-              <Route path="/about/history" element={<About />} />
-              <Route
-                path="/about/committeeMembers"
-                element={<CommitteeMember />}
-              />
-              <Route
-                path="/affiliatedmembers"
-                element={<AffiliatedMembers />}
-              />
-              <Route
-                path="/nonaffiliatedmembers"
-                element={<NonAffiliatedMembers />}
-              />
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <Navbar />
+      <main className="flex-grow">
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<SignUp />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/notifications" element={<Notification />} />
+            <Route path="/members" element={<Members />} />
+            <Route path="/media" element={<Gallery />} />
+            <Route path="/results" element={<Results />} />
+            <Route path="/matchresults" element={<MatchResults />} />
+            <Route path="/upcomingmatches" element={<UpcomingMatches />} />
+            <Route path="/forgot-password" element={<Forgetpswd />} />
+            <Route path="/about/history" element={<About />} />
+            <Route
+              path="/about/committeeMembers"
+              element={<CommitteeMember />}
+            />
+            <Route path="/affiliatedmembers" element={<AffiliatedMembers />} />
+            <Route
+              path="/nonaffiliatedmembers"
+              element={<NonAffiliatedMembers />}
+            />
 
-              {/* Protected Route Example */}
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute
-                    element={<Dashboard />}
-                    isAuthenticated={isAuthenticated}
-                  />
-                }
-              />
+            {/* Protected Routes */}
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute
+                  element={<Dashboard />}
+                  isAuthenticated={isAuthenticated}
+                />
+              }
+            />
+            <Route
+              path="/dashboard/dashboard-item"
+              element={
+                <ProtectedRoute
+                  element={<DashboardItem />}
+                  isAuthenticated={isAuthenticated}
+                />
+              }
+            />
 
-              <Route
-                path="/dashboard/dashboard-item"
-                element={
-                  <ProtectedRoute
-                    element={<DashboardItem />}
-                    isAuthenticated={isAuthenticated}
-                  />
-                }
-              />
-
-              {/* Catch-all 404 Route */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+            {/* Catch-all 404 Route */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </main>
+      <Footer />
+    </div>
   );
 }
 
