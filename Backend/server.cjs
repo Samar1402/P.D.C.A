@@ -49,14 +49,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Connection to PDCA Database
 const db = mysql.createPool({
-  host: "auth-db1825.hstgr.io",
-  user: "u515845719_pdca",
-  password: "Samar@1402",
-  database: "u515845719_pdca_db",
+  host: process.env.DB_HOST || "localhost",
+  user: process.env.DB_USER || "pdca_user",
+  password: process.env.DB_PASSWORD || "Samar@1402",
+  database: process.env.DB_NAME || "pdca_db",
   waitForConnections: true,
-  connectionLimit: 10, // Connection pool size
-  queueLimit: 0, // Unlimited queue size
-  connectTimeout: 10000, // Connection timeout of 10 seconds
+  connectionLimit: 10,
+  queueLimit: 0,
+  connectTimeout: 10000,
 });
 
 db.getConnection((err, connection) => {
