@@ -7,8 +7,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import cricketer from "../images/cricketer.png"; // Your cricketer image
-import Cricket from "../images/abt.jpg"; // Your background image
+import cricketer from "../images/cricketer.png";
+import Cricket from "../images/abt.jpg";
 
 const Login = () => {
   const [value, setValue] = useState({ email: "", password: "" });
@@ -16,29 +16,20 @@ const Login = () => {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
   const navigate = useNavigate();
 
   const handleInput = (e) => {
-    setValue((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    setValue((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const validate = () => {
     const formErrors = {};
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zAHEY0-9.-]+\.[a-zA-Z]{2,}$/;
-    const contactRegex = /^\d{10}$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     if (!value.email) {
-      formErrors.email = "Email or contact number is required";
-    } else if (
-      !emailRegex.test(value.email) &&
-      !contactRegex.test(value.email)
-    ) {
-      formErrors.email =
-        "Enter a valid email address or 10-digit contact number";
+      formErrors.email = "Email is required";
+    } else if (!emailRegex.test(value.email)) {
+      formErrors.email = "Enter a valid email address";
     }
 
     if (!value.password) {
@@ -55,13 +46,20 @@ const Login = () => {
     if (Object.keys(formErrors).length === 0) {
       setIsLoading(true);
       try {
-        const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:3000"; // Default to local if not set
+        const apiUrl =
+          import.meta.env.VITE_API_URL ||
+          import.meta.env.REACT_APP_API_URL ||
+          "http://localhost:3000/api";
+        console.log("API Request URL:", `${apiUrl}/login`);
+        console.log("Sending Data:", value);
 
-        const response = await axios.post(
-          `${apiUrl}/login`, // Dynamically use the correct API URL
-          value,
-          { withCredentials: true }
-        );
+        const response = await axios.post(`${apiUrl}/login`, value, {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true, // ✅ Required for auth
+        });
+
+        console.log("API Response:", response.data);
+
         if (response.status === 200 && response.data?.message) {
           setMessage(response.data.message);
           localStorage.setItem("authToken", response.data.token);
@@ -70,9 +68,9 @@ const Login = () => {
           }, 500);
         }
       } catch (err) {
+        console.error("Login Error:", err.response?.data || err.message);
         setError({
-          general:
-            err.response?.data?.message || "Failed to login. Try again later.",
+          general: err.response?.data?.message || "Invalid email or password.",
         });
       } finally {
         setIsLoading(false);
@@ -109,14 +107,16 @@ const Login = () => {
           <form onSubmit={handleSubmit} className="space-y-8">
             <div>
               <label className="block text-l font-medium text-white">
-                Email/Contact No.
+                Email
               </label>
               <input
                 type="text"
-                className={`w-full px-4 py-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500 outline-none ${
-                  error.email ? "border-red-500" : ""
+                className={`w-full px-4 py-2 mt-1 border rounded-md outline-none ${
+                  error.email
+                    ? "border-red-500"
+                    : "focus:ring-blue-500 focus:border-blue-500"
                 }`}
-                placeholder="Enter your username"
+                placeholder="Enter your email"
                 name="email"
                 onChange={handleInput}
                 value={value.email}
@@ -133,8 +133,10 @@ const Login = () => {
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
-                  className={`w-full px-4 py-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500 outline-none ${
-                    error.password ? "border-red-500" : ""
+                  className={`w-full px-4 py-2 mt-1 border rounded-md outline-none ${
+                    error.password
+                      ? "border-red-500"
+                      : "focus:ring-blue-500 focus:border-blue-500"
                   }`}
                   placeholder="Enter your password"
                   name="password"
@@ -155,27 +157,18 @@ const Login = () => {
             </div>
 
             {error.general && (
-              <div className="text-red-500 text-sm mt-1">{error.general}</div>
+              <p className="text-red-500 text-sm mt-2 text-center">
+                {error.general}
+              </p>
             )}
 
-            <div className="flex justify-center">
-              <button
-                type="submit"
-                className={`w-full flex items-center justify-center px-4 py-3 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 ${
-                  isLoading ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-                disabled={isLoading}
-              >
-                <FontAwesomeIcon icon={faSignInAlt} className="mr-2" />
-                {isLoading ? "Logging in..." : "Login"}
-              </button>
-            </div>
-
-            {message && (
-              <div className="text-green-500 text-sm mt-2 text-center">
-                {message}
-              </div>
-            )}
+            <button
+              type="submit"
+              className="w-full px-4 py-3 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+            >
+              <FontAwesomeIcon icon={faSignInAlt} className="mr-2" />
+              {isLoading ? "Logging in..." : "Login"}
+            </button>
           </form>
         </div>
       </div>

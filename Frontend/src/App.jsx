@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import Header from "./Components/Header";
@@ -26,8 +26,9 @@ const NonAffiliatedMembers = lazy(() =>
 const DashboardItem = lazy(() => import("./Components/DashboardItem"));
 
 // Protected Route component
-const ProtectedRoute = ({ element, isAuthenticated }) => {
-  return isAuthenticated ? element : <LoginRedirect />;
+const ProtectedRoute = ({ element }) => {
+  const authToken = localStorage.getItem("authToken");
+  return authToken ? element : <LoginRedirect />;
 };
 
 // Login redirect component
@@ -41,12 +42,13 @@ const LoginRedirect = () => {
 };
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = React.useState(false); // Example auth state
+  const location = useLocation(); // Get current route
+  const isDashboard = location.pathname.startsWith("/dashboard"); // Check if on Dashboard
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
-      <Navbar />
+      {!isDashboard && <Header />} {/* Hide Header on Dashboard */}
+      {!isDashboard && <Navbar />} {/* Hide Navbar on Dashboard */}
       <main className="flex-grow">
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
@@ -75,21 +77,11 @@ function App() {
             {/* Protected Routes */}
             <Route
               path="/dashboard"
-              element={
-                <ProtectedRoute
-                  element={<Dashboard />}
-                  isAuthenticated={isAuthenticated}
-                />
-              }
+              element={<ProtectedRoute element={<Dashboard />} />}
             />
             <Route
               path="/dashboard/dashboard-item"
-              element={
-                <ProtectedRoute
-                  element={<DashboardItem />}
-                  isAuthenticated={isAuthenticated}
-                />
-              }
+              element={<ProtectedRoute element={<DashboardItem />} />}
             />
 
             {/* Catch-all 404 Route */}
@@ -97,7 +89,7 @@ function App() {
           </Routes>
         </Suspense>
       </main>
-      <Footer />
+      {!isDashboard && <Footer />} {/* Hide Footer on Dashboard */}
     </div>
   );
 }

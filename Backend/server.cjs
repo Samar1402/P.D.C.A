@@ -1,51 +1,16 @@
-const bodyParser = require("body-parser");
-const express = require("express");
-const mysql = require("mysql2");
-const cors = require("cors");
-const { body, validationResult } = require("express-validator");
+// const { body, validationResult } = require("express-validator");
 const multer = require("multer");
 const path = require("path");
-const dotenv = require("dotenv");
-
-dotenv.config();
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const mysql = require("mysql2");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const app = express();
-
-const allowedOrigins = [process.env.FRONTEND_URL, process.env.DEV_FRONTEND_URL];
-
-const corsOptions = {
-  origin: allowedOrigins,
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true,
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-};
-
-app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
-
-// Configure multer for file uploads
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/");
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)); // Append the file extension
-  },
-});
-const upload = multer({ storage: storage });
-
-// app.use(cors(corsOptions));
-// app.options("*", cors(corsOptions)); // Preflight request ko handle karne ke liye
-
-// Serve static files from the 'uploads' directory
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
-const port = 3000;
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+const PORT = process.env.PORT || 3000;
 
 // Connection to PDCA Database
 const db = mysql.createPool({
@@ -63,9 +28,50 @@ db.getConnection((err, connection) => {
   if (err) {
     console.error("Error connecting to the database:", err);
   } else {
-    console.log("Database connected as id", connection.threadId);
-    connection.release(); // Release the connection back to the pool
+    console.log("Database connected!");
+    connection.release();
   }
+});
+
+app.use(
+  cors({
+    origin: [process.env.FRONTEND_URL, process.env.DEV_FRONTEND_URL],
+    credentials: true,
+  })
+);
+app.use(bodyParser.json());
+
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname)); // Append the file extension
+  },
+});
+const upload = multer({ storage: storage });
+
+// Serve static files from the 'uploads' directory
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// ✅ Hash and Update Existing Passwords in the Database (Run Once)
+app.get("/api/hash-passwords", async (req, res) => {
+  db.query("SELECT id, password FROM sign_up", async (err, users) => {
+    if (err) return res.status(500).json({ message: "Database error" });
+
+    for (let user of users) {
+      if (!user.password.startsWith("$2a$")) {
+        // Check if already hashed
+        const hashedPassword = await bcrypt.hash(user.password, 10);
+        db.query("UPDATE sign_up SET password = ? WHERE id = ?", [
+          hashedPassword,
+          user.id,
+        ]);
+      }
+    }
+    res.json({ message: "Passwords hashed successfully" });
+  });
 });
 
 // Route to get SignUp Details
@@ -278,36 +284,46 @@ app.post("/update/:ID", (req, res) => {
     res.status(200).json({ message: "Updated Successfully" });
   });
 });
-
-//login api
-app.post("/login", (req, res) => {
+// login api
+app.post("/api/login", (req, res) => {
   const { email, password } = req.body;
+  console.log("Login Attempt:", email, password);
 
   if (!email || !password) {
-    return res.status(400).send({ message: "Email and password are required" });
+    return res.status(400).json({ message: "Email and password are required" });
   }
 
-  // Fetch the user by email from the database
-  const query = "SELECT * FROM sign_up WHERE email = ?";
+  db.query(
+    "SELECT * FROM sign_up WHERE email = ?",
+    [email],
+    async (err, result) => {
+      if (err) {
+        console.error("Database Error:", err);
+        return res.status(500).json({ message: "Internal Server Error" });
+      }
 
-  db.query(query, [email], (err, result) => {
-    if (err) {
-      return res.status(500).send({ message: "Error querying the database" });
+      if (result.length === 0) {
+        return res.status(401).json({ message: "Invalid email or password" });
+      }
+
+      const user = result[0];
+
+      // Compare hashed password
+      const passwordMatch = await bcrypt.compare(password, user.password);
+      if (!passwordMatch) {
+        return res.status(401).json({ message: "Invalid email or password" });
+      }
+
+      // Generate JWT Token
+      const token = jwt.sign(
+        { id: user.id, email: user.email },
+        process.env.JWT_SECRET || "your_secret_key",
+        { expiresIn: "1h" }
+      );
+
+      res.json({ message: "Login successful", token });
     }
-
-    if (result.length === 0) {
-      return res.status(401).send({ message: "Invalid email or password" });
-    }
-
-    const user = result[0];
-
-    // Compare the entered password with the stored password (no bcrypt here)
-    if (password === user.password) {
-      return res.status(200).send({ message: "Login successful" });
-    } else {
-      return res.status(401).send({ message: "Invalid email or password" });
-    }
-  });
+  );
 });
 
 app.get("/upcomingMatch", (req, res) => {
@@ -884,8 +900,110 @@ app.delete("/notifications/:id", (req, res) => {
   });
 });
 
-// Start the server
-// const port = 3000;
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
+// require("dotenv").config();
+// const express = require("express");
+// const cors = require("cors");
+// const bodyParser = require("body-parser");
+// const mysql = require("mysql2");
+// const bcrypt = require("bcryptjs");
+// const jwt = require("jsonwebtoken");
+
+// const app = express();
+// const PORT = process.env.PORT || 3000;
+
+// Database Connection
+// const db = mysql.createPool({
+//   host: process.env.DB_HOST || "localhost",
+//   user: process.env.DB_USER || "pdca_user",
+//   password: process.env.DB_PASSWORD || "Samar@1402",
+//   database: process.env.DB_NAME || "pdca_db",
+//   waitForConnections: true,
+//   connectionLimit: 10,
+//   queueLimit: 0,
+//   connectTimeout: 10000,
+// });
+
+// db.getConnection((err, connection) => {
+//   if (err) {
+//     console.error("Error connecting to the database:", err);
+//   } else {
+//     console.log("Database connected!");
+//     connection.release();
+//   }
+// });
+
+// Middleware
+// app.use(
+//   cors({
+//     origin: [process.env.FRONTEND_URL, process.env.DEV_FRONTEND_URL],
+//     credentials: true,
+//   })
+// );
+// app.use(bodyParser.json());
+
+// // ✅ Hash and Update Existing Passwords in the Database (Run Once)
+// app.get("/api/hash-passwords", async (req, res) => {
+//   db.query("SELECT id, password FROM sign_up", async (err, users) => {
+//     if (err) return res.status(500).json({ message: "Database error" });
+
+//     for (let user of users) {
+//       if (!user.password.startsWith("$2a$")) {
+//         // Check if already hashed
+//         const hashedPassword = await bcrypt.hash(user.password, 10);
+//         db.query("UPDATE sign_up SET password = ? WHERE id = ?", [
+//           hashedPassword,
+//           user.id,
+//         ]);
+//       }
+//     }
+//     res.json({ message: "Passwords hashed successfully" });
+//   });
+// });
+
+// // ✅ Login Route (With Hashed Password Verification)
+// app.post("/api/login", (req, res) => {
+//   const { email, password } = req.body;
+//   console.log("Login Attempt:", email, password);
+
+//   if (!email || !password) {
+//     return res.status(400).json({ message: "Email and password are required" });
+//   }
+
+//   db.query(
+//     "SELECT * FROM sign_up WHERE email = ?",
+//     [email],
+//     async (err, result) => {
+//       if (err) {
+//         console.error("Database Error:", err);
+//         return res.status(500).json({ message: "Internal Server Error" });
+//       }
+
+//       if (result.length === 0) {
+//         return res.status(401).json({ message: "Invalid email or password" });
+//       }
+
+//       const user = result[0];
+
+//       // Compare hashed password
+//       const passwordMatch = await bcrypt.compare(password, user.password);
+//       if (!passwordMatch) {
+//         return res.status(401).json({ message: "Invalid email or password" });
+//       }
+
+//       // Generate JWT Token
+//       const token = jwt.sign(
+//         { id: user.id, email: user.email },
+//         process.env.JWT_SECRET || "your_secret_key",
+//         { expiresIn: "1h" }
+//       );
+
+//       res.json({ message: "Login successful", token });
+//     }
+//   );
+// });
+
+// // Start Server
+// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
