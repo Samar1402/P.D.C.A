@@ -66,7 +66,7 @@ const SignUp = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/addmember",
+        "http://localhost:5000/addmember",
         formData,
         {
           withCredentials: true,

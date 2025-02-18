@@ -8,7 +8,7 @@ const MatchResult = () => {
   useEffect(() => {
     // Fetch match data from the backend
     axios
-      .get("http://localhost:3000/result", { withCredentials: true })
+      .get("http://localhost:5000/result", { withCredentials: true })
       .then((response) => {
         // Assuming response.data is an array of match results
         setMatchData(response.data);

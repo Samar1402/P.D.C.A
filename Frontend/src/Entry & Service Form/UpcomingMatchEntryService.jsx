@@ -40,7 +40,7 @@ const UpcomingMatchEntryService = () => {
   // Fetching matches from the backend
   const fetchMatches = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/upcomingMatch", {
+      const response = await axios.get("http://localhost:5000/upcomingMatch", {
         withCredentials: true,
       });
       setFetchedMatches(response.data || []);
@@ -75,7 +75,7 @@ const UpcomingMatchEntryService = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/addmatch",
+        "http://localhost:5000/addmatch",
         matchData,
         { withCredentials: true }
       );
@@ -105,7 +105,7 @@ const UpcomingMatchEntryService = () => {
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3000/deleteUpcomingMatch/${id}`,
+        `http://localhost:5000/deleteUpcomingMatch/${id}`,
         {
           withCredentials: true,
         }

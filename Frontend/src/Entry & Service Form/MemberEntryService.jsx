@@ -36,7 +36,7 @@ const UpcomingMatchEntryService = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/addmatch",
+        "http://localhost:5000/addmatch",
         matchData,
         {
           withCredentials: true,

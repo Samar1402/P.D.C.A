@@ -8,7 +8,7 @@ import Cricket from "./../images/backg.jpg";
 
 const NotificationCard = ({ title, pdf_path }) => (
   <a
-    href={`http://localhost:3000${pdf_path}`}
+    href={`http://localhost:5000${pdf_path}`}
     target="_blank"
     rel="noopener noreferrer"
     className="h-60 w-full sm:w-96 md:w-80 lg:w-96 border border-slate-950 bg-blue-950 p-6 rounded-3xl flex flex-col justify-between transition-transform transform hover:scale-105 cursor-pointer"
@@ -129,7 +129,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:3000/result")
+    fetch("http://localhost:5000/result")
       .then((response) => response.json())
       .then((data) => {
         const formattedMatches = data.map((match) => ({
@@ -143,7 +143,7 @@ const Home = () => {
         console.error("Error fetching match results:", error);
       });
 
-    fetch("http://localhost:3000/notifications")
+    fetch("http://localhost:5000/notifications")
       .then((response) => response.json())
       .then((data) => {
         const notificationData = data.map((notification) => ({
