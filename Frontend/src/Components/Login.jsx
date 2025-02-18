@@ -34,6 +34,8 @@ const Login = () => {
 
     if (!value.password) {
       formErrors.password = "Password is required";
+    } else if (value.password.length < 8) {
+      formErrors.password = "Password must be at least 8 characters long";
     }
 
     return formErrors;
@@ -46,32 +48,39 @@ const Login = () => {
     if (Object.keys(formErrors).length === 0) {
       setIsLoading(true);
       try {
-        const apiUrl =
-          import.meta.env.VITE_API_URL ||
-          import.meta.env.REACT_APP_API_URL ||
-          "http://localhost:3000/api";
-        console.log("API Request URL:", `${apiUrl}/login`);
-        console.log("Sending Data:", value);
+        const apiUrl = "/api"; // Use the proxy in development
+        // console.log("API Request URL:", `${apiUrl}/login`);
+        // console.log("Sending Data:", value);
 
         const response = await axios.post(`${apiUrl}/login`, value, {
           headers: { "Content-Type": "application/json" },
           withCredentials: true, // ✅ Required for auth
         });
 
-        console.log("API Response:", response.data);
+        // console.log("API Response:", response.data);
 
         if (response.status === 200 && response.data?.message) {
-          setMessage(response.data.message);
+          setMessage("Login successful! Redirecting...");
           localStorage.setItem("authToken", response.data.token);
           setTimeout(() => {
             navigate("/dashboard");
-          }, 500);
+          }, 1000); // 1 second delay
         }
       } catch (err) {
         console.error("Login Error:", err.response?.data || err.message);
-        setError({
-          general: err.response?.data?.message || "Invalid email or password.",
-        });
+        if (err.response) {
+          setError({
+            general: err.response.data?.message || "Invalid email or password.",
+          });
+        } else if (err.request) {
+          setError({
+            general: "Network error. Please check your connection.",
+          });
+        } else {
+          setError({
+            general: "An unexpected error occurred. Please try again.",
+          });
+        }
       } finally {
         setIsLoading(false);
       }
@@ -90,6 +99,7 @@ const Login = () => {
           backgroundPosition: "center",
           filter: "blur(5px)",
           zIndex: -1,
+          backgroundColor: "rgba(0, 0, 0, 0.5)", // Fallback color
         }}
       ></div>
 
@@ -120,6 +130,7 @@ const Login = () => {
                 name="email"
                 onChange={handleInput}
                 value={value.email}
+                disabled={isLoading}
               />
               {error.email && (
                 <p className="text-red-500 text-sm mt-1">{error.email}</p>
@@ -142,11 +153,13 @@ const Login = () => {
                   name="password"
                   onChange={handleInput}
                   value={value.password}
+                  disabled={isLoading}
                 />
                 <button
                   type="button"
                   className="absolute inset-y-0 right-3 flex items-center text-gray-500"
                   onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                 </button>
@@ -164,7 +177,8 @@ const Login = () => {
 
             <button
               type="submit"
-              className="w-full px-4 py-3 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+              className="w-full px-4 py-3 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600 disabled:bg-blue-300"
+              disabled={isLoading}
             >
               <FontAwesomeIcon icon={faSignInAlt} className="mr-2" />
               {isLoading ? "Logging in..." : "Login"}

@@ -1,14 +1,13 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-// Load environment variables
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 5173, // Change this if needed
+    port: 5173,
     proxy: {
       "/api": {
-        target: "https://patnadca.com",
+        target: "http://localhost:3000", // Backend server
         changeOrigin: true,
         secure: true,
       },
