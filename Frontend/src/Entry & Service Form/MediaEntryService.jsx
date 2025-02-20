@@ -25,7 +25,7 @@ const MediaEntryService = () => {
   const fetchImages = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get("http://localhost:5000/gallery");
+      const response = await axios.get("http://localhost:3000/gallery");
       setImages(response.data);
     } catch (err) {
       console.error("Error fetching images:", err);
@@ -54,7 +54,7 @@ const MediaEntryService = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/upload",
+        "http://localhost:3000/upload",
         formData,
         {
           headers: {
@@ -90,7 +90,7 @@ const MediaEntryService = () => {
     if (!confirmDelete) return; // Stop if the user cancels
 
     try {
-      await axios.delete(`http://localhost:5000/gallery/${id}`);
+      await axios.delete(`http://localhost:3000/gallery/${id}`);
       setImages(images.filter((image) => image.id !== id)); // Update state
       alert("Image deleted successfully!");
     } catch (err) {

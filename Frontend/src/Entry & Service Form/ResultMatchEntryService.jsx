@@ -24,7 +24,7 @@ const ResultMatchEntryService = () => {
   useEffect(() => {
     if (activeForm === "service") {
       axios
-        .get("http://localhost:5000/result", { withCredentials: true })
+        .get("http://localhost:3000/result", { withCredentials: true })
         .then((response) => {
           console.log("Fetched data:", response.data);
           setServiceData(response.data);
@@ -46,7 +46,7 @@ const ResultMatchEntryService = () => {
     console.log("Data to be sent:", matchResultData); // Log the data before sending
     try {
       const response = await axios.post(
-        "http://localhost:5000/addresult",
+        "http://localhost:3000/addresult",
         matchResultData,
         { withCredentials: true }
       );
@@ -100,7 +100,7 @@ const ResultMatchEntryService = () => {
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/deleteresult/${id}`,
+        `http://localhost:3000/deleteresult/${id}`,
         {
           withCredentials: true,
         }
@@ -230,7 +230,7 @@ const ResultMatchEntryService = () => {
                     name={name}
                     value={matchResultData[name]}
                     onChange={handleInputChange}
-                    className="flex-1 border border-black border-b-2 h-[30px] outline-none px-3 pb-1 text-sm border-gray-300"
+                    className="flex-1 border border-black border-b-2 h-[30px] outline-none px-3 pb-1 text-sm "
                     placeholder={placeholder}
                   />
                 </div>

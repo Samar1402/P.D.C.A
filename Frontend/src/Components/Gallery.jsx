@@ -16,7 +16,7 @@ const Gallery = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/gallery");
+        const response = await axios.get("http://localhost:3000/gallery");
         setImages(response.data);
       } catch (err) {
         console.error("Error fetching images:", err);

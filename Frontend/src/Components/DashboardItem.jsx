@@ -9,7 +9,7 @@ const DashboardItem = () => {
   useEffect(() => {
     // Fetch recent match results and total match count from the backend
     axios
-      .get("http://localhost:5000/dashboardResult", { withCredentials: true })
+      .get("http://localhost:3000/dashboardResult", { withCredentials: true })
       .then((response) => {
         setRecentMatches(response.data.recentMatches); // Store recent match results
         setTotalMatches(response.data.totalMatches); // Store total match count

@@ -9,7 +9,7 @@ const Notification = () => {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/notifications");
+        const response = await axios.get("http://localhost:3000/notifications");
         setNotifications(response.data.reverse());
       } catch (error) {
         console.error("Error fetching notifications:", error);
@@ -35,7 +35,7 @@ const Notification = () => {
         {notifications.map((item, index) => (
           <nav key={index} className="hover:text-blue-600">
             <a
-              href={`http://localhost:5000${item.pdf_path}`} // Full URL to the PDF file
+              href={`http://localhost:3000${item.pdf_path}`} // Full URL to the PDF file
               target="_blank" // Open in a new tab
               rel="noopener noreferrer" // Security best practice
               className="flex items-center p-2 sm:p-3 hover:bg-gray-200 transition duration-200"

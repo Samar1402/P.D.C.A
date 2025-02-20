@@ -9,7 +9,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 // Connection to PDCA Database
 const db = mysql.createPool({
@@ -855,7 +855,7 @@ app.post("/upload", upload.single("image"), (req, res) => {
     return res.status(400).json({ message: "No file uploaded" });
   }
 
-  const imageUrl = `http://localhost:5000/uploads/${req.file.filename}`;
+  const imageUrl = `http://localhost:3000/uploads/${req.file.filename}`;
 
   const query = "INSERT INTO gallery (image_url) VALUES (?)";
   db.query(query, [imageUrl], (err, result) => {

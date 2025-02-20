@@ -26,7 +26,7 @@ const NotificationEntryService = () => {
   const fetchNotifications = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get("http://localhost:5000/notifications");
+      const response = await axios.get("http://localhost:3000/notifications");
       setNotifications(response.data);
     } catch (err) {
       console.error("Error fetching notifications:", err);
@@ -51,7 +51,7 @@ const NotificationEntryService = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/addNotification",
+        "http://localhost:3000/addNotification",
         formData,
         {
           headers: {
@@ -86,7 +86,7 @@ const NotificationEntryService = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:5000/notifications/${id}`);
+      await axios.delete(`http://localhost:3000/notifications/${id}`);
       setNotifications(
         notifications.filter((notification) => notification.id !== id)
       );
@@ -187,7 +187,7 @@ const NotificationEntryService = () => {
                     className="flex justify-between items-center p-4 border-b border-gray-200"
                   >
                     <a
-                      href={`http://localhost:5000${notification.pdf_path}`}
+                      href={`http://localhost:3000${notification.pdf_path}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-500 hover:underline"
