@@ -126,6 +126,27 @@ const Home = () => {
     autoplaySpeed: 3000,
     cssEase: "linear",
     pauseOnHover: false,
+    beforeChange: (oldIndex, newIndex) => {
+      document.querySelectorAll(".slick-slide").forEach((slide, index) => {
+        if (index === newIndex) {
+          slide.removeAttribute("aria-hidden");
+          slide.setAttribute("tabindex", "0");
+          slide.removeAttribute("inert");
+        } else {
+          slide.setAttribute("aria-hidden", "true");
+          slide.setAttribute("tabindex", "-1");
+          slide.setAttribute("inert", "true"); // Prevent focus & interactions
+        }
+      });
+    },
+    afterChange: () => {
+      if (
+        document.activeElement &&
+        document.activeElement.closest('.slick-slide[aria-hidden="true"]')
+      ) {
+        document.activeElement.blur(); // 🔹 Remove focus from hidden slides
+      }
+    },
   };
 
   useEffect(() => {

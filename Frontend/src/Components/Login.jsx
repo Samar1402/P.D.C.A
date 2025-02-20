@@ -48,9 +48,9 @@ const Login = () => {
     if (Object.keys(formErrors).length === 0) {
       setIsLoading(true);
       try {
-        const apiUrl = "/api"; // Use the proxy in development
-        // console.log("API Request URL:", `${apiUrl}/login`);
-        // console.log("Sending Data:", value);
+        const apiUrl = `${import.meta.env.VITE_API_URL}`; // Use the proxy in development
+        console.log("API Request URL:", `${apiUrl}/login`);
+        console.log("Sending Data:", value);
 
         const response = await axios.post(`${apiUrl}/login`, value, {
           headers: { "Content-Type": "application/json" },
@@ -64,7 +64,7 @@ const Login = () => {
           localStorage.setItem("authToken", response.data.token);
           setTimeout(() => {
             navigate("/dashboard");
-          }, 1000); // 1 second delay
+          }, 200); // 1 second delay
         }
       } catch (err) {
         console.error("Login Error:", err.response?.data || err.message);

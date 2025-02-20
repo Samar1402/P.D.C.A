@@ -305,7 +305,7 @@ app.post("/update/:ID", (req, res) => {
 });
 
 // Login API
-app.post("/api/login", (req, res) => {
+app.post("/login", (req, res) => {
   const { email, password } = req.body;
   // console.log("Login Attempt:", email, password);
 
